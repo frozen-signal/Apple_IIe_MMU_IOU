@@ -1,0 +1,64 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity MMU_INTERNALS is
+    port (
+        C8_FXX  : in std_logic;
+        MCFFF_N : in std_logic;
+        PHI_1   : in std_logic;
+        INTC300 : in std_logic;
+        MC00X_N : in std_logic;
+        MC01X_N : in std_logic;
+        MC3XX   : in std_logic;
+        MPON_N  : in std_logic;
+        PENIO_N : in std_logic;
+        MC0XX_N : in std_logic;
+
+        INTC8EN    : out std_logic;
+        INTC8ACC   : out std_logic;
+        INTC3ACC_N : out std_logic;
+        CENROM1    : out std_logic;
+        INTIO_N    : out std_logic
+    );
+end MMU_INTERNALS;
+
+architecture RTL of MMU_INTERNALS is
+    component LS74_SINGLE is
+        port (
+            PRE_N : in std_logic;
+            CLR_N : in std_logic;
+            CLK   : in std_logic;
+            D     : in std_logic;
+            Q     : out std_logic
+        );
+    end component;
+
+    signal L5_6, RSTC8_N : std_logic;
+begin
+
+    -- MMU_2 @B-4:C2-3
+    INTC3ACC_N <= INTC300 nand MC3XX;
+
+    -- MMU_2 @C-4:F2-5
+    L5_6    <= INTC3ACC_N or PHI_1;
+    RSTC8_N <= MCFFF_N and MPON_N;
+    F2_1 : LS74_SINGLE port map(
+        PRE_N => L5_6,
+        CLR_N => RSTC8_N,
+        CLK   => '0',
+        D     => '0',
+        Q     => INTC8EN
+    );
+
+    -- MMU_2 @D-4:J3-3
+    INTC8ACC <= C8_FXX and INTC8EN;
+
+    -- MMU_2 @C-3:B2-8
+    CENROM1 <= PENIO_N and MC0XX_N;
+
+    -- MMU_2 @C-3:J3-11
+    -- Note: In the logic schematic, the output of J3-11 is labeled INTIO. It should be INTIO_N: this signal is active-low when the address is C00X-C01X
+    -- The ASIC schematic confirms that this should be INTIO_N.
+    INTIO_N <= MC00X_N and MC01X_N;
+end RTL;
