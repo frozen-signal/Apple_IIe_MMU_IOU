@@ -67,13 +67,14 @@ Note that all parts of the schematics associated with unselected values of these
 
 A hardware solution should take care not to break the tri-state capability of some of the pins of the MMU and IOU, for example by using a bus tranceiver without exporting a corresponding 'enable' signal from the VHDL.
 These are the tri-state pins and their corresponing enable signal:
+
 **MMU**:
 | Pin(s) | Enable signal |
 | --- | --- |
 | ORA0-7  | RA_ENABLE_N |
 | MD7  | MD7_ENABLE_N |
 
-**IOU***:
+**IOU**:
 | Pin(s) | Enable signal | Notes |
 | --- | --- | --- |
 | PIN_RESET_N  | FORCE_RESET_N_LOW | The IOU will force RESET_N low for ~35ms after power-on, then will let external components drive this signal. |
