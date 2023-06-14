@@ -25,7 +25,7 @@ end MMU_MD7;
 architecture RTL of MMU_MD7 is
     signal RC011_RC018_N : std_logic;
 begin
-    -- There is no definition in the MMU schematics for MD7. The one on IOU_2 at C-2 and D-2 has would have an incorrect enabling (STROBE) signal for the MMU.
+    -- There is no definition in the MMU schematics for MD7. The one on IOU_2 at C-2 and D-2 has would have an incorrect enabling signal for the MMU.
     -- The enabling has been based on "Understanding the Apple IIe" by Jim Sather
     -- and confirmed with the circuits around MD7 on the ASIC schematic of the MMU.
 

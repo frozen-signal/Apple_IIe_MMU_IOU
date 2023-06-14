@@ -12,12 +12,12 @@ entity MMU is
         INH_N  : in std_logic;
         DMA_N  : in std_logic;
 
-        ORA       : out std_logic_vector(7 downto 0);
+        ORA       : out std_logic_vector(7 downto 0); -- Tri-state
         EN80_N    : out std_logic;
         KBD_N     : out std_logic;
         ROMEN1_N  : out std_logic;
         ROMEN2_N  : out std_logic;
-        MD7       : out std_logic;
+        MD7       : out std_logic; -- Tri-state
         R_W_N_245 : out std_logic; -- Also called MD IN/OUT'
         CASEN_N   : out std_logic;
         CXXXOUT   : out std_logic
@@ -25,7 +25,7 @@ entity MMU is
 end MMU;
 
 architecture RTL of MMU is
-    component ADDR_DECODER is
+    component MMU_ADDR_DECODER is
         port (
             A     : in std_logic_vector(15 downto 0);
             PHI_0 : in std_logic;
@@ -105,7 +105,7 @@ architecture RTL of MMU is
             C00X_N      : in std_logic;
             R_W_N       : in std_logic;
             RESET_N     : in std_logic;
-            PHI         : in std_logic;
+            PHI_0       : in std_logic;
 
             EN80VID   : out std_logic;
             FLG1      : out std_logic;
@@ -146,7 +146,6 @@ architecture RTL of MMU is
             PHI_0  : in std_logic;
 
             RC01X_N   : out std_logic;
-            RAS_N     : out std_logic;
             P_PHI_0   : out std_logic;
             P_PHI_1   : out std_logic;
             Q3_PRAS_N : out std_logic
@@ -298,7 +297,7 @@ architecture RTL of MMU is
     component MMU_RA is
         port (
             A         : in std_logic_vector(15 downto 0);
-            RAS_N     : in std_logic;
+            PRAS_N    : in std_logic;
             P_PHI_0   : in std_logic;
             Q3_PRAS_N : in std_logic;
             DXXX_N    : in std_logic;
@@ -318,7 +317,7 @@ architecture RTL of MMU is
     signal BANK1, BANK2, RDRAM, RDROM, OUT_FST_ACC, WRPROT, OUT_WREN                             : std_logic;
     signal EN80VID, FLG1, FLG2, PENIO_N, ALTSTKZP, INTC300_N, INTC300                            : std_logic;
     signal PG2, HIRES                                                                            : std_logic;
-    signal RC01X_N, RAS_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                           : std_logic;
+    signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                                  : std_logic;
     signal SELMB_N                                                                               : std_logic;
     signal PCASEN_N, OCASEN_N                                                                    : std_logic;
     signal INTC8EN, INTC8ACC, INTC3ACC_N, CENROM1, INTIO_N                                       : std_logic;
@@ -331,7 +330,7 @@ begin
     PHI_1 <= not PHI_0;
     INH   <= not INH_N;
 
-    U_ADDR_DECODER : ADDR_DECODER port map(
+    U_ADDR_DECODER : MMU_ADDR_DECODER port map(
         A           => A,
         PHI_0       => PHI_0,
         CXXX_FXXX   => CXXX_FXXX,
@@ -402,7 +401,7 @@ begin
         C00X_N      => MC00X_N,
         R_W_N       => R_W_N,
         RESET_N     => MPON_N,
-        PHI         => PHI_0,
+        PHI_0       => PHI_0,
 
         EN80VID   => EN80VID,
         FLG1      => FLG1,
@@ -439,7 +438,6 @@ begin
         PHI_0  => PHI_0,
 
         RC01X_N   => RC01X_N,
-        RAS_N     => RAS_N,
         P_PHI_0   => P_PHI_0,
         P_PHI_1   => P_PHI_1,
         Q3_PRAS_N => Q3_PRAS_N
@@ -567,7 +565,7 @@ begin
 
     U_MMU_RA : MMU_RA port map(
         A         => A,
-        RAS_N     => RAS_N,
+        PRAS_N    => PRAS_N,
         P_PHI_0   => P_PHI_0,
         Q3_PRAS_N => Q3_PRAS_N,
         DXXX_N    => DXXX_N,

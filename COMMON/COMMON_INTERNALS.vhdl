@@ -11,7 +11,6 @@ entity COMMON_INTERNALS is
         PHI_0  : in std_logic;
 
         RC01X_N   : out std_logic;
-        RAS_N     : out std_logic;
         P_PHI_0   : out std_logic;
         P_PHI_1   : out std_logic;
         Q3_PRAS_N : out std_logic
@@ -30,7 +29,8 @@ begin
     RC01X_N <= (not R_W_N) or C01X_N;
 
     -- IOU_1 @A-4:J8-11
-    RAS_N <= PRAS_N; -- It's PRAS_N xor '0' in the schematics (?)
+    -- NOTE: In the schematics, RAS_N is PRAS_N xor '0'. Since RAS_N and PRAS_N always have the same value,
+    -- only PRAS_N has been used in this implementatsion
 
     -- IOU_1 @D-3:K9-3
     Q3_PRAS_N <= Q3 or PRAS_N;

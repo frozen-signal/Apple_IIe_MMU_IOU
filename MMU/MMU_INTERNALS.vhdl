@@ -58,7 +58,7 @@ begin
     CENROM1 <= PENIO_N and MC0XX_N;
 
     -- MMU_2 @C-3:J3-11
-    -- Note: In the logic schematic, the output of J3-11 is labeled INTIO. It should be INTIO_N: this signal is active-low when the address is C00X-C01X
+    -- Note: In the emulator schematic, the output of J3-11 is labeled INTIO. It should be INTIO_N: this signal is active-low when the address is C00X-C01X
     -- The ASIC schematic confirms that this should be INTIO_N.
     INTIO_N <= MC00X_N and MC01X_N;
 end RTL;

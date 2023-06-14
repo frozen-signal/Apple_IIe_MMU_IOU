@@ -12,7 +12,7 @@ architecture SOFT_SWITCHES_C00X_TEST of SOFT_SWITCHES_C00X_TB is
             C00X_N      : in std_logic;
             R_W_N       : in std_logic;
             RESET_N     : in std_logic;
-            PHI         : in std_logic;
+            PHI_0       : in std_logic;
 
             EN80VID   : out std_logic;
             FLG1      : out std_logic;
@@ -31,7 +31,7 @@ architecture SOFT_SWITCHES_C00X_TEST of SOFT_SWITCHES_C00X_TB is
     signal C00X_N  : std_logic;
     signal R_W_N   : std_logic;
     signal RESET_N : std_logic;
-    signal PHI     : std_logic;
+    signal PHI_0   : std_logic;
 
     signal EN80VID   : std_logic;
     signal FLG1      : std_logic;
@@ -50,7 +50,7 @@ begin
         C00X_N      => C00X_N,
         R_W_N       => R_W_N,
         RESET_N     => RESET_N,
-        PHI         => PHI,
+        PHI_0       => PHI_0,
 
         EN80VID   => EN80VID,
         FLG1      => FLG1,
@@ -64,7 +64,7 @@ begin
     );
 
     process begin
-        PHI <= '1';
+        PHI_0 <= '1';
 
         RESET_N <= '0';
         wait for 1 ns;
@@ -187,7 +187,7 @@ begin
         assert(S_80COL = '1') report "When address 111, value of S_80COL should not change" severity error;
         assert(PAYMAR = '1') report "When address 111, value of PAYMAR should take the value of D" severity error;
 
-        PHI <= '0';
+        PHI_0 <= '0';
         wait for 1 ns;
 
         A <= "000";

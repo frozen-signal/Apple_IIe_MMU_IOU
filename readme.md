@@ -29,6 +29,8 @@ Alternatively, all the sources can be analysed and elaborated with this command:
 ```bash
 ./make.sh
 ```
+(You can ignore warnings saying "... is neither an entity nor a configuration")
+
 And all testbenches can be simulated with this command:
 ```bash
 ./testall.sh
@@ -38,10 +40,11 @@ And all testbenches can be simulated with this command:
 * **COMMON**: Components common to the MMU and the IOU.
 * **TTL**: Implementation of a few TTL components used in the schematics.
 * **MMU**: Components that makes the MMU.
+* **IOU**: Components that makes the IOU.
 * **test**: Testing components, testbenches and test-cases; has the same structure as the base directory.
 
 # Notation in the code that references the schematics.
-Throughout the code, there are comments that refers to the logic schematics. The format is `[Schematics] @[Coords]:[Component]-[OutPin]`
+Throughout the code, there are comments that refers to the emulator schematics. The format is `[Schematics] @[Coords]:[Component]-[OutPin]`
 For example this:
 ```
     -- MMU_1 @B-1:L2-8
@@ -50,15 +53,37 @@ For example this:
 refers to the schematic named `MMU_1.jpg`, at a location near `B-1` and is the output pin `8` of the component `L2`.
 
 # Notes:
-## In development
-This project is in development; the IOU has not been completed yet and the MMU likely still contains problems.
-To facilitate debugging, the logic is exactly (except when noted otherwise in the sources) as seen in the schematics; simplification of the logic will be done later.
-
 ## Bonding options
 The schematics contains "hard-coded" values and bonding options. These are the values used:
 ```
 64K: HIGH
-VLC: LOW
+VLC: LOW (refers to "Very Low Cost"; the codename of the Apple IIc)
 INVIO': LOW
-DIANA: HIGH
+DIANA: HIGH ("Diana" was the codename for the Apple IIe)
 ```
+Note that all parts of the schematics associated with unselected values of these bonding options has been left out of of this implementation.
+
+## Hardware implementation
+
+A hardware solution should take care not to break the tri-state capability of some of the pins of the MMU and IOU, for example by using a bus tranceiver without exporting a corresponding 'enable' signal from the VHDL.
+These are the tri-state pins and their corresponing enable signal:
+**MMU**:
+| Pin(s) | Enable signal |
+| --- | --- |
+| ORA0-7  | RA_ENABLE_N |
+| MD7  | MD7_ENABLE_N |
+
+**IOU***:
+| Pin(s) | Enable signal | Notes |
+| --- | --- | --- |
+| PIN_RESET_N  | FORCE_RESET_N_LOW | The IOU will force RESET_N low for ~35ms after power-on, then will let external components drive this signal. |
+| ORA0-7  | RA_ENABLE_N | Depending on the timings, ORA will be an input, an output pin or tri-state. |
+| MD7  | MD7_ENABLE_N | |
+
+## In development
+This project is in active development; while all the components are tested, bear in mind that problems might still exist.
+To facilitate debugging, the code has been kept very close to the logic seen in the schematics, at the cost of efficiency and readibility. Simplifications of the logic will be done later.
+
+## License
+
+This repository is licensed under the Creative Commons Zero License. You are free to use, modify, distribute, and build upon the code in any way you see fit. The Creative Commons License grants you the freedom to adapt the code for personal, academic, commercial, or any other purposes without seeking explicit permission.

@@ -14,7 +14,6 @@ architecture COMMON_INTERNALS_TEST of COMMON_INTERNALS_TB is
             PHI_0  : in std_logic;
 
             RC01X_N   : out std_logic;
-            RAS_N     : out std_logic;
             P_PHI_0   : out std_logic;
             P_PHI_1   : out std_logic;
             Q3_PRAS_N : out std_logic
@@ -28,7 +27,6 @@ architecture COMMON_INTERNALS_TEST of COMMON_INTERNALS_TB is
     signal PHI_0  : std_logic;
 
     signal RC01X_N   : std_logic;
-    signal RAS_N     : std_logic;
     signal P_PHI_0   : std_logic;
     signal P_PHI_1   : std_logic;
     signal Q3_PRAS_N : std_logic;
@@ -42,7 +40,6 @@ begin
         PHI_0  => PHI_0,
 
         RC01X_N   => RC01X_N,
-        RAS_N     => RAS_N,
         P_PHI_0   => P_PHI_0,
         P_PHI_1   => P_PHI_1,
         Q3_PRAS_N => Q3_PRAS_N
@@ -69,15 +66,6 @@ begin
         C01X_N <= '1';
         wait for 1 ns;
         assert(RC01X_N = '1') report "When R_W_N HIGH, C01X_N HIGH; expect RC01X_N HIGH" severity error;
-
-        -- RAS_N ----------------------------------------------------------
-        PRAS_N <= '0';
-        wait for 1 ns;
-        assert(RAS_N = '0') report "When PRAS_N LOW; expect PRAS_N LOW" severity error;
-
-        PRAS_N <= '1';
-        wait for 1 ns;
-        assert(RAS_N = '1') report "When PRAS_N HIGH; expect PRAS_N HIGH" severity error;
 
         -- Q3_PRAS_N ------------------------------------------------------
         Q3     <= '0';

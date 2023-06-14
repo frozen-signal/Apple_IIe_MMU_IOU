@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity ADDR_DECODER is
+entity MMU_ADDR_DECODER is
     port (
         A     : in std_logic_vector(15 downto 0);
         PHI_0 : in std_logic;
@@ -17,6 +17,10 @@ entity ADDR_DECODER is
         E_FXXX_N  : out std_logic;
         D_FXXX    : out std_logic;
 
+        -- There is also an address decoder in the IOU. The addresses decoded by
+        -- the MMU are prefixed by 'M'. So, MC00X_N is C00X_N, but decoded by the MMU.
+        -- The main difference is that the IOU uses the latched address and the MMU uses
+        -- the address bus directly.
         MC0XX_N : out std_logic;
         MC3XX   : out std_logic;
         MC00X_N : out std_logic;
@@ -31,10 +35,10 @@ entity ADDR_DECODER is
         PHI_0_1XX_N : out std_logic;
         S_01XX_N    : out std_logic
     );
-end ADDR_DECODER;
+end MMU_ADDR_DECODER;
 
-architecture RTL of ADDR_DECODER is
-    -- S5 stands for Soft 5, a 'soft' 5v. Comes from the Apple II.	
+architecture RTL of MMU_ADDR_DECODER is
+    -- S5 stands for Soft 5, a 'soft' 5v. Comes from the Apple II.
     constant S5 : std_logic := '1'; -- Pull-up resistor see MMU_1 @B-4:A4-15
 
     component LS138 is
@@ -64,8 +68,7 @@ begin
     MC3XX   <= not((not CXXX) or A(11) or (A(10) or (not A(9)) or (not A(8))));
 
     -- MMU1 @C-3:J5
-    MMU_1_J5 : LS138
-    port map(
+    MMU_1_J5 : LS138 port map(
         A     => A(4),
         B     => A(5),
         C     => A(6),
@@ -77,7 +80,7 @@ begin
         Y2    => open,
         Y3    => open,
         Y4    => MC04X_N,
-        Y5    => MC05X_N, -- DIFFERENT THAN IN THE LOGIC SCHEMATICS; Used for the soft switches HIRES (C056/7) and PG2 (C054/5). See the ASIC schematics.
+        Y5    => MC05X_N, -- DIFFERENT THAN IN THE EMULATOR SCHEMATICS; Used for the soft switches HIRES (C056/7) and PG2 (C054/5). See the ASIC schematics.
         Y6    => MC06X_N,
         Y7    => MC07X_N
     );

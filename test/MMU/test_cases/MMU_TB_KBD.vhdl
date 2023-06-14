@@ -206,7 +206,7 @@ begin
         assert(ROMEN2_N = '1') report "expect ROMEN2_N HIGH" severity error;
         assert(MD7 = 'Z') report "expect MD7 Z" severity error;
         assert(R_W_N_245 = '0') report "expect R_W_N_245 LOW" severity error;
-        assert(CASEN_N = '0') report "expect CASEN_N LOW" severity error;
+        assert(CASEN_N = '1') report "expect CASEN_N HIGH" severity error;
         assert(CXXXOUT = '1') report "expect CXXXOUT HIGH" severity error;
 
         -- KBD' is gated by PHI_0
@@ -223,7 +223,7 @@ begin
         assert(ROMEN2_N = '1') report "expect ROMEN2_N HIGH" severity error;
         assert(MD7 = 'Z') report "expect MD7 Z" severity error;
         assert(R_W_N_245 = '0') report "expect R_W_N_245 LOW" severity error;
-        assert(CASEN_N = '0') report "expect CASEN_N LOW" severity error;
+        assert(CASEN_N = '1') report "expect CASEN_N HIGH" severity error;
         assert(CXXXOUT = '1') report "expect CXXXOUT HIGH" severity error;
         FINISHED <= '1';
         assert false report "Test done." severity note;

@@ -29,9 +29,9 @@ begin
     PCASEN_N <= (D2_6 nand B5_8) or CXXX;
 
     -- MMU_1 @D-1:E2-3
-    -- Not in the logic schematics: In the ASIC, OCASEN is forced LOW on MPON. Here that means OCASEN_N is forced HIGH on MPON_N
+    -- Not in the emulator schematics: In the ASIC, OCASEN is forced LOW on MPON. Here that means OCASEN_N is forced HIGH on MPON_N
     OCASEN_N <= (PCASEN_N or SELMB_N) or INH or (not MPON_N);
 
     -- MMU_1 @B-1:L2-8
-    CASEN_N <= OCASEN_N and PHI_0;
+    CASEN_N <= OCASEN_N; -- In the schematics, CASEN_N is: OCASEN_N and (PHI_0 or 64K), but 64K is constant (HIGH)
 end RTL;

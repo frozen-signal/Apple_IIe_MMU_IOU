@@ -794,7 +794,7 @@ begin
         A     <= x"0000";
         wait until falling_edge(PHI_0);
         wait until falling_edge(CLK_14M);
-        assert(CASEN_N = '0') report "expect CASEN_N LOW" severity error;
+        assert(CASEN_N = '1') report "expect CASEN_N HIGH" severity error;
         assert(EN80_N = '1') report "expect EN80_N HIGH" severity error;
         assert(ROMEN1_N = '1') report "expect ROMEN1_N HIGH" severity error;
         assert(ROMEN2_N = '1') report "expect ROMEN2_N HIGH" severity error;

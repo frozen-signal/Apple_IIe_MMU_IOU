@@ -13,5 +13,6 @@ end MMU_KBD;
 
 architecture RTL of MMU_KBD is
 begin
+    -- MMU_1 @D-2:N4-6
     KBD_N <= INTIO_N or (not R_W_N) or PHI_1;
 end RTL;

@@ -1,11 +1,12 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity ADDR_DECODER_TB is
+entity MMU_ADDR_DECODER_TB is
     -- empty
-end ADDR_DECODER_TB;
-architecture ADDR_DECODER_TEST of ADDR_DECODER_TB is
-    component ADDR_DECODER is
+end MMU_ADDR_DECODER_TB;
+
+architecture MMU_ADDR_DECODER_TEST of MMU_ADDR_DECODER_TB is
+    component MMU_ADDR_DECODER is
         port (
             A     : in std_logic_vector(15 downto 0);
             PHI_0 : in std_logic;
@@ -43,7 +44,7 @@ architecture ADDR_DECODER_TEST of ADDR_DECODER_TB is
     PHI_0_7XX, PHI_0_1XX_N, S_01XX_N : std_logic;
 
 begin
-    dut : ADDR_DECODER port map(
+    dut : MMU_ADDR_DECODER port map(
         A           => A,
         PHI_0       => PHI_0,
         CXXX_FXXX   => CXXX_FXXX,
@@ -169,7 +170,7 @@ begin
         assert(FXXX_N = '1') report "When A is C000 expect FXXX_N HIGH" severity error;
         assert(EXXX_N = '1') report "When A is C000 expect EXXX_N HIGH" severity error;
         assert(DXXX_N = '1') report "When A is C000 expect DXXX_N HIGH" severity error;
-        assert(CXXX = '1') report "When A is C000 expect CXXX HIGH" severity error;
+        assert(CXXX = '1') report "When A is C000 expect CXXX LOW" severity error;
         assert(C8_FXX = '0') report "When A is C000 expect C8_FXX LOW" severity error;
         assert(C8_FXX_N = '1') report "When A is C000 expect C8_FXX_N HIGH" severity error;
         assert(C0_7XX_N = '0') report "When A is C000 expect C0_7XX_N LOW" severity error;
@@ -280,7 +281,7 @@ begin
         wait for 1 ns;
         assert(C8_FXX = '1') report "When A is CFFF expect C8_FXX HIGH" severity error;
         assert(C8_FXX_N = '0') report "When A is CFFF expect C8_FXX_N LOW" severity error;
-        assert(C0_7XX_N = '1') report "When A is CFFF expect C0_7XX_N HIGH" severity error;
+        assert(C0_7XX_N = '1') report "When A is CFFF expect C0_7XX_N  LOW" severity error;
         assert(MC0XX_N = '1') report "When A is CFFF expect MC0XX_N HIGH" severity error;
         assert(MC3XX = '0') report "When A is CFFF expect MC3XX LOW" severity error;
         assert(MC00X_N = '1') report "When A is CFFF expect MC00X_N HIGH" severity error;
@@ -307,4 +308,4 @@ begin
         wait;
 
     end process;
-end ADDR_DECODER_TEST;
+end MMU_ADDR_DECODER_TEST;
