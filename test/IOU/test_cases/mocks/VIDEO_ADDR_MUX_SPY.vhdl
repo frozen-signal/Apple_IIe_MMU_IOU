@@ -42,6 +42,9 @@ architecture SPY of VIDEO_ADDR_MUX_SPY is
             RA4, RA5, RA6, RA7 : out std_logic
         );
     end component;
+
+    signal RA0_INT, RA1_INT, RA2_INT, RA3_INT, RA4_INT, RA5_INT, RA6_INT, RA7_INT : std_logic;
+    signal RA_ENABLE_N_INT                                                        : std_logic;
 begin
     U_VIDEO_ADDR_MUX : VIDEO_ADDR_MUX port map(
         PG2_N       => PG2_N,
@@ -68,25 +71,35 @@ begin
         ZC          => ZC,
         ZD          => ZD,
         ZE          => ZE,
-        RA_ENABLE_N => RA_ENABLE_N,
-        RA0         => RA0,
-        RA1         => RA1,
-        RA2         => RA2,
-        RA3         => RA3,
-        RA4         => RA4,
-        RA5         => RA5,
-        RA6         => RA6,
-        RA7         => RA7
+        RA_ENABLE_N => RA_ENABLE_N_INT,
+        RA0         => RA0_INT,
+        RA1         => RA1_INT,
+        RA2         => RA2_INT,
+        RA3         => RA3_INT,
+        RA4         => RA4_INT,
+        RA5         => RA5_INT,
+        RA6         => RA6_INT,
+        RA7         => RA7_INT
     );
 
-    TB_RA_ENABLE_N <= RA_ENABLE_N;
-    TB_MUX_RA0     <= RA0;
-    TB_MUX_RA1     <= RA1;
-    TB_MUX_RA2     <= RA2;
-    TB_MUX_RA3     <= RA3;
-    TB_MUX_RA4     <= RA4;
-    TB_MUX_RA5     <= RA5;
-    TB_MUX_RA6     <= RA6;
-    TB_MUX_RA7     <= RA7;
+    TB_RA_ENABLE_N <= RA_ENABLE_N_INT;
+    TB_MUX_RA0     <= RA0_INT;
+    TB_MUX_RA1     <= RA1_INT;
+    TB_MUX_RA2     <= RA2_INT;
+    TB_MUX_RA3     <= RA3_INT;
+    TB_MUX_RA4     <= RA4_INT;
+    TB_MUX_RA5     <= RA5_INT;
+    TB_MUX_RA6     <= RA6_INT;
+    TB_MUX_RA7     <= RA7_INT;
+
+    RA_ENABLE_N <= RA_ENABLE_N_INT;
+    RA0         <= RA0_INT;
+    RA1         <= RA1_INT;
+    RA2         <= RA2_INT;
+    RA3         <= RA3_INT;
+    RA4         <= RA4_INT;
+    RA5         <= RA5_INT;
+    RA6         <= RA6_INT;
+    RA7         <= RA7_INT;
 
 end SPY;

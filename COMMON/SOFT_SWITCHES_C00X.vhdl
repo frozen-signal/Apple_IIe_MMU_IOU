@@ -33,8 +33,8 @@ architecture RTL of SOFT_SWITCHES_C00X is
             C_N : in std_logic;
             E_N : in std_logic;
 
-            D          : in std_logic;
-            A0, A1, A2 : in std_logic;
+            D    : in std_logic;
+            ADDR : in std_logic_vector(2 downto 0);
 
             Q0, Q1, Q2, Q3,
             Q4, Q5, Q6, Q7 : out std_logic
@@ -47,20 +47,18 @@ begin
     ENABLE_N <= R_W_N or C00X_N or (not PHI_0);
 
     SOFT_SWITCHES_LATCH : LATCH_9334 port map(
-        C_N => RESET_N,
-        E_N => ENABLE_N,
-        D   => D,
-        A0  => SWITCH_ADDR(0),
-        A1  => SWITCH_ADDR(1),
-        A2  => SWITCH_ADDR(2),
-        Q0  => EN80VID,  -- Also called 80STORE,  RESET: WC000, SET: WC001, READ: RC018
-        Q1  => FLG1,     -- Also called RAMRD     RESET: WC002, SET: WC003, READ: RC013
-        Q2  => FLG2,     -- Also called RAMWRT    RESET: WC004, SET: WC005, READ: RC014
-        Q3  => PENIO_N,  -- Also called INTCXROM  RESET: WC006, SET: WC007, READ: RC015
-        Q4  => ALTSTKZP, -- Also called ALTZP     RESET: WC008, SET: WC009, READ: RC016
-        Q5  => Q5_VALUE, -- Also called SLOTC3ROM RESET: WC00A, SET: WC00B, READ: RC017
-        Q6  => S_80COL,  --                       RESET: WC00C, SET: WC00D, READ: RC01F
-        Q7  => PAYMAR    -- Also called ALTCHRSET RESET: WC00E, SET: WC00F, READ: RC01E
+        C_N  => RESET_N,
+        E_N  => ENABLE_N,
+        D    => D,
+        ADDR => SWITCH_ADDR,
+        Q0   => EN80VID,  -- Also called 80STORE,  RESET: WC000, SET: WC001, READ: RC018
+        Q1   => FLG1,     -- Also called RAMRD     RESET: WC002, SET: WC003, READ: RC013
+        Q2   => FLG2,     -- Also called RAMWRT    RESET: WC004, SET: WC005, READ: RC014
+        Q3   => PENIO_N,  -- Also called INTCXROM  RESET: WC006, SET: WC007, READ: RC015
+        Q4   => ALTSTKZP, -- Also called ALTZP     RESET: WC008, SET: WC009, READ: RC016
+        Q5   => Q5_VALUE, -- Also called SLOTC3ROM RESET: WC00A, SET: WC00B, READ: RC017
+        Q6   => S_80COL,  --                       RESET: WC00C, SET: WC00D, READ: RC01F
+        Q7   => PAYMAR    -- Also called ALTCHRSET RESET: WC00E, SET: WC00F, READ: RC01E
     );
 
     INTC300_N <= Q5_VALUE;

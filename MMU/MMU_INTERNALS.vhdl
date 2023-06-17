@@ -34,25 +34,26 @@ architecture RTL of MMU_INTERNALS is
         );
     end component;
 
-    signal L5_6, RSTC8_N : std_logic;
+    signal L5_6, RSTC8_N               : std_logic;
+    signal INTC3ACC_N_INT, INTC8EN_INT : std_logic;
 begin
 
     -- MMU_2 @B-4:C2-3
-    INTC3ACC_N <= INTC300 nand MC3XX;
+    INTC3ACC_N_INT <= INTC300 nand MC3XX;
 
     -- MMU_2 @C-4:F2-5
-    L5_6    <= INTC3ACC_N or PHI_1;
+    L5_6    <= INTC3ACC_N_INT or PHI_1;
     RSTC8_N <= MCFFF_N and MPON_N;
     F2_1 : LS74_SINGLE port map(
         PRE_N => L5_6,
         CLR_N => RSTC8_N,
         CLK   => '0',
         D     => '0',
-        Q     => INTC8EN
+        Q     => INTC8EN_INT
     );
 
     -- MMU_2 @D-4:J3-3
-    INTC8ACC <= C8_FXX and INTC8EN;
+    INTC8ACC <= C8_FXX and INTC8EN_INT;
 
     -- MMU_2 @C-3:B2-8
     CENROM1 <= PENIO_N and MC0XX_N;
@@ -61,4 +62,7 @@ begin
     -- Note: In the emulator schematic, the output of J3-11 is labeled INTIO. It should be INTIO_N: this signal is active-low when the address is C00X-C01X
     -- The ASIC schematic confirms that this should be INTIO_N.
     INTIO_N <= MC00X_N and MC01X_N;
+
+    INTC3ACC_N <= INTC3ACC_N_INT;
+    INTC8EN    <= INTC8EN_INT;
 end RTL;

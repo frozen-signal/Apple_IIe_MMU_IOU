@@ -24,19 +24,22 @@ end VIDEO_SCANNER;
 -- more efficient and simpler than 6x LS161s chained with a ripple carry overflow.
 architecture RTL of VIDEO_SCANNER is
     signal counters : unsigned(23 downto 0) := (others => '0');
+
+    signal HPE_N_INT, VA_INT, TC_INT : std_logic;
 begin
     process (P_PHI_2, POC_N)
     begin
         if (POC_N = '0') then
             counters <= "111111110000000000000000";
         elsif (rising_edge(P_PHI_2)) then
-            if (HPE_N = '0') then
+            if (HPE_N_INT = '0') then
                 counters(6 downto 0) <= "1000000";
-                counters(7)          <= VA;
-            else counters        <= counters + 1;
+                counters(7)          <= VA_INT;
+            else
+                counters <= counters + 1;
             end if;
 
-            if (TC = '1') then
+            if (TC_INT = '1') then
                 counters(8)  <= NTSC;
                 counters(9)  <= '0';
                 counters(10) <= '1';
@@ -50,25 +53,29 @@ begin
 
     end process;
 
-    H0    <= counters(0);
-    H1    <= counters(1);
-    H2    <= counters(2);
-    H3    <= counters(3);
-    H4    <= counters(4);
-    H5    <= counters(5);
-    HPE_N <= counters(6);
-    VA    <= counters(7);
-    VB    <= counters(8);
-    VC    <= counters(9);
-    V0    <= counters(10);
-    V1    <= counters(11);
-    V2    <= counters(12);
-    V3    <= counters(13);
-    V4    <= counters(14);
-    V5    <= counters(15);
-    PAKST <= counters(17);
-    FLASH <= counters(20);
+    H0        <= counters(0);
+    H1        <= counters(1);
+    H2        <= counters(2);
+    H3        <= counters(3);
+    H4        <= counters(4);
+    H5        <= counters(5);
+    HPE_N_INT <= counters(6);
+    VA_INT    <= counters(7);
+    VB        <= counters(8);
+    VC        <= counters(9);
+    V0        <= counters(10);
+    V1        <= counters(11);
+    V2        <= counters(12);
+    V3        <= counters(13);
+    V4        <= counters(14);
+    V5        <= counters(15);
+    PAKST     <= counters(17);
+    FLASH     <= counters(20);
 
-    TC    <= '1' when counters(15 downto 0) = "1111111111111111" else '0';
-    TC14S <= '1' when counters(19 downto 0) = "11111111111111111111" else '0';
+    TC_INT <= '1' when counters(15 downto 0) = "1111111111111111" else '0';
+    TC14S  <= '1' when counters(19 downto 0) = "11111111111111111111" else '0';
+
+    HPE_N <= HPE_N_INT;
+    VA    <= VA_INT;
+    TC    <= TC_INT;
 end RTL;

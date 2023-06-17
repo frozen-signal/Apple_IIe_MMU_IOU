@@ -10,11 +10,12 @@ end MMU_TB_MPON;
 architecture MMU_TEST_MPON of MMU_TB_MPON is
     component HAL_TIMING_MOCK is
         port (
-            CLK_14M  : out std_logic;
+            FINISHED : in std_logic;
+
+            CLK_14M  : inout std_logic;
             PHI_0    : out std_logic;
             Q3       : out std_logic;
-            RAS_N    : out std_logic;
-            FINISHED : out std_logic
+            RAS_N    : out std_logic
         );
     end component;
 
@@ -64,11 +65,11 @@ architecture MMU_TEST_MPON of MMU_TB_MPON is
 
 begin
     hal_mock : HAL_TIMING_MOCK port map(
+        FINISHED => FINISHED,
         CLK_14M  => CLK_14M,
         PHI_0    => PHI_0,
         Q3       => Q3,
-        RAS_N    => PRAS_N,
-        FINISHED => FINISHED
+        RAS_N    => PRAS_N
     );
 
     c_mmu : MMU port map(

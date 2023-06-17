@@ -103,8 +103,6 @@ architecture RTL of IOU is
             H2, H3, H4, H5         : in std_logic;
             NTSC                   : in std_logic;
             ITEXT                  : in std_logic;
-            P_PHI_0                : in std_logic;
-            PRAS_N                 : in std_logic;
             R_W_N                  : in std_logic;
             PGR_TXT_N              : in std_logic;
             HIRES                  : in std_logic;
@@ -113,8 +111,8 @@ architecture RTL of IOU is
             LA0, LA1, LA2, LA3     : in std_logic;
             IKSTRB                 : in std_logic;
             IAKD                   : in std_logic;
+            P_PHI_2                : in std_logic;
 
-            P_PHI_2   : out std_logic;
             HIRESEN_N : out std_logic;
             C040_7_N  : out std_logic;
             HBL       : out std_logic;
@@ -295,23 +293,23 @@ architecture RTL of IOU is
 
     component IOU_MD7 is
         port (
-            Q3                 : in std_logic;
-            PHI_0              : in std_logic;
-            PRAS_N             : in std_logic;
-            KEYLE              : in std_logic;
-            POC_N              : in std_logic;
-            CLRKEY_N           : in std_logic;
-            RC00X_N            : in std_logic;
-            RC01X_N            : in std_logic;
-            LA3, LA2, LA1, LA0 : in std_logic;
-            AKD                : in std_logic;
-            VBL_N              : in std_logic;
-            ITEXT              : in std_logic;
-            MIX                : in std_logic;
-            PG2                : in std_logic;
-            HIRES              : in std_logic;
-            PAYMAR             : in std_logic;
-            S_80COL            : in std_logic;
+            Q3       : in std_logic;
+            PHI_0    : in std_logic;
+            PRAS_N   : in std_logic;
+            KEYLE    : in std_logic;
+            POC_N    : in std_logic;
+            CLRKEY_N : in std_logic;
+            RC00X_N  : in std_logic;
+            RC01X_N  : in std_logic;
+            LA       : in std_logic_vector(3 downto 0);
+            AKD      : in std_logic;
+            VBL_N    : in std_logic;
+            ITEXT    : in std_logic;
+            MIX      : in std_logic;
+            PG2      : in std_logic;
+            HIRES    : in std_logic;
+            PAYMAR   : in std_logic;
+            S_80COL  : in std_logic;
 
             MD7_ENABLE_N : out std_logic;
             MD7          : out std_logic
@@ -327,13 +325,17 @@ architecture RTL of IOU is
     signal E0, E1, E2, E3                                                                         : std_logic;
     signal LA0, LA1, LA2, LA3, LA4, LA5, LA7                                                      : std_logic;
     signal C00X_N, C01X_N, C02X_N, C03X_N, C04X_N, C05X_N, C07X_N, RC00X_N                        : std_logic;
-    signal ITEXT, MIX, PG2, HIRES                                                                 : std_logic;
+    signal ITEXT, MIX, PG2, PG2_N, HIRES                                                          : std_logic;
     signal MUX_RA0, MUX_RA1, MUX_RA2, MUX_RA3, MUX_RA4, MUX_RA5, MUX_RA6, MUX_RA7                 : std_logic;
-    signal IN_RA0, IN_RA1, IN_RA2, IN_RA3, IN_RA4, IN_RA5, IN_RA6, IN_RA7                         : std_logic;
+    signal IN_RA0, IN_RA1, IN_RA2, IN_RA3, IN_RA4, IN_RA5, IN_RA6                                 : std_logic;
     signal ZA, ZB, ZC, ZD, ZE, RA_ENABLE_N                                                        : std_logic;
-    signal MD7_ENABLE_N, UNGATED_MD7, PGR_TXT_N, PCLRGAT, PSYNC_N, POC_N, AKSTB,
-    D_KSTRB_N, STRBLE_N, CLR_DELAY_N, SET_DELAY                 : std_logic;
-    signal KEYLE, CLRKEY_N, AUTOREPEAT_DELAY, AUTOREPEAT_ACTIVE : std_logic;
+    signal MD7_ENABLE_N, UNGATED_MD7, PGR_TXT_N, PCLRGAT, PSYNC_N, POC_N, AKSTB                   : std_logic;
+    signal D_KSTRB_N, STRBLE_N, CLR_DELAY_N, SET_DELAY                                            : std_logic;
+    signal KEYLE, CLRKEY_N, AUTOREPEAT_DELAY, AUTOREPEAT_ACTIVE                                   : std_logic;
+    signal LA_ADDR_3_0                                                                            : std_logic_vector(3 downto 0);
+    signal LA_ADDR_3_1                                                                            : std_logic_vector(2 downto 0);
+
+    signal H0_INT, LGR_TXT_N_INT, ORA7_INT : std_logic;
 begin
 
     U_COMMON_INTERNALS : COMMON_INTERNALS port map(
@@ -388,12 +390,13 @@ begin
         H3      => H3,
         H2      => H2,
         H1      => H1,
-        H0      => H0,
+        H0      => H0_INT,
         PAKST   => PAKST,
         TC      => TC,
         TC14S   => TC14S,
         FLASH   => FLASH
     );
+    H0 <= H0_INT;
 
     U_IOU_INTERNALS : IOU_INTERNALS port map(
         V0        => V0,
@@ -409,8 +412,6 @@ begin
         H5        => H5,
         NTSC      => NTSC,
         ITEXT     => ITEXT,
-        P_PHI_0   => P_PHI_0,
-        PRAS_N    => PRAS_N,
         R_W_N     => R_W_N,
         PGR_TXT_N => PGR_TXT_N,
         HIRES     => HIRES,
@@ -439,7 +440,7 @@ begin
 
     U_SOFT_SWITCHES_C00X : SOFT_SWITCHES_C00X port map(
         D           => LA0,
-        SWITCH_ADDR => LA3 & LA2 & LA1,
+        SWITCH_ADDR => LA_ADDR_3_1,
         C00X_N      => C00X_N,
         R_W_N       => R_W_N,
         RESET_N     => RESET_N,
@@ -462,7 +463,7 @@ begin
         VA        => VA,
         VB        => VB,
         VC        => VC,
-        H0        => H0,
+        H0        => H0_INT,
         HIRESEN_N => HIRESEN_N,
         ITEXT     => ITEXT,
         MIX       => MIX,
@@ -470,8 +471,9 @@ begin
         SEGA      => SEGA,
         SEGB      => SEGB,
         SEGC      => SEGC,
-        LGR_TXT_N => LGR_TXT_N
+        LGR_TXT_N => LGR_TXT_N_INT
     );
+    LGR_TXT_N <= LGR_TXT_N_INT;
 
     U_VIDEO_GENERATOR : VIDEO_GENERATOR port map(
         P_PHI_1   => P_PHI_1,
@@ -482,7 +484,7 @@ begin
         V4        => V4,
         VID6      => VID6,
         VID7      => VID7,
-        LGR_TXT_N => LGR_TXT_N,
+        LGR_TXT_N => LGR_TXT_N_INT,
         PAYMAR    => PAYMAR,
         FLASH     => FLASH,
         PCLRGAT   => PCLRGAT,
@@ -504,7 +506,6 @@ begin
     IN_RA4 <= ORA4;
     IN_RA5 <= ORA5;
     IN_RA6 <= ORA6;
-    IN_RA7 <= ORA7;
     U_VIDEO_ADDR_LATCH : VIDEO_ADDR_LATCH port map(
         P_PHI_2 => P_PHI_2,
         RA0     => IN_RA0,
@@ -522,7 +523,8 @@ begin
         LA5     => LA5,
         LA7     => LA7
     );
-
+    LA_ADDR_3_1 <= LA3 & LA2 & LA1;
+    LA_ADDR_3_0 <= LA_ADDR_3_1 & LA0;
     U_IOU_ADDR_DECODER : IOU_ADDR_DECODER port map(
         C0XX_N => C0XX_N,
         LA7    => LA7,
@@ -541,7 +543,7 @@ begin
 
     U_SOFT_SWITCHES_C05X : SOFT_SWITCHES_C05X port map(
         D           => LA0,
-        SWITCH_ADDR => LA3 & LA2 & LA1,
+        SWITCH_ADDR => LA_ADDR_3_1,
         C05X_N      => C05X_N,
         RESET_N     => RESET_N,
         ITEXT       => ITEXT,
@@ -554,8 +556,9 @@ begin
         AN3         => AN3
     );
 
+    PG2_N <= not PG2;
     U_VIDEO_ADDR_MUX : VIDEO_ADDR_MUX port map(
-        PG2_N       => not PG2,
+        PG2_N       => PG2_N,
         EN80VID     => EN80VID,
         HIRESEN_N   => HIRESEN_N,
         VA          => VA,
@@ -567,7 +570,7 @@ begin
         V0          => V0,
         V1          => V1,
         V2          => V2,
-        H0          => H0,
+        H0          => H0_INT,
         H1          => H1,
         H2          => H2,
         E0          => E0,
@@ -644,10 +647,7 @@ begin
         CLRKEY_N     => CLRKEY_N,
         RC00X_N      => RC00X_N,
         RC01X_N      => RC01X_N,
-        LA3          => LA3,
-        LA2          => LA2,
-        LA1          => LA1,
-        LA0          => LA0,
+        LA           => LA_ADDR_3_0,
         AKD          => AKD,
         VBL_N        => VBL_N,
         ITEXT        => ITEXT,

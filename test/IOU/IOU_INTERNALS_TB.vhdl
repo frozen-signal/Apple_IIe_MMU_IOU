@@ -13,8 +13,6 @@ architecture IOU_INTERNALS_TEST of IOU_INTERNALS_TB is
             H2, H3, H4, H5         : in std_logic;
             NTSC                   : in std_logic;
             ITEXT                  : in std_logic;
-            P_PHI_0                : in std_logic;
-            PRAS_N                 : in std_logic;
             R_W_N                  : in std_logic;
             PGR_TXT_N              : in std_logic;
             HIRES                  : in std_logic;
@@ -23,8 +21,8 @@ architecture IOU_INTERNALS_TEST of IOU_INTERNALS_TB is
             LA0, LA1, LA2, LA3     : in std_logic;
             IKSTRB                 : in std_logic;
             IAKD                   : in std_logic;
+            P_PHI_2   : in std_logic;
 
-            P_PHI_2   : out std_logic;
             HIRESEN_N : out std_logic;
             C040_7_N  : out std_logic;
             HBL       : out std_logic;
@@ -45,8 +43,6 @@ architecture IOU_INTERNALS_TEST of IOU_INTERNALS_TB is
     signal H2, H3, H4, H5         : std_logic;
     signal NTSC                   : std_logic;
     signal ITEXT                  : std_logic;
-    signal P_PHI_0                : std_logic;
-    signal PRAS_N                 : std_logic;
     signal R_W_N                  : std_logic;
     signal PGR_TXT_N              : std_logic;
     signal HIRES                  : std_logic;
@@ -84,8 +80,6 @@ begin
         H5        => H5,
         NTSC      => NTSC,
         ITEXT     => ITEXT,
-        P_PHI_0   => P_PHI_0,
-        PRAS_N    => PRAS_N,
         R_W_N     => R_W_N,
         PGR_TXT_N => PGR_TXT_N,
         HIRES     => HIRES,
@@ -327,27 +321,6 @@ begin
         wait for 1 ns;
         assert(PSYNC_N = '0') report "expect PSYNC_N to be HIGH" severity error;
 
-        -- P_PHI_2 ----------------------------------------
-        P_PHI_0 <= '0';
-        PRAS_N  <= '0';
-        wait for 1 ns;
-        assert(P_PHI_2 = '0') report "expect P_PHI_2 to be LOW" severity error;
-
-        P_PHI_0 <= '1';
-        PRAS_N  <= '0';
-        wait for 1 ns;
-        assert(P_PHI_2 = '0') report "expect P_PHI_2 to be LOW" severity error;
-
-        P_PHI_0 <= '0';
-        PRAS_N  <= '1';
-        wait for 1 ns;
-        assert(P_PHI_2 = '0') report "expect P_PHI_2 to be LOW" severity error;
-
-        P_PHI_0 <= '1';
-        PRAS_N  <= '1';
-        wait for 1 ns;
-        assert(P_PHI_2 = '1') report "expect P_PHI_2 to be HIGH" severity error;
-
         -- HIRESEN_N --------------------------------------
         PGR_TXT_N <= '0';
         HIRES     <= '0';
@@ -395,38 +368,43 @@ begin
         assert(C040_7_N = '0') report "expect C040_7_N to be LOW" severity error;
 
         -- IAKD & IKSTRB ----------------------------------
-        -- Shift a 1, then a 0 through AKD & IKSTRB
-
-        P_PHI_0 <= '0';
-        PRAS_N  <= '0';
+        -- Preload shift registers with 'U'
+        IAKD    <= 'U';
+        IKSTRB  <= 'U';
+        P_PHI_2 <= '0';
+        wait for 1 ns;
+        P_PHI_2 <= '1';
+        wait for 1 ns;
+        P_PHI_2 <= '0';
+        wait for 1 ns;
+        P_PHI_2 <= '1';
         wait for 1 ns;
 
-        P_PHI_0 <= '1';
-        PRAS_N  <= '1';
+        -- Shift a 1, then a 0 through AKD & IKSTRB
+        P_PHI_2 <= '0';
+        wait for 1 ns;
+
+        P_PHI_2 <= '1';
         IAKD    <= '1';
         IKSTRB  <= '1';
         wait for 1 ns;
         assert(AKD = 'U') report "expect AKD to be undefined" severity error;
         assert(KSTRB = 'U') report "expect KSTRB to be undefined" severity error;
 
-        P_PHI_0 <= '0';
-        PRAS_N  <= '0';
+        P_PHI_2 <= '0';
         wait for 1 ns;
 
-        P_PHI_0 <= '1';
-        PRAS_N  <= '1';
+        P_PHI_2 <= '1';
         IAKD    <= '0';
         IKSTRB  <= '0';
         wait for 1 ns;
         assert(AKD = '1') report "expect AKD to be HIGH" severity error;
         assert(KSTRB = '1') report "expect KSTRB to be HIGH" severity error;
 
-        P_PHI_0 <= '0';
-        PRAS_N  <= '0';
+        P_PHI_2 <= '0';
         wait for 1 ns;
 
-        P_PHI_0 <= '1';
-        PRAS_N  <= '1';
+        P_PHI_2 <= '1';
         IAKD    <= '0';
         IKSTRB  <= '0';
         wait for 1 ns;

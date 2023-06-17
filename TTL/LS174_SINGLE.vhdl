@@ -11,7 +11,7 @@ entity LS174_SINGLE is
     );
 end LS174_SINGLE;
 
-architecture BEHAVIORAL of LS174_SINGLE is
+architecture RTL of LS174_SINGLE is
 begin
     process (CLK, CLR_N)
     begin
@@ -23,4 +23,4 @@ begin
             Q_N <= not D;
         end if;
     end process;
-end BEHAVIORAL;
+end RTL;

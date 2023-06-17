@@ -35,22 +35,25 @@ architecture RTL of IOU_KEYBOARD is
     signal N8_4     : std_logic;
     signal N9_SHIFT : std_logic_vector(2 downto 0);
     signal N9_7     : std_logic;
+
+    signal AKSTB_INT, D_KSTRB_N_INT, STRBLE_N_INT, CLR_DELAY_N_INT, SET_DELAY_INT : std_logic;
+    signal AUTOREPEAT_DELAY_INT, AUTOREPEAT_ACTIVE_INT                            : std_logic;
 begin
     -- IOU_1 @C-3:M8
     process (P_PHI_2)
     begin
         if (rising_edge(P_PHI_2)) then
-            M8_3      <= not PAKST;
-            WNDW_N    <= not BL_N;
-            D_KSTRB_N <= not KSTRB;
+            M8_3          <= not PAKST;
+            WNDW_N        <= not BL_N;
+            D_KSTRB_N_INT <= not KSTRB;
         end if;
     end process;
-    AKSTB <= PAKST and M8_3; -- AKSTB is the Autorepeat Key STroBe
+    AKSTB_INT <= PAKST and M8_3; -- AKSTB is the Autorepeat Key STroBe
 
     -- IOU_2 @D-2, D-1, C-2, C-1
-    STRBLE_N <= KSTRB nand D_KSTRB_N; -- STRBLE_N will be LOW when KSTRB transitions from LOW to HIGH.
-    STRBLE   <= not STRBLE_N;
-    AKD_N    <= not AKD;
+    STRBLE_N_INT <= KSTRB nand D_KSTRB_N_INT; -- STRBLE_N will be LOW when KSTRB transitions from LOW to HIGH.
+    STRBLE       <= not STRBLE_N_INT;
+    AKD_N        <= not AKD;
 
     -- IOU_2 @D-3:M3-6
     CLRKEY_N <= (RC01X_N or LA0 or LA1 or LA2 or LA3) and (R_W_N or C01X_N);
@@ -59,34 +62,42 @@ begin
     process (AKD_N, STRBLE)
     begin
         if (AKD_N = '1') then
-            SET_DELAY <= '0';
+            SET_DELAY_INT <= '0';
         elsif (STRBLE = '1') then
-            SET_DELAY <= '1';
+            SET_DELAY_INT <= '1';
         end if;
     end process;
 
     -- IOU_2 @D-1:N9
     -- The flip-flops used in the schematics is implemented here as a 3-bit shift register
-    CLR_DELAY_N <= AKD and STRBLE_N;
-    process (CTC14S, CLR_DELAY_N)
+    CLR_DELAY_N_INT <= AKD and STRBLE_N_INT;
+    process (CTC14S, CLR_DELAY_N_INT)
     begin
-        if (CLR_DELAY_N = '0') then
+        if (CLR_DELAY_N_INT = '0') then
             N9_SHIFT <= "000";
         elsif (rising_edge(CTC14S)) then
             N9_SHIFT(2 downto 1) <= N9_SHIFT(1 downto 0);
-            N9_SHIFT(0)          <= SET_DELAY;
+            N9_SHIFT(0)          <= SET_DELAY_INT;
         end if;
     end process;
-    AUTOREPEAT_DELAY <= N9_SHIFT(2);
+    AUTOREPEAT_DELAY_INT <= N9_SHIFT(2);
 
     -- IOU_2 @D-4:P7
-    process (STRBLE, AKD_N, AUTOREPEAT_DELAY)
+    process (STRBLE, AKD_N, AUTOREPEAT_DELAY_INT)
     begin
         if ((AKD_N or STRBLE) = '1') then
-            AUTOREPEAT_ACTIVE <= '0';
-        elsif (AUTOREPEAT_DELAY = '1') then
-            AUTOREPEAT_ACTIVE <= '1';
+            AUTOREPEAT_ACTIVE_INT <= '0';
+        elsif (AUTOREPEAT_DELAY_INT = '1') then
+            AUTOREPEAT_ACTIVE_INT <= '1';
         end if;
     end process;
-    KEYLE <= (AKSTB and AUTOREPEAT_ACTIVE) or STRBLE;
+    KEYLE <= (AKSTB_INT and AUTOREPEAT_ACTIVE_INT) or STRBLE;
+
+    AKSTB             <= AKSTB_INT;
+    STRBLE_N          <= STRBLE_N_INT;
+    D_KSTRB_N         <= D_KSTRB_N_INT;
+    CLR_DELAY_N       <= CLR_DELAY_N_INT;
+    SET_DELAY         <= SET_DELAY_INT;
+    AUTOREPEAT_DELAY  <= AUTOREPEAT_DELAY_INT;
+    AUTOREPEAT_ACTIVE <= AUTOREPEAT_ACTIVE_INT;
 end RTL;

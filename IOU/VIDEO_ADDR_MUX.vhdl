@@ -23,25 +23,34 @@ end VIDEO_ADDR_MUX;
 
 architecture RTL of VIDEO_ADDR_MUX is
     signal VID_PG2_N : std_logic;
+
+    signal ZA_INT, ZB_INT, ZC_INT, ZD_INT, ZE_INT : std_logic;
 begin
     -- IOU_2 @C-4:E2-8
     VID_PG2_N <= PG2_N or EN80VID;
-    ZA        <= VA when HIRESEN_N = '0' else VID_PG2_N;
-    ZB        <= VB when HIRESEN_N = '0' else not VID_PG2_N;
-    ZC        <= VC when HIRESEN_N = '0' else '0';
-    ZD        <= VID_PG2_N when HIRESEN_N = '0' else '0';
-    ZE        <= HIRESEN_N nor VID_PG2_N;
+    ZA_INT    <= VA when HIRESEN_N = '0' else VID_PG2_N;
+    ZB_INT    <= VB when HIRESEN_N = '0' else not VID_PG2_N;
+    ZC_INT    <= VC when HIRESEN_N = '0' else '0';
+    ZD_INT    <= VID_PG2_N when HIRESEN_N = '0' else '0';
+    ZE_INT    <= HIRESEN_N nor VID_PG2_N;
 
     -- IOU_1 @D-3:A9
     RA_ENABLE_N <= Q3_PRAS_N nand P_PHI_1;
 
     RA0 <= V2 when PRAS_N = '0' else H0;
     RA1 <= E3 when PRAS_N = '0' else H1;
-    RA2 <= ZA when PRAS_N = '0' else H2;
-    RA3 <= ZB when PRAS_N = '0' else E0;
+    RA2 <= ZA_INT when PRAS_N = '0' else H2;
+    RA3 <= ZB_INT when PRAS_N = '0' else E0;
 
-    RA4 <= ZC when PRAS_N = '0' else E1;
-    RA5 <= ZD when PRAS_N = '0' else E2;
-    RA6 <= ZE when PRAS_N = '0' else V0; -- ZE/V1 has been simplified to ZE since boning option 64K is always high
+    RA4 <= ZC_INT when PRAS_N = '0' else E1;
+    RA5 <= ZD_INT when PRAS_N = '0' else E2;
+    RA6 <= ZE_INT when PRAS_N = '0' else V0; -- ZE/V1 has been simplified to ZE since boning option 64K is always high
     RA7 <= '0' when PRAS_N = '0' else V1;
+
+    ZA <= ZA_INT;
+    ZB <= ZB_INT;
+    ZC <= ZC_INT;
+    ZD <= ZD_INT;
+    ZE <= ZE_INT;
+
 end RTL;

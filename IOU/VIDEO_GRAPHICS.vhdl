@@ -18,12 +18,13 @@ entity VIDEO_GRAPHICS is
 end VIDEO_GRAPHICS;
 
 architecture RTL of VIDEO_GRAPHICS is
+    signal PGR_TXT_N_INT : std_logic;
 begin
     -- IOU_1 @B-1:R5-12
     process (P_PHI_2)
     begin
         if (rising_edge(P_PHI_2)) then
-            PGR_TXT_N <= (MIX and V2 and V4) nor ITEXT;
+            PGR_TXT_N_INT <= (MIX and V2 and V4) nor ITEXT;
         end if;
     end process;
 
@@ -31,11 +32,17 @@ begin
     process (P_PHI_2)
     begin
         if (rising_edge(P_PHI_2)) then
-            SEGA      <= VA when PGR_TXT_N = '0' else H0;
-            SEGB      <= VB when PGR_TXT_N = '0' else HIRESEN_N;
+            if (PGR_TXT_N_INT = '0') then
+                SEGA <= VA;
+                SEGB <= VB;
+            else
+                SEGA <= H0;
+                SEGB <= HIRESEN_N;
+            end if;
             SEGC      <= VC;
             LGR_TXT_N <= (MIX and V2 and V4) nor ITEXT;
         end if;
     end process;
 
+    PGR_TXT_N <= PGR_TXT_N_INT;
 end RTL;

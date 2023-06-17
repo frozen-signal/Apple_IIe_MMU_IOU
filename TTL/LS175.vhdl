@@ -12,7 +12,7 @@ entity LS175 is
     );
 end LS175;
 
-architecture BEHAVIORAL of LS175 is
+architecture RTL of LS175 is
 begin
     process (CLK, CLR_N)
     begin
@@ -36,4 +36,4 @@ begin
             Q4_N <= not D4;
         end if;
     end process;
-end BEHAVIORAL;
+end RTL;

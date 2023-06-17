@@ -41,6 +41,8 @@ architecture SPY of IOU_ADDR_DECODER_SPY is
         );
     end component;
 
+    signal C00X_N_INT, C01X_N_INT, C02X_N_INT, C03X_N_INT, C04X_N_INT, C05X_N_INT, C07X_N_INT : std_logic;
+
 begin
     U_IOU_ADDR_DECODER : IOU_ADDR_DECODER port map(
         C0XX_N => C0XX_N,
@@ -49,20 +51,29 @@ begin
         LA5    => LA5,
         A6     => A6,
         Q3     => Q3,
-        C00X_N => C00X_N,
-        C01X_N => C01X_N,
-        C02X_N => C02X_N,
-        C03X_N => C03X_N,
-        C04X_N => C04X_N,
-        C05X_N => C05X_N,
-        C07X_N => C07X_N
+        C00X_N => C00X_N_INT,
+        C01X_N => C01X_N_INT,
+        C02X_N => C02X_N_INT,
+        C03X_N => C03X_N_INT,
+        C04X_N => C04X_N_INT,
+        C05X_N => C05X_N_INT,
+        C07X_N => C07X_N_INT
     );
 
-    TB_C00X_N <= C00X_N;
-    TB_C01X_N <= C01X_N;
-    TB_C02X_N <= C02X_N;
-    TB_C03X_N <= C03X_N;
-    TB_C04X_N <= C04X_N;
-    TB_C05X_N <= C05X_N;
-    TB_C07X_N <= C07X_N;
+    TB_C00X_N <= C00X_N_INT;
+    TB_C01X_N <= C01X_N_INT;
+    TB_C02X_N <= C02X_N_INT;
+    TB_C03X_N <= C03X_N_INT;
+    TB_C04X_N <= C04X_N_INT;
+    TB_C05X_N <= C05X_N_INT;
+    TB_C07X_N <= C07X_N_INT;
+
+    C00X_N <= C00X_N_INT;
+    C01X_N <= C01X_N_INT;
+    C02X_N <= C02X_N_INT;
+    C03X_N <= C03X_N_INT;
+    C04X_N <= C04X_N_INT;
+    C05X_N <= C05X_N_INT;
+    C07X_N <= C07X_N_INT;
+
 end SPY;

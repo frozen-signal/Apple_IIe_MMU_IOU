@@ -12,7 +12,7 @@ entity LS74_SINGLE is
     );
 end LS74_SINGLE;
 
-architecture BEHAVIORAL of LS74_SINGLE is
+architecture RTL of LS74_SINGLE is
 begin
     process (CLK, PRE_N, CLR_N)
     begin
@@ -24,4 +24,4 @@ begin
             Q <= D;
         end if;
     end process;
-end BEHAVIORAL;
+end RTL;

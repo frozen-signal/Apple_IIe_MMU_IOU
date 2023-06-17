@@ -8,8 +8,6 @@ entity IOU_INTERNALS is
         H2, H3, H4, H5         : in std_logic;
         NTSC                   : in std_logic;
         ITEXT                  : in std_logic;
-        P_PHI_0                : in std_logic;
-        PRAS_N                 : in std_logic;
         R_W_N                  : in std_logic;
         PGR_TXT_N              : in std_logic;
         HIRES                  : in std_logic;
@@ -18,8 +16,8 @@ entity IOU_INTERNALS is
         LA0, LA1, LA2, LA3     : in std_logic;
         IKSTRB                 : in std_logic;
         IAKD                   : in std_logic;
+        P_PHI_2                : in std_logic;
 
-        P_PHI_2   : out std_logic;
         HIRESEN_N : out std_logic;
         C040_7_N  : out std_logic;
         HBL       : out std_logic;
@@ -42,39 +40,38 @@ architecture RTL of IOU_INTERNALS is
     signal R9_6        : std_logic;
     signal KSTRB_SHIFT : std_logic_vector(1 downto 0) := "00";
     signal AKD_SHIFT   : std_logic_vector(1 downto 0) := "00";
+
+    signal HBL_INT, VBL_N_INT, SERR_INT, V1_N_V5_N_INT, V2_V2_N_INT : std_logic;
 begin
     PAL  <= not NTSC;
     H2_N <= not H2;
     H3_N <= not H3;
 
     -- IOU_1 @C-1:J6-6
-    HBL   <= (H3 and H4) nor H5;
-    HBL_N <= not HBL;
+    HBL_INT <= (H3 and H4) nor H5;
+    HBL_N   <= not HBL_INT;
 
     -- IOU_1 @B-1:K6-6
-    BL_N <= (V3 and V4) nor HBL;
+    BL_N <= (V3 and V4) nor HBL_INT;
 
     -- IOU_1 @C-1:R9-5
     PCLRGAT <= not (H2_N or H3_N or HBL_N or ITEXT);
 
     --IOU_1 @C-2:M9_3
-    VBL_N <= V3 nand V4;
+    VBL_N_INT <= V3 nand V4;
 
     -- IOU_1 @D-2:N7-6
-    V1_N_V5_N <= (V1 and NTSC) nor (V5 and PAL);
+    V1_N_V5_N_INT <= (V1 and NTSC) nor (V5 and PAL);
 
     -- IOU_1 @D-2:J8-3
-    V2_V2_N <= PAL xor V2;
+    V2_V2_N_INT <= PAL xor V2;
 
     -- IOU_1 @D-2:L6-12
-    SERR <= not (H3 or H4 or H5);
+    SERR_INT <= not (H3 or H4 or H5);
 
     --IOU_1 @C-1:J6-8
-    R9_6    <= not (VBL_N or V0 or VC or SERR);
-    PSYNC_N <= (HBL and H2_N and H3) nor (V1_N_V5_N and V2_V2_N and R9_6);
-
-    -- IOU_1 @C-3:P9-6
-    P_PHI_2 <= P_PHI_0 and PRAS_N;
+    R9_6    <= not (VBL_N_INT or V0 or VC or SERR_INT);
+    PSYNC_N <= (HBL_INT and H2_N and H3) nor (V1_N_V5_N_INT and V2_V2_N_INT and R9_6);
 
     -- IOU_2 @D-4:E3-3
     HIRESEN_N <= PGR_TXT_N nand HIRES;
@@ -95,4 +92,10 @@ begin
     end process;
     KSTRB <= KSTRB_SHIFT(1);
     AKD   <= AKD_SHIFT(1);
+
+    HBL       <= HBL_INT;
+    VBL_N     <= VBL_N_INT;
+    SERR      <= SERR_INT;
+    V1_N_V5_N <= V1_N_V5_N_INT;
+    V2_V2_N   <= V2_V2_N_INT;
 end RTL;

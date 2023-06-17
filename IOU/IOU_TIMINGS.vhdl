@@ -15,19 +15,21 @@ entity IOU_TIMINGS is
 end IOU_TIMINGS;
 
 architecture RTL of IOU_TIMINGS is
+    signal P_PHI_2_INT : std_logic;
 begin
     -- IOU_1 @C-3:P9-6
-    P_PHI_2 <= P_PHI_0 and PRAS_N;
+    P_PHI_2_INT <= P_PHI_0 and PRAS_N;
 
     -- IOU_1 @A-3:R8-8
     PHI_1 <= not PHI_0;
 
     -- MMU_2 @C-4:F2-9
-    process (P_PHI_2)
+    process (P_PHI_2_INT)
     begin
-        if (rising_edge(P_PHI_2)) then
+        if (rising_edge(P_PHI_2_INT)) then
             CTC14S <= TC14S;
         end if;
     end process;
 
+    P_PHI_2 <= P_PHI_2_INT;
 end RTL;

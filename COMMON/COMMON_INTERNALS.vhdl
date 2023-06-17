@@ -18,6 +18,7 @@ entity COMMON_INTERNALS is
 end COMMON_INTERNALS;
 
 architecture RTL of COMMON_INTERNALS is
+    signal Q3_PRAS_N_INT : std_logic;
 begin
     -- IOU_2 @BC-1:R6-11
     -- NOTE:
@@ -33,14 +34,16 @@ begin
     -- only PRAS_N has been used in this implementatsion
 
     -- IOU_1 @D-3:K9-3
-    Q3_PRAS_N <= Q3 or PRAS_N;
+    Q3_PRAS_N_INT <= Q3 or PRAS_N;
 
     -- IOU_1 @B-3:H5
-    process (Q3_PRAS_N, PHI_0) begin
-        if (Q3_PRAS_N = '0') then
+    process (Q3_PRAS_N_INT, PHI_0) begin
+        if (Q3_PRAS_N_INT = '0') then
             P_PHI_0 <= not PHI_0;
             P_PHI_1 <= PHI_0;
         end if;
     end process;
+
+    Q3_PRAS_N <= Q3_PRAS_N_INT;
 
 end RTL;

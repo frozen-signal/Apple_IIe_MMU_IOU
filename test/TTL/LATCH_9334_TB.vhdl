@@ -12,7 +12,7 @@ architecture LATCH_9334_TEST of LATCH_9334_TB is
             E_N : in std_logic;
 
             D          : in std_logic;
-            A0, A1, A2 : in std_logic;
+            ADDR : in std_logic_vector(2 downto 0);
 
             Q0, Q1, Q2, Q3,
             Q4, Q5, Q6, Q7 : out std_logic
@@ -23,7 +23,7 @@ architecture LATCH_9334_TEST of LATCH_9334_TB is
     signal E_N : std_logic;
 
     signal D          : std_logic;
-    signal A0, A1, A2 : std_logic;
+    signal ADDR : std_logic_vector(2 downto 0);
 
     signal Q0, Q1, Q2, Q3,
     Q4, Q5, Q6, Q7 : std_logic;
@@ -33,9 +33,7 @@ begin
         C_N => C_N,
         E_N => E_N,
         D   => D,
-        A0  => A0,
-        A1  => A1,
-        A2  => A2,
+        ADDR  => ADDR,
         Q0  => Q0,
         Q1  => Q1,
         Q2  => Q2,
@@ -62,9 +60,7 @@ begin
 
         C_N <= '1';
         E_N <= '0';
-        A2  <= '0';
-        A1  <= '0';
-        A0  <= '0';
+        ADDR <= "000";
         D   <= '1';
         wait for 1 ns;
         assert(Q0 = '1') report "Storing 1 at 000; expect Q0 HIGH" severity error;
@@ -76,9 +72,7 @@ begin
         assert(Q6 = '0') report "Storing 1 at 000; expect Q6 PREVIOUS" severity error;
         assert(Q7 = '0') report "Storing 1 at 000; expect Q7 PREVIOUS" severity error;
 
-        A2 <= '0';
-        A1 <= '0';
-        A0 <= '1';
+        ADDR <= "001";
         D  <= '1';
         wait for 1 ns;
         assert(Q0 = '1') report "Storing 1 at 001; expect Q0 PREVIOUS" severity error;
@@ -90,9 +84,7 @@ begin
         assert(Q6 = '0') report "Storing 1 at 001; expect Q6 PREVIOUS" severity error;
         assert(Q7 = '0') report "Storing 1 at 001; expect Q7 PREVIOUS" severity error;
 
-        A2 <= '0';
-        A1 <= '1';
-        A0 <= '0';
+        ADDR <= "010";
         D  <= '1';
         wait for 1 ns;
         assert(Q0 = '1') report "Storing 1 at 010; expect Q0 PREVIOUS" severity error;
@@ -104,9 +96,7 @@ begin
         assert(Q6 = '0') report "Storing 1 at 010; expect Q6 PREVIOUS" severity error;
         assert(Q7 = '0') report "Storing 1 at 010; expect Q7 PREVIOUS" severity error;
 
-        A2 <= '0';
-        A1 <= '1';
-        A0 <= '1';
+        ADDR <= "011";
         D  <= '1';
         wait for 1 ns;
         assert(Q0 = '1') report "Storing 1 at 011; expect Q0 PREVIOUS" severity error;
@@ -118,9 +108,7 @@ begin
         assert(Q6 = '0') report "Storing 1 at 011; expect Q6 PREVIOUS" severity error;
         assert(Q7 = '0') report "Storing 1 at 011; expect Q7 PREVIOUS" severity error;
 
-        A2 <= '1';
-        A1 <= '0';
-        A0 <= '0';
+        ADDR <= "100";
         D  <= '1';
         wait for 1 ns;
         assert(Q0 = '1') report "Storing 1 at 100; expect Q0 PREVIOUS" severity error;
@@ -132,9 +120,7 @@ begin
         assert(Q6 = '0') report "Storing 1 at 100; expect Q6 PREVIOUS" severity error;
         assert(Q7 = '0') report "Storing 1 at 100; expect Q7 PREVIOUS" severity error;
 
-        A2 <= '1';
-        A1 <= '0';
-        A0 <= '1';
+        ADDR <= "101";
         D  <= '1';
         wait for 1 ns;
         assert(Q0 = '1') report "Storing 1 at 101; expect Q0 PREVIOUS" severity error;
@@ -146,9 +132,7 @@ begin
         assert(Q6 = '0') report "Storing 1 at 101; expect Q6 PREVIOUS" severity error;
         assert(Q7 = '0') report "Storing 1 at 101; expect Q7 PREVIOUS" severity error;
 
-        A2 <= '1';
-        A1 <= '1';
-        A0 <= '0';
+        ADDR <= "110";
         D  <= '1';
         wait for 1 ns;
         assert(Q0 = '1') report "Storing 1 at 110; expect Q0 PREVIOUS" severity error;
@@ -160,9 +144,7 @@ begin
         assert(Q6 = '1') report "Storing 1 at 110; expect Q6 HIGH" severity error;
         assert(Q7 = '0') report "Storing 1 at 110; expect Q7 PREVIOUS" severity error;
 
-        A2 <= '1';
-        A1 <= '1';
-        A0 <= '1';
+        ADDR <= "111";
         D  <= '1';
         wait for 1 ns;
         assert(Q0 = '1') report "Storing 1 at 111; expect Q0 PREVIOUS" severity error;
@@ -175,9 +157,7 @@ begin
         assert(Q7 = '1') report "Storing 1 at 111; expect Q7 HIGH" severity error;
 
         E_N <= '1';
-        A2  <= '1';
-        A1  <= '1';
-        A0  <= '1';
+        ADDR <= "111";
         D   <= '0';
         wait for 1 ns;
         assert(Q0 = '1') report "Memory mode; expect Q0 PREVIOUS" severity error;

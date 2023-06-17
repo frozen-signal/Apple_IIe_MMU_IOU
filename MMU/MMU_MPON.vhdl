@@ -13,11 +13,10 @@ entity MMU_MPON is
     );
 end MMU_MPON;
 
-architecture BEHAVIORAL of MMU_MPON is
+architecture RTL of MMU_MPON is
     -- S5 stands for Soft 5, a 'soft' 5v. Comes from the Apple II.
-    constant S5   : std_logic := '1'; -- Pull-up resistor see MMU_1 @B-4:A4-15
+    constant S5   : std_logic                     := '1'; -- Pull-up resistor see MMU_1 @B-4:A4-15
     constant FFFC : std_logic_vector(15 downto 0) := x"FFFC";
-
 
     component LS174_SINGLE is
         port (
@@ -65,4 +64,4 @@ begin
     N4_11 <= DELTA_01XX_N or P5_11;
 
     MPON_N <= Q3 or PHI_0 or FFFC_N or N4_11;
-end BEHAVIORAL;
+end RTL;

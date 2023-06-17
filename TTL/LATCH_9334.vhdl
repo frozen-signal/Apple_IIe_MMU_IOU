@@ -7,7 +7,7 @@ entity LATCH_9334 is
         E_N : in std_logic;
 
         D          : in std_logic;
-        A0, A1, A2 : in std_logic;
+        ADDR : in std_logic_vector(2 downto 0);
 
         Q0, Q1, Q2, Q3,
         Q4, Q5, Q6, Q7 : out std_logic
@@ -16,7 +16,7 @@ end LATCH_9334;
 
 architecture RTL of LATCH_9334 is
 begin
-    process (C_N, E_N, D, A0, A1, A2) begin
+    process (C_N, E_N, D, ADDR) begin
         if C_N = '0' then
             -- CLEAR
             -- In the MMU/IOU, the Demultiplexer mode of the 9334 is never used, so it is not implemented here.
@@ -30,7 +30,7 @@ begin
             Q7 <= '0';
         elsif E_N = '0' then
             -- ADDRESSABLE LATCH (STORE)
-            case (A2 & A1 & A0) is
+            case (ADDR) is
                 when "000"  => Q0 <= D;
                 when "001"  => Q1 <= D;
                 when "010"  => Q2 <= D;

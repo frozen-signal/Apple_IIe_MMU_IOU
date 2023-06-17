@@ -16,7 +16,7 @@ architecture IOU_MD7_TEST of IOU_MD7_TB is
             CLRKEY_N           : in std_logic;
             RC00X_N            : in std_logic;
             RC01X_N            : in std_logic;
-            LA3, LA2, LA1, LA0 : in std_logic;
+            LA : in std_logic_vector(3 downto 0);
             AKD                : in std_logic;
             VBL_N              : in std_logic;
             ITEXT              : in std_logic;
@@ -39,7 +39,7 @@ architecture IOU_MD7_TEST of IOU_MD7_TB is
     signal CLRKEY_N           : std_logic;
     signal RC00X_N            : std_logic;
     signal RC01X_N            : std_logic;
-    signal LA3, LA2, LA1, LA0 : std_logic;
+    signal LA : std_logic_vector(3 downto 0);
     signal AKD                : std_logic;
     signal VBL_N              : std_logic;
     signal ITEXT              : std_logic;
@@ -61,10 +61,7 @@ begin
         CLRKEY_N     => CLRKEY_N,
         RC00X_N      => RC00X_N,
         RC01X_N      => RC01X_N,
-        LA3          => LA3,
-        LA2          => LA2,
-        LA1          => LA1,
-        LA0          => LA0,
+        LA => LA,
         AKD          => AKD,
         VBL_N        => VBL_N,
         ITEXT        => ITEXT,
@@ -86,10 +83,7 @@ begin
         PRAS_N  <= '1';
         RC00X_N <= '0';
         RC01X_N <= '1';
-        LA3     <= '0';
-        LA2     <= '0';
-        LA1     <= '0';
-        LA0     <= '0';
+        LA <= "0000";
         wait for 1 ns;
         assert(MD7_ENABLE_N = '1') report "expect MD7_ENABLE_N to be HIGH" severity error;
 
@@ -160,20 +154,14 @@ begin
 
         RC00X_N <= '1';
         RC01X_N <= '0';
-        LA3     <= '0';
-        LA2     <= '1';
-        LA1     <= '0';
-        LA0     <= '1';
+        LA <= "0101";
         wait for 1 ns;
         assert(MD7_ENABLE_N = '0') report "expect MD7_ENABLE_N to be LOW" severity error;
 
         -- Soft switches addressed
         RC00X_N <= '0';
         RC01X_N <= '1';
-        LA3     <= '0';
-        LA2     <= '0';
-        LA1     <= '0';
-        LA0     <= '0';
+        LA <= "0000";
         wait for 1 ns;
         assert(MD7_ENABLE_N = '0') report "expect MD7_ENABLE_N to be LOW" severity error;
 
@@ -184,20 +172,14 @@ begin
 
         RC00X_N <= '1';
         RC01X_N <= '0';
-        LA3     <= '1';
-        LA2     <= '1';
-        LA1     <= '1';
-        LA0     <= '1';
+        LA <= "1111";
         wait for 1 ns;
         assert(MD7_ENABLE_N = '0') report "expect MD7_ENABLE_N to be LOW" severity error;
 
         -- KEY --------------------------------------------
         RC00X_N <= '0';
         RC01X_N <= '1';
-        LA3     <= '0';
-        LA2     <= '0';
-        LA1     <= '0';
-        LA0     <= '0';
+        LA <= "0000";
 
         KEYLE    <= '0';
         CLRKEY_N <= '1';
@@ -236,20 +218,14 @@ begin
         S_80COL <= '0';
 
         -- C010
-        LA3 <= '0';
-        LA2 <= '0';
-        LA1 <= '0';
-        LA0 <= '0';
+        LA <= x"0";
         AKD <= '1';
         wait for 1 ns;
         assert(MD7_ENABLE_N = '0') report "expect MD7_ENABLE_N to be LOW" severity error;
         assert(MD7 = '1') report "MD7 should be HIGH" severity error;
 
         -- C019
-        LA3   <= '1';
-        LA2   <= '0';
-        LA1   <= '0';
-        LA0   <= '1';
+        LA <= x"9";
         AKD   <= '0';
         VBL_N <= '1';
         wait for 1 ns;
@@ -257,10 +233,7 @@ begin
         assert(MD7 = '1') report "MD7 should be HIGH" severity error;
 
         -- C01A
-        LA3   <= '1';
-        LA2   <= '0';
-        LA1   <= '1';
-        LA0   <= '0';
+        LA <= x"A";
         VBL_N <= '0';
         ITEXT <= '1';
         wait for 1 ns;
@@ -268,10 +241,7 @@ begin
         assert(MD7 = '1') report "MD7 should be HIGH" severity error;
 
         -- C01B
-        LA3   <= '1';
-        LA2   <= '0';
-        LA1   <= '1';
-        LA0   <= '1';
+        LA <= x"B";
         ITEXT <= '0';
         MIX   <= '1';
         wait for 1 ns;
@@ -279,10 +249,7 @@ begin
         assert(MD7 = '1') report "MD7 should be HIGH" severity error;
 
         -- C01C
-        LA3 <= '1';
-        LA2 <= '1';
-        LA1 <= '0';
-        LA0 <= '0';
+        LA <= x"C";
         MIX <= '0';
         PG2 <= '1';
         wait for 1 ns;
@@ -290,10 +257,7 @@ begin
         assert(MD7 = '1') report "MD7 should be HIGH" severity error;
 
         -- C01D
-        LA3   <= '1';
-        LA2   <= '1';
-        LA1   <= '0';
-        LA0   <= '1';
+        LA <= x"D";
         PG2   <= '0';
         HIRES <= '1';
         wait for 1 ns;
@@ -301,10 +265,7 @@ begin
         assert(MD7 = '1') report "MD7 should be HIGH" severity error;
 
         -- C01E
-        LA3    <= '1';
-        LA2    <= '1';
-        LA1    <= '1';
-        LA0    <= '0';
+        LA <= x"E";
         HIRES  <= '0';
         PAYMAR <= '1';
         wait for 1 ns;
@@ -312,10 +273,7 @@ begin
         assert(MD7 = '1') report "MD7 should be HIGH" severity error;
 
         -- C01F
-        LA3     <= '1';
-        LA2     <= '1';
-        LA1     <= '1';
-        LA0     <= '1';
+        LA <= x"F";
         PAYMAR  <= '0';
         S_80COL <= '1';
         wait for 1 ns;

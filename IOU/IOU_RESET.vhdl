@@ -53,6 +53,6 @@ begin
         end if;
     end process;
 
-    POC <= INT_POC;
+    POC               <= INT_POC;
     FORCE_RESET_N_LOW <= PWR_ON_ONGOING;
 end RTL;
