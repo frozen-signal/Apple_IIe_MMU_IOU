@@ -10,15 +10,15 @@ A VHDL compiler such as GHDL is required, and optionnaly a wave analyser such as
 ## Compiling
 VHDL files must first be analysed. For example for a file `my_vhdl_component.vhdl` run the command:
 ```bash
-ghdl -a --std=08 --workdir=work my_vhdl_component.vhdl
+ghdl -a --workdir=work my_vhdl_component.vhdl
 ```
 Then, the component must be elaborated. For example, if the file above contains a component named `MY_VHDL_COMPONENT`, this would elaborate the component:
 ```bash
-ghdl -e --std=08 --workdir=work MY_VHDL_COMPONENT
+ghdl -e --workdir=work MY_VHDL_COMPONENT
 ```
 Finally, to run a testbench once it has been analysed and elaborated, run this command
 ```bash
-ghdl -r --std=08 --workdir=work MY_COMPONENT_TB  --vcd=debug.vcd
+ghdl -r --workdir=work MY_COMPONENT_TB  --vcd=debug.vcd
 ```
 This will run the testbench `MY_COMPONENT_TB` and dump the generated signals in the file `debug.vcd`. To view the dump, run:
 ```bash
