@@ -13,8 +13,8 @@ entity IOU_DEVICES is
 end IOU_DEVICES;
 
 architecture RTL of IOU_DEVICES is
-    signal CURRENT_SPKR  : std_logic := '0';
-    signal CURRENT_CASSO : std_logic := '0';
+    signal CURRENT_SPKR  : std_logic;
+    signal CURRENT_CASSO : std_logic;
 begin
     -- IOU_1 @C-2:A5
     -- The speaker (and the cassette which is essentially the same from the IOU's perspective):

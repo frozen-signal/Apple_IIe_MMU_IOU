@@ -38,8 +38,10 @@ architecture RTL of IOU_INTERNALS is
     signal HBL_N       : std_logic;
     signal H2_N, H3_N  : std_logic;
     signal R9_6        : std_logic;
-    signal KSTRB_SHIFT : std_logic_vector(1 downto 0) := "00";
-    signal AKD_SHIFT   : std_logic_vector(1 downto 0) := "00";
+    signal KSTRB_SHIFT : std_logic_vector(1 downto 0);  -- It's safe if we don't initialize KSTRB_SHIFT and AKD_SHIFT
+    signal AKD_SHIFT   : std_logic_vector(1 downto 0);  --   at power-on: P_PHI_2 will cycle several times during power-on
+                                                        --   and '0' will be shifted in these signals each time effectively
+                                                        --   initializing them to "00"
 
     signal HBL_INT, VBL_N_INT, SERR_INT, V1_N_V5_N_INT, V2_V2_N_INT : std_logic;
 begin

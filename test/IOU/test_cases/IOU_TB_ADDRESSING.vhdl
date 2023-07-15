@@ -16,6 +16,9 @@ configuration IOU_TB_ADDRESSING of IOU_TEST_ADDRESSING_ENTITY is
                 for U_VIDEO_ADDR_MUX : VIDEO_ADDR_MUX
                     use entity VIDEO_ADDR_MUX_SPY(SPY);
                 end for;
+                for U_POWER_ON_DETECTION : POWER_ON_DETECTION
+                    use entity POWER_ON_DETECTION_MOCK(MOCK);
+                end for;
             end for;
         end for;
     end for;
@@ -187,6 +190,11 @@ begin
     );
 
     process begin
+        TB_FORCE_POC_N <= '0';
+        wait for 1 ns;
+        TB_FORCE_POC_N <= '1';
+        wait for 1 ns;
+
         -- ORA0-ORA6 are latched to LA0-LA5 and LA7 at RAS' rising during PHASE 1
         TEST_ORA0 <= '0';
         TEST_ORA1 <= '0';

@@ -9,4 +9,5 @@ package IOU_TESTBENCH_PACKAGE is
        signal TB_C00X_N, TB_C01X_N, TB_C02X_N, TB_C03X_N, TB_C04X_N, TB_C05X_N, TB_C07X_N : std_logic;
 
        signal TB_FORCE_RESET : std_logic;
+       signal TB_FORCE_POC_N : std_logic;
 end package IOU_TESTBENCH_PACKAGE;

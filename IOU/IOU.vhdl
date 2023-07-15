@@ -39,6 +39,14 @@ end IOU;
 architecture RTL of IOU is
     constant NTSC : std_logic := '1'; -- FIXME: How should options be handled? Input pin? Leave as constant?
 
+    component POWER_ON_DETECTION is
+        port (
+            PHI_0 : in std_logic;
+
+            POC_N  : out std_logic
+        );
+    end component;
+
     component COMMON_INTERNALS is
         port (
             R_W_N  : in std_logic;
@@ -71,11 +79,11 @@ architecture RTL of IOU is
         port (
             PHI_1 : in std_logic;
             TC    : in std_logic;
+            POC_N : in std_logic;
 
             -- The IOU will force RESET_N low during power-on;
             -- otherwise RESET_N is driven by the value from the input of the RESET_N pin.
-            FORCE_RESET_N_LOW : out std_logic;
-            POC               : out std_logic
+            FORCE_RESET_N_LOW : out std_logic -- This will be HIGH when the IOU should force RESET_N LOW.
         );
     end component;
 
@@ -318,7 +326,7 @@ architecture RTL of IOU is
 
     signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                                   : std_logic;
     signal P_PHI_2, PHI_1, CTC14S                                                                 : std_logic;
-    signal FORCE_RESET_N_LOW, POC, RESET_N, IN_RESET                                              : std_logic;
+    signal FORCE_RESET_N_LOW, RESET_N, IN_RESET                                              : std_logic;
     signal HPE_N, V5, V4, V3, V2, V1, V0, VC, VB, VA, H5, H4, H3, H2, H1, PAKST, TC, TC14S, FLASH : std_logic;
     signal HIRESEN_N, C040_7_N, HBL, BL_N, VBL_N, V1_N_V5_N, V2_V2_N, SERR, KSTRB, AKD            : std_logic;
     signal EN80VID, FLG1, FLG2, PENIO_N, ALTSTKZP, INTC300_N, INTC300, S_80COL, PAYMAR            : std_logic;
@@ -337,6 +345,10 @@ architecture RTL of IOU is
 
     signal H0_INT, LGR_TXT_N_INT, ORA7_INT : std_logic;
 begin
+    U_POWER_ON_DETECTION : POWER_ON_DETECTION port map(
+        PHI_0   => PHI_0,
+        POC_N => POC_N
+    );
 
     U_COMMON_INTERNALS : COMMON_INTERNALS port map(
         R_W_N     => R_W_N,
@@ -363,14 +375,13 @@ begin
     U_IOU_RESET : IOU_RESET port map(
         PHI_1             => PHI_1,
         TC                => TC,
-        FORCE_RESET_N_LOW => FORCE_RESET_N_LOW,
-        POC               => POC
+        POC_N               => POC_N,
+        FORCE_RESET_N_LOW => FORCE_RESET_N_LOW
     );
     IN_RESET    <= PIN_RESET_N;
     RESET_N     <= '0' when FORCE_RESET_N_LOW = '1' else IN_RESET;
     PIN_RESET_N <= '0' when FORCE_RESET_N_LOW = '1' else 'Z';
 
-    POC_N <= POC;
     U_VIDEO_SCANNER : VIDEO_SCANNER port map(
         POC_N   => POC_N,
         NTSC    => NTSC,
@@ -445,7 +456,7 @@ begin
         R_W_N       => R_W_N,
         RESET_N     => RESET_N,
         PHI_0       => PHI_0,
-        EN80VID     => open,
+        EN80VID     => EN80VID,
         FLG1        => open,
         FLG2        => open,
         PENIO_N     => open,
