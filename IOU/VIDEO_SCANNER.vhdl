@@ -23,7 +23,8 @@ end VIDEO_SCANNER;
 -- tries to keep close to the emulator schematics, but this is an exception. The implementation below is
 -- more efficient and simpler than 6x LS161s chained with a ripple carry overflow.
 architecture RTL of VIDEO_SCANNER is
-    signal counters : unsigned(23 downto 0) := (others => '0');
+    signal counters : unsigned(23 downto 0);  -- It's safe if we don't initialize counters: at power-up POC_N is LOW
+                                              --    and will initialize the signal.
 
     signal HPE_N_INT, VA_INT, TC_INT : std_logic;
 begin
@@ -72,8 +73,8 @@ begin
     PAKST     <= counters(17);
     FLASH     <= counters(20);
 
-    TC_INT <= '1' when counters(15 downto 0) = "1111111111111111" else '0';
-    TC14S  <= '1' when counters(19 downto 0) = "11111111111111111111" else '0';
+    TC_INT <= '1' when POC_N = '1' and counters(15 downto 0) = "1111111111111111" else '0';
+    TC14S  <= '1' when POC_N = '1' and counters(19 downto 0) = "11111111111111111111" else '0';
 
     HPE_N <= HPE_N_INT;
     VA    <= VA_INT;

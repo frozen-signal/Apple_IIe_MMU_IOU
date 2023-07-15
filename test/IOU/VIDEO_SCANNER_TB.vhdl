@@ -87,6 +87,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- After POC_N goes HIGH, initial values are loaded.
         POC_N <= '1';
@@ -110,6 +111,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         for i in 1 to 15 loop
             P_PHI_2 <= '0';
@@ -135,6 +137,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         P_PHI_2 <= '0';
         wait for 489.9634322 ns;
@@ -158,6 +161,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         for i in 80 to 191 loop
             P_PHI_2 <= '0';
@@ -183,6 +187,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- 130: 128 steps + 2x loads
         for i in 1 to 130 loop
@@ -209,6 +214,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- 260: 256 steps + 4x loads
         for i in 1 to 260 loop
@@ -235,6 +241,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- 520: 512 steps + 8x loads
         for i in 1 to 520 loop
@@ -261,6 +268,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- 1040: 1024 steps + 16x loads
         for i in 1 to 1040 loop
@@ -287,6 +295,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- 2080: 2048 steps + 32x loads
         for i in 1 to 2080 loop
@@ -313,6 +322,7 @@ begin
         assert(V3 = '0') report "V3 should be LOW" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- 4160: 4096 steps + 64x loads
         for i in 1 to 4160 loop
@@ -339,6 +349,7 @@ begin
         assert(V3 = '1') report "V3 should be HIGH" severity error;
         assert(V4 = '0') report "V4 should be LOW" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- 8320: 8192 steps + 128x loads
         for i in 1 to 8320 loop
@@ -365,6 +376,7 @@ begin
         assert(V3 = '1') report "V3 should be HIGH" severity error;
         assert(V4 = '1') report "V4 should be HIGH" severity error;
         assert(V5 = '0') report "V5 should be LOW" severity error;
+        assert(TC = '0') report "TC should be LOW" severity error;
 
         -- 16640: 16384 steps + 256x loads
         for i in 1 to 16640 loop

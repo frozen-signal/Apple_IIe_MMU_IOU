@@ -24,16 +24,6 @@ entity MMU_INTERNALS is
 end MMU_INTERNALS;
 
 architecture RTL of MMU_INTERNALS is
-    component LS74_SINGLE is
-        port (
-            PRE_N : in std_logic;
-            CLR_N : in std_logic;
-            CLK   : in std_logic;
-            D     : in std_logic;
-            Q     : out std_logic
-        );
-    end component;
-
     signal L5_6, RSTC8_N               : std_logic;
     signal INTC3ACC_N_INT, INTC8EN_INT : std_logic;
 begin
@@ -44,13 +34,15 @@ begin
     -- MMU_2 @C-4:F2-5
     L5_6    <= INTC3ACC_N_INT or PHI_1;
     RSTC8_N <= MCFFF_N and MPON_N;
-    F2_1 : LS74_SINGLE port map(
-        PRE_N => L5_6,
-        CLR_N => RSTC8_N,
-        CLK   => '0',
-        D     => '0',
-        Q     => INTC8EN_INT
-    );
+    -- FIXME: is a process really needed?
+    process (L5_6, RSTC8_N)
+    begin
+        if (L5_6 = '0') then
+            INTC8EN_INT <= '1';
+        elsif (RSTC8_N = '0') then
+            INTC8EN_INT <= '0';
+        end if;
+    end process;
 
     -- MMU_2 @D-4:J3-3
     INTC8ACC <= C8_FXX and INTC8EN_INT;

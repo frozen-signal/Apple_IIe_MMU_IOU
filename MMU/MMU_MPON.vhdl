@@ -18,48 +18,39 @@ architecture RTL of MMU_MPON is
     constant S5   : std_logic                     := '1'; -- Pull-up resistor see MMU_1 @B-4:A4-15
     constant FFFC : std_logic_vector(15 downto 0) := x"FFFC";
 
-    component LS174_SINGLE is
-        port (
-            CLR_N : in std_logic;
-            CLK   : in std_logic;
-            D     : in std_logic;
-            Q     : out std_logic;
-            Q_N   : out std_logic
-        );
-    end component;
-
     signal FFFC_N                   : std_logic;
     signal M5_2, M5_7, DELTA_01XX_N : std_logic;
     signal P5_11, N4_11             : std_logic;
 begin
-    -- MMU2 @B-4 to B-2
+    -- MMU_2 @B-4:H2-9
     FFFC_N <= '0' when A = FFFC else '1';
 
-    MMU1_LS174_1 : LS174_SINGLE port map(
-        CLR_N => S5,
-        CLK   => PHI_0,
-        D     => S_01XX_N,
-        Q     => M5_2,
-        Q_N   => open
-    );
+    -- MMU_2 @B-3:M5-2
+    process (PHI_0)
+    begin
+        if (rising_edge(PHI_0)) then
+            M5_2   <= S_01XX_N;
+        end if;
+    end process;
 
-    MMU1_LS174_2 : LS174_SINGLE port map(
-        CLR_N => S5,
-        CLK   => PHI_0,
-        D     => M5_2,
-        Q     => M5_7,
-        Q_N   => open
-    );
+    -- MMU_2 @B-3:M5-7
+    process (PHI_0)
+    begin
+        if (rising_edge(PHI_0)) then
+            M5_7  <= M5_2;
+        end if;
+    end process;
 
+    -- MMU_2 @B-3
     P5_11 <= M5_2 or M5_7;
 
-    MMU1_LS174_3 : LS174_SINGLE port map(
-        CLR_N => S5,
-        CLK   => PHI_0,
-        D     => M5_7,
-        Q     => DELTA_01XX_N,
-        Q_N   => open
-    );
+    -- MMU_2 @B-3:M5-15
+    process (PHI_0)
+    begin
+        if (rising_edge(PHI_0)) then
+            DELTA_01XX_N  <= M5_7;
+        end if;
+    end process;
 
     N4_11 <= DELTA_01XX_N or P5_11;
 

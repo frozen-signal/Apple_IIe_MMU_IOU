@@ -8,7 +8,7 @@ entity IOU_TIMINGS is
         PRAS_N  : in std_logic;
         TC14S   : in std_logic;
 
-        P_PHI_2 : out std_logic;
+        P_PHI_2 : out std_logic;  -- Probaly means Phase-shifted PHI_2
         PHI_1   : out std_logic;
         CTC14S  : out std_logic
     );
