@@ -34,7 +34,7 @@ begin
 
     process begin
         -- Power On ---------------------------------------
-        POC_N  <= '1';
+        POC_N  <= '0';
         C02X_N <= '0';
         wait for 1 ns;
         C02X_N <= '1';
@@ -47,7 +47,7 @@ begin
         wait for 1 ns;
         assert(SPKR = '0') report "SPKR should not change during power on" severity error;
 
-        POC_N <= '0';
+        POC_N <= '1';
 
         -- Speaker ----------------------------------------
         C03X_N <= '0';
