@@ -19,18 +19,18 @@ architecture IOU_RESET_TEST of IOU_RESET_TB is
     signal PHI_1             : std_logic;
     signal TC                : std_logic;
     signal FORCE_RESET_N_LOW : std_logic;
-    signal POC_N               : std_logic;
+    signal POC_N             : std_logic;
 
 begin
     dut : IOU_RESET port map(
         PHI_1             => PHI_1,
         TC                => TC,
-        POC_N               => POC_N,
+        POC_N             => POC_N,
         FORCE_RESET_N_LOW => FORCE_RESET_N_LOW
     );
 
     process begin
-        TC <= '0';
+        TC    <= '0';
         POC_N <= '0';
         wait for 490 ns;
         assert(FORCE_RESET_N_LOW = '1') report "expect FORCE_RESET_N_LOW HIGH" severity error;

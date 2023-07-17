@@ -40,33 +40,32 @@ use ieee.numeric_std.all;
 -- On power-on, the signal POC_N should be held LOW for 2.4ms and then driven HIGH. It shoult then
 -- remain HIGH as long as the device has power.
 
--- FIXME: Move tests
 entity POWER_ON_DETECTION is
     port (
         PHI_0 : in std_logic;
 
-        POC_N  : out std_logic := '0'  -- Initialization only used by tests to
-                                       --    mock requirement that the device should
-                                       --    initialize all memory elements to '0'
+        POC_N : out std_logic := '0' -- Initialization only used by tests to
+                                     --    mock requirement that the device should
+                                     --    initialize all memory elements to '0'
     );
 end POWER_ON_DETECTION;
 
 architecture RTL of POWER_ON_DETECTION is
-	constant COUNT_2_4_MS : unsigned(11 downto 0) := x"991";  -- 2449 in hex
+    constant COUNT_2_4_MS : unsigned(11 downto 0) := x"991"; -- 2449 in hex
 
-    signal COUNT          : unsigned(11 downto 0) := (others => '0');  -- Initialization only used by tests to
-                                                                       --    mock requirement that the device should
-                                                                       --    initialize all memory elements to '0'
+    signal COUNT : unsigned(11 downto 0) := (others => '0'); -- Initialization only used by tests to
+                                                             --    mock requirement that the device should
+                                                             --    initialize all memory elements to '0'
 begin
     process (PHI_0)
     begin
         if (rising_edge(PHI_0)) then
-			if (COUNT < COUNT_2_4_MS) then
-				COUNT <= COUNT + 1;
-				POC_N <= '0';
-			else
+            if (COUNT < COUNT_2_4_MS) then
+                COUNT      <= COUNT + 1;
+                POC_N      <= '0';
+            else
                 POC_N <= '1';
-			end if;
+            end if;
         end if;
     end process;
 

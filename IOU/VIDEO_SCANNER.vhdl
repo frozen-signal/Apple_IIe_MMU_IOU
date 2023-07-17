@@ -23,8 +23,8 @@ end VIDEO_SCANNER;
 -- tries to keep close to the emulator schematics, but this is an exception. The implementation below is
 -- more efficient and simpler than 6x LS161s chained with a ripple carry overflow.
 architecture RTL of VIDEO_SCANNER is
-    signal counters : unsigned(23 downto 0);  -- It's safe if we don't initialize counters: at power-up POC_N is LOW
-                                              --    and will initialize the signal.
+    signal counters : unsigned(23 downto 0); -- It's safe if we don't initialize counters: at power-up POC_N is LOW
+                                             --    and will initialize the signal.
 
     signal HPE_N_INT, VA_INT, TC_INT : std_logic;
 begin

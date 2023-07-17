@@ -61,7 +61,7 @@ begin
     process (P_PHI_1, PCLRGAT)
     begin
         if (P_PHI_1 = '1') then
-            CLRGAT_N <= PCLRGAT;
+            CLRGAT_N <= not PCLRGAT;
         end if;
     end process;
 

@@ -11,8 +11,8 @@ entity COMMON_INTERNALS is
         PHI_0  : in std_logic;
 
         RC01X_N   : out std_logic;
-        P_PHI_0   : out std_logic;  -- Probaly means Phase-shifted PHI_0
-        P_PHI_1   : out std_logic;  -- Probaly means Phase-shifted PHI_1
+        P_PHI_0   : out std_logic; -- Probaly means Phase-shifted PHI_0
+        P_PHI_1   : out std_logic; -- Probaly means Phase-shifted PHI_1
         Q3_PRAS_N : out std_logic
     );
 end COMMON_INTERNALS;

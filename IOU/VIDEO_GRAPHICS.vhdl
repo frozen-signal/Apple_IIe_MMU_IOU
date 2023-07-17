@@ -33,8 +33,8 @@ begin
     begin
         if (rising_edge(P_PHI_2)) then
             if (PGR_TXT_N_INT = '0') then
-                SEGA <= VA;
-                SEGB <= VB;
+                SEGA      <= VA;
+                SEGB      <= VB;
             else
                 SEGA <= H0;
                 SEGB <= HIRESEN_N;

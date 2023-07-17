@@ -21,7 +21,7 @@ architecture IOU_INTERNALS_TEST of IOU_INTERNALS_TB is
             LA0, LA1, LA2, LA3     : in std_logic;
             IKSTRB                 : in std_logic;
             IAKD                   : in std_logic;
-            P_PHI_2   : in std_logic;
+            P_PHI_2                : in std_logic;
 
             HIRESEN_N : out std_logic;
             C040_7_N  : out std_logic;
@@ -107,8 +107,8 @@ begin
     );
 
     process begin
-        IKSTRB <= '0';
-        IAKD <= '0';
+        IKSTRB  <= '0';
+        IAKD    <= '0';
         P_PHI_2 <= '0';
         wait for 1 ns;
         P_PHI_2 <= '1';
@@ -121,8 +121,6 @@ begin
         wait for 1 ns;
         P_PHI_2 <= '1';
         wait for 1 ns;
-
-
         -- HBL --------------------------------------------
         H3 <= '0';
         H4 <= '0';
