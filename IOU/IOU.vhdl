@@ -43,7 +43,7 @@ architecture RTL of IOU is
         port (
             PHI_0 : in std_logic;
 
-            POC_N  : out std_logic
+            POC_N : out std_logic
         );
     end component;
 
@@ -326,7 +326,7 @@ architecture RTL of IOU is
 
     signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                                   : std_logic;
     signal P_PHI_2, PHI_1, CTC14S                                                                 : std_logic;
-    signal FORCE_RESET_N_LOW, RESET_N, IN_RESET                                              : std_logic;
+    signal FORCE_RESET_N_LOW, RESET_N, IN_RESET                                                   : std_logic;
     signal HPE_N, V5, V4, V3, V2, V1, V0, VC, VB, VA, H5, H4, H3, H2, H1, PAKST, TC, TC14S, FLASH : std_logic;
     signal HIRESEN_N, C040_7_N, HBL, BL_N, VBL_N, V1_N_V5_N, V2_V2_N, SERR, KSTRB, AKD            : std_logic;
     signal EN80VID, FLG1, FLG2, PENIO_N, ALTSTKZP, INTC300_N, INTC300, S_80COL, PAYMAR            : std_logic;
@@ -346,7 +346,7 @@ architecture RTL of IOU is
     signal H0_INT, LGR_TXT_N_INT, ORA7_INT : std_logic;
 begin
     U_POWER_ON_DETECTION : POWER_ON_DETECTION port map(
-        PHI_0   => PHI_0,
+        PHI_0 => PHI_0,
         POC_N => POC_N
     );
 
@@ -375,7 +375,7 @@ begin
     U_IOU_RESET : IOU_RESET port map(
         PHI_1             => PHI_1,
         TC                => TC,
-        POC_N               => POC_N,
+        POC_N             => POC_N,
         FORCE_RESET_N_LOW => FORCE_RESET_N_LOW
     );
     IN_RESET    <= PIN_RESET_N;

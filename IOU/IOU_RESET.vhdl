@@ -25,7 +25,7 @@ architecture RTL of IOU_RESET is
 begin
     process (POC_N, TC, PHI_1)
     begin
-        if(POC_N = '0') then
+        if (POC_N = '0') then
             PWR_ON_FINISHED <= '0';
         elsif (TC = '1' and PHI_1 = '1') then
             PWR_ON_FINISHED <= '1';

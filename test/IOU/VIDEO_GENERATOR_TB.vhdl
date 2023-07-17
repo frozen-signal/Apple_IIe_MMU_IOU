@@ -249,7 +249,7 @@ begin
 
         P_PHI_1 <= '1';
         wait for 1 ns;
-        assert(CLRGAT_N = '0') report "expect CLRGAT_N LOW" severity error;
+        assert(CLRGAT_N = '1') report "expect CLRGAT_N HIGH" severity error;
 
         P_PHI_1 <= '0';
         wait for 1 ns;
@@ -257,7 +257,7 @@ begin
         P_PHI_1 <= '1';
         PCLRGAT <= '1';
         wait for 1 ns;
-        assert(CLRGAT_N = '1') report "expect CLRGAT_N HIGH" severity error;
+        assert(CLRGAT_N = '0') report "expect CLRGAT_N LOW" severity error;
 
         -- SYNC_N ---------------------------------------
         P_PHI_1 <= '0';

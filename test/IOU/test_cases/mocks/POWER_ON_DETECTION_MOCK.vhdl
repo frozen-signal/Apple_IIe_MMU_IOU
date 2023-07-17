@@ -5,7 +5,7 @@ use work.IOU_TESTBENCH_PACKAGE.all;
 entity POWER_ON_DETECTION_MOCK is
     port (
         PHI_0 : in std_logic;
-        POC_N  : out std_logic
+        POC_N : out std_logic
     );
 end POWER_ON_DETECTION_MOCK;
 
