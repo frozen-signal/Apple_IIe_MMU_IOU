@@ -25,7 +25,7 @@ begin
 
     process (POC_N, C03X_N)
     begin
-        if (POC_N = '1') then
+        if (POC_N = '0') then
             CURRENT_SPKR <= '0';
         elsif (rising_edge(C03X_N)) then
             CURRENT_SPKR <= not CURRENT_SPKR;
@@ -35,7 +35,7 @@ begin
 
     process (POC_N, C02X_N)
     begin
-        if (POC_N = '1') then
+        if (POC_N = '0') then
             CURRENT_CASSO <= '0';
         elsif (rising_edge(C02X_N)) then
             CURRENT_CASSO <= not CURRENT_CASSO;
