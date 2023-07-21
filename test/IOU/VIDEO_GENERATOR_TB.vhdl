@@ -68,88 +68,17 @@ begin
     );
 
     process begin
-        -- E0 tests
-        V3 <= '0';
-        H3 <= '1';
-        wait for 1 ns;
-        assert(E0 = '0') report "expect E0 LOW" severity error;
-
-        V3 <= '1';
-        H3 <= '1';
-        wait for 1 ns;
-        assert(E0 = '1') report "expect E0 HIGH" severity error;
-
-        V3 <= '0';
-        H3 <= '0';
-        wait for 1 ns;
-        assert(E0 = '1') report "expect E0 HIGH" severity error;
-
-        V3 <= '1';
-        H3 <= '0';
-        wait for 1 ns;
-        assert(E0 = '0') report "expect E0 LOW" severity error;
-
-        -- E1 tests
-        H3 <= '0';
-        V3 <= '0';
-        H4 <= '0';
-        V4 <= '0';
-        wait for 1 ns;
-        assert(E1 = '0') report "expect E1 LOW" severity error;
-
-        H3 <= '1';
-        V3 <= '0';
-        H4 <= '0';
-        V4 <= '0';
-        wait for 1 ns;
-        assert(E1 = '1') report "expect E1 HIGH" severity error;
-
-        H3 <= '0';
-        V3 <= '1';
-        H4 <= '0';
-        V4 <= '0';
-        wait for 1 ns;
-        assert(E1 = '1') report "expect E1 HIGH" severity error;
-
-        H3 <= '0';
-        V3 <= '0';
-        H4 <= '1';
-        V4 <= '0';
-        wait for 1 ns;
-        assert(E1 = '1') report "expect E1 HIGH" severity error;
-
-        H3 <= '0';
-        V3 <= '0';
-        H4 <= '0';
-        V4 <= '1';
-        wait for 1 ns;
-        assert(E1 = '1') report "expect E1 HIGH" severity error;
-
-        H3 <= '1';
-        V3 <= '0';
-        H4 <= '0';
-        V4 <= '1';
-        wait for 1 ns;
-        assert(E1 = '0') report "expect E1 LOW" severity error;
-
-        -- E2/E3 tests
+        -- E0-E3 tests ----------
         H3 <= '0';
         H4 <= '0';
         H5 <= '0';
         V3 <= '0';
         V4 <= '0';
         wait for 1 ns;
-        assert(E2 = '1') report "expect E2 HIGH" severity error;
         assert(E3 = '1') report "expect E3 HIGH" severity error;
-
-        H3 <= '0';
-        H4 <= '0';
-        H5 <= '1';
-        V3 <= '0';
-        V4 <= '0';
-        wait for 1 ns;
-        assert(E2 = '0') report "expect E2 LOW" severity error;
-        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
 
         H3 <= '0';
         H4 <= '0';
@@ -157,8 +86,10 @@ begin
         V3 <= '0';
         V4 <= '1';
         wait for 1 ns;
-        assert(E2 = '1') report "expect E2 HIGH" severity error;
         assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
 
         H3 <= '0';
         H4 <= '0';
@@ -166,17 +97,329 @@ begin
         V3 <= '1';
         V4 <= '0';
         wait for 1 ns;
-        assert(E2 = '0') report "expect E2 LOW" severity error;
         assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
 
-        H3 <= '1';
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '0';
+        V3 <= '1';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '1';
+        V3 <= '0';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '1';
+        V3 <= '0';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '1';
+        V3 <= '1';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '1';
+        V3 <= '1';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '0';
+        V3 <= '0';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '0';
+        V3 <= '0';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '0';
+        V3 <= '1';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '0';
+        V3 <= '1';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '1';
+        V3 <= '0';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '1';
+        V3 <= '0';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '1';
+        V3 <= '1';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
         H4 <= '1';
         H5 <= '1';
         V3 <= '1';
         V4 <= '1';
         wait for 1 ns;
-        assert(E2 = '0') report "expect E2 LOW" severity error;
         assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '0';
+        V3 <= '0';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '0';
+        V3 <= '0';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '0';
+        V3 <= '1';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '0';
+        V3 <= '1';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '1';
+        V3 <= '0';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '1';
+        V3 <= '0';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '1';
+        V3 <= '1';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '0';
+        H5 <= '1';
+        V3 <= '1';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '0';
+        V3 <= '0';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '0';
+        V3 <= '0';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '0';
+        V3 <= '1';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '0';
+        V3 <= '1';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '1';
+        V3 <= '0';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '1';
+        V3 <= '0';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '1') report "expect E2 HIGH" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '1') report "expect E0 HIGH" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '1';
+        V3 <= '1';
+        V4 <= '0';
+        wait for 1 ns;
+        assert(E3 = '1') report "expect E3 HIGH" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '0') report "expect E1 LOW" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        H3 <= '0';
+        H4 <= '1';
+        H5 <= '1';
+        V3 <= '1';
+        V4 <= '1';
+        wait for 1 ns;
+        assert(E3 = '0') report "expect E3 LOW" severity error;
+        assert(E2 = '0') report "expect E2 LOW" severity error;
+        assert(E1 = '1') report "expect E1 HIGH" severity error;
+        assert(E0 = '0') report "expect E0 LOW" severity error;
 
         -- RA9_N tests
         VID6      <= '0';

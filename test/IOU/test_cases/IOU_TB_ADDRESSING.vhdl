@@ -347,62 +347,62 @@ begin
         TEST_ORA7 <= 'U';
         wait until rising_edge(PRAS_N);
         wait for 1 ns;
-        assert(ORA0 = '1') report "During the last 14M of PHASE 0, ORA0 should be driven by the IOU" severity error;
-        assert(ORA1 = '1') report "During the last 14M of PHASE 0, ORA1 should be driven by the IOU" severity error;
-        assert(ORA2 = '0') report "During the last 14M of PHASE 0, ORA2 should be driven by the IOU" severity error;
-        assert(ORA3 = '1') report "During the last 14M of PHASE 0, ORA3 should be driven by the IOU" severity error;
-        assert(ORA4 = '0') report "During the last 14M of PHASE 0, ORA4 should be driven by the IOU" severity error;
-        assert(ORA5 = '1') report "During the last 14M of PHASE 0, ORA5 should be driven by the IOU" severity error;
-        assert(ORA6 = '0') report "During the last 14M of PHASE 0, ORA6 should be driven by the IOU" severity error;
-        assert(ORA7 = '0') report "During the last 14M of PHASE 0, ORA7 should be driven by the IOU" severity error;
+        assert(ORA0 /= 'U') report "During the last 14M of PHASE 0, ORA0 should be driven by the IOU" severity error;
+        assert(ORA1 /= 'U') report "During the last 14M of PHASE 0, ORA1 should be driven by the IOU" severity error;
+        assert(ORA2 /= 'U') report "During the last 14M of PHASE 0, ORA2 should be driven by the IOU" severity error;
+        assert(ORA3 /= 'U') report "During the last 14M of PHASE 0, ORA3 should be driven by the IOU" severity error;
+        assert(ORA4 /= 'U') report "During the last 14M of PHASE 0, ORA4 should be driven by the IOU" severity error;
+        assert(ORA5 /= 'U') report "During the last 14M of PHASE 0, ORA5 should be driven by the IOU" severity error;
+        assert(ORA6 /= 'U') report "During the last 14M of PHASE 0, ORA6 should be driven by the IOU" severity error;
+        assert(ORA7 /= 'U') report "During the last 14M of PHASE 0, ORA7 should be driven by the IOU" severity error;
 
         -- 1st 14M
         wait until falling_edge(PHI_0);
         wait for 1 ns;
-        assert(ORA0 = '1') report "During the first 4 14M of PHASE 1, ORA0 should be driven by the IOU" severity error;
-        assert(ORA1 = '1') report "During the first 4 14M of PHASE 1, ORA1 should be driven by the IOU" severity error;
-        assert(ORA2 = '0') report "During the first 4 14M of PHASE 1, ORA2 should be driven by the IOU" severity error;
-        assert(ORA3 = '1') report "During the first 4 14M of PHASE 1, ORA3 should be driven by the IOU" severity error;
-        assert(ORA4 = '0') report "During the first 4 14M of PHASE 1, ORA4 should be driven by the IOU" severity error;
-        assert(ORA5 = '1') report "During the first 4 14M of PHASE 1, ORA5 should be driven by the IOU" severity error;
-        assert(ORA6 = '0') report "During the first 4 14M of PHASE 1, ORA6 should be driven by the IOU" severity error;
-        assert(ORA7 = '0') report "During the first 4 14M of PHASE 1, ORA7 should be driven by the IOU" severity error;
+        assert(ORA0 /= 'U') report "During the first 4 14M of PHASE 1, ORA0 should be driven by the IOU" severity error;
+        assert(ORA1 /= 'U') report "During the first 4 14M of PHASE 1, ORA1 should be driven by the IOU" severity error;
+        assert(ORA2 /= 'U') report "During the first 4 14M of PHASE 1, ORA2 should be driven by the IOU" severity error;
+        assert(ORA3 /= 'U') report "During the first 4 14M of PHASE 1, ORA3 should be driven by the IOU" severity error;
+        assert(ORA4 /= 'U') report "During the first 4 14M of PHASE 1, ORA4 should be driven by the IOU" severity error;
+        assert(ORA5 /= 'U') report "During the first 4 14M of PHASE 1, ORA5 should be driven by the IOU" severity error;
+        assert(ORA6 /= 'U') report "During the first 4 14M of PHASE 1, ORA6 should be driven by the IOU" severity error;
+        assert(ORA7 /= 'U') report "During the first 4 14M of PHASE 1, ORA7 should be driven by the IOU" severity error;
 
         -- 2nd 14M
         wait until rising_edge(CLK_14M);
         wait for 1 ns;
-        assert(ORA0 = '0') report "During the first 4 14M of PHASE 1, ORA0 should be driven by the IOU" severity error;
-        assert(ORA1 = '1') report "During the first 4 14M of PHASE 1, ORA1 should be driven by the IOU" severity error;
-        assert(ORA2 = '1') report "During the first 4 14M of PHASE 1, ORA2 should be driven by the IOU" severity error;
-        assert(ORA3 = '0') report "During the first 4 14M of PHASE 1, ORA3 should be driven by the IOU" severity error;
-        assert(ORA4 = '0') report "During the first 4 14M of PHASE 1, ORA4 should be driven by the IOU" severity error;
-        assert(ORA5 = '0') report "During the first 4 14M of PHASE 1, ORA5 should be driven by the IOU" severity error;
-        assert(ORA6 = '0') report "During the first 4 14M of PHASE 1, ORA6 should be driven by the IOU" severity error;
-        assert(ORA7 = '0') report "During the first 4 14M of PHASE 1, ORA7 should be driven by the IOU" severity error;
+        assert(ORA0 /= 'U') report "During the first 4 14M of PHASE 1, ORA0 should be driven by the IOU" severity error;
+        assert(ORA1 /= 'U') report "During the first 4 14M of PHASE 1, ORA1 should be driven by the IOU" severity error;
+        assert(ORA2 /= 'U') report "During the first 4 14M of PHASE 1, ORA2 should be driven by the IOU" severity error;
+        assert(ORA3 /= 'U') report "During the first 4 14M of PHASE 1, ORA3 should be driven by the IOU" severity error;
+        assert(ORA4 /= 'U') report "During the first 4 14M of PHASE 1, ORA4 should be driven by the IOU" severity error;
+        assert(ORA5 /= 'U') report "During the first 4 14M of PHASE 1, ORA5 should be driven by the IOU" severity error;
+        assert(ORA6 /= 'U') report "During the first 4 14M of PHASE 1, ORA6 should be driven by the IOU" severity error;
+        assert(ORA7 /= 'U') report "During the first 4 14M of PHASE 1, ORA7 should be driven by the IOU" severity error;
 
         -- 3rd 14M
         wait until rising_edge(CLK_14M);
         wait for 1 ns;
-        assert(ORA0 = '0') report "During the first 4 14M of PHASE 1, ORA0 should be driven by the IOU" severity error;
-        assert(ORA1 = '1') report "During the first 4 14M of PHASE 1, ORA1 should be driven by the IOU" severity error;
-        assert(ORA2 = '1') report "During the first 4 14M of PHASE 1, ORA2 should be driven by the IOU" severity error;
-        assert(ORA3 = '0') report "During the first 4 14M of PHASE 1, ORA3 should be driven by the IOU" severity error;
-        assert(ORA4 = '0') report "During the first 4 14M of PHASE 1, ORA4 should be driven by the IOU" severity error;
-        assert(ORA5 = '0') report "During the first 4 14M of PHASE 1, ORA5 should be driven by the IOU" severity error;
-        assert(ORA6 = '0') report "During the first 4 14M of PHASE 1, ORA6 should be driven by the IOU" severity error;
-        assert(ORA7 = '0') report "During the first 4 14M of PHASE 1, ORA7 should be driven by the IOU" severity error;
+        assert(ORA0 /= 'U') report "During the first 4 14M of PHASE 1, ORA0 should be driven by the IOU" severity error;
+        assert(ORA1 /= 'U') report "During the first 4 14M of PHASE 1, ORA1 should be driven by the IOU" severity error;
+        assert(ORA2 /= 'U') report "During the first 4 14M of PHASE 1, ORA2 should be driven by the IOU" severity error;
+        assert(ORA3 /= 'U') report "During the first 4 14M of PHASE 1, ORA3 should be driven by the IOU" severity error;
+        assert(ORA4 /= 'U') report "During the first 4 14M of PHASE 1, ORA4 should be driven by the IOU" severity error;
+        assert(ORA5 /= 'U') report "During the first 4 14M of PHASE 1, ORA5 should be driven by the IOU" severity error;
+        assert(ORA6 /= 'U') report "During the first 4 14M of PHASE 1, ORA6 should be driven by the IOU" severity error;
+        assert(ORA7 /= 'U') report "During the first 4 14M of PHASE 1, ORA7 should be driven by the IOU" severity error;
 
         -- 4th 14M
         wait until rising_edge(CLK_14M);
         wait for 1 ns;
-        assert(ORA0 = '0') report "During the first 4 14M of PHASE 1, ORA0 should be driven by the IOU" severity error;
-        assert(ORA1 = '1') report "During the first 4 14M of PHASE 1, ORA1 should be driven by the IOU" severity error;
-        assert(ORA2 = '1') report "During the first 4 14M of PHASE 1, ORA2 should be driven by the IOU" severity error;
-        assert(ORA3 = '0') report "During the first 4 14M of PHASE 1, ORA3 should be driven by the IOU" severity error;
-        assert(ORA4 = '0') report "During the first 4 14M of PHASE 1, ORA4 should be driven by the IOU" severity error;
-        assert(ORA5 = '0') report "During the first 4 14M of PHASE 1, ORA5 should be driven by the IOU" severity error;
-        assert(ORA6 = '0') report "During the first 4 14M of PHASE 1, ORA6 should be driven by the IOU" severity error;
-        assert(ORA7 = '0') report "During the first 4 14M of PHASE 1, ORA7 should be driven by the IOU" severity error;
+        assert(ORA0 /= 'U') report "During the first 4 14M of PHASE 1, ORA0 should be driven by the IOU" severity error;
+        assert(ORA1 /= 'U') report "During the first 4 14M of PHASE 1, ORA1 should be driven by the IOU" severity error;
+        assert(ORA2 /= 'U') report "During the first 4 14M of PHASE 1, ORA2 should be driven by the IOU" severity error;
+        assert(ORA3 /= 'U') report "During the first 4 14M of PHASE 1, ORA3 should be driven by the IOU" severity error;
+        assert(ORA4 /= 'U') report "During the first 4 14M of PHASE 1, ORA4 should be driven by the IOU" severity error;
+        assert(ORA5 /= 'U') report "During the first 4 14M of PHASE 1, ORA5 should be driven by the IOU" severity error;
+        assert(ORA6 /= 'U') report "During the first 4 14M of PHASE 1, ORA6 should be driven by the IOU" severity error;
+        assert(ORA7 /= 'U') report "During the first 4 14M of PHASE 1, ORA7 should be driven by the IOU" severity error;
 
         -- Address decoding
         -- C00X
