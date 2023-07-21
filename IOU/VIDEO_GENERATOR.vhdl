@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity VIDEO_GENERATOR is
     port (
@@ -32,22 +33,31 @@ architecture RTL of VIDEO_GENERATOR is
     signal L6_6   : std_logic;
     signal H5_N   : std_logic;
     signal H3_N   : std_logic;
+    signal SUMS   : unsigned(3 downto 0);
 begin
     H3_N <= not H3;
     H5_N <= not H5;
 
-    -- IOU_1 @D-2
-    K8_6  <= H4 nand V4;
-    K8_8  <= (H4 or V4) nand K8_6;
-    L9_13 <= H3 nor V3;
-    K8_3  <= K8_6 nand (L9_13 or K8_8);
-    H8_8  <= H5_N xor V3;
-    N7_8  <= (H5_N and V3) nor (K8_3 and H8_8);
+    -- The schematics seems to have some problems with the computation of Σ0, Σ1, Σ2, and Σ3
+    -- Instead we use here what is described in "Understanding the Apple IIe" by Jim Sather, P.5-9:
+    --                      1
+    --    H5'   H5'   H4   H3
+    --  + V4    V3    V4   V3
+    --    -------------------
+    --    Σ3    Σ2    Σ1   Σ0
+    --
+    -- In the schematics, the location of these elements are:
+    --   * almost all of IOU_1 @D-2
+    --   * Σ0: IOU_1 @C-2:J8-8
+    --   * Σ1: IOU_1 @C-2:J8-6
+    --   * Σ2: IOU_1 @D-1:H8-11
+    --   * Σ3: IOU_1 @D-1:H8-6
 
-    E0 <= V3 xor H3_N;          -- IOU_1 @C-2:J8-8
-    E1 <= K8_8 xor L9_13;       -- IOU_1 @C-2:J8-6
-    E2 <= H8_8 xor K8_3;        -- IOU_1 @D-1:H8-11
-    E3 <= (H5 xor V4) xor N7_8; -- IOU_1 @D-1:H8-6
+    SUMS <= ("0001" + (H5_N & H5_N & H4 & H3) + (V4 & V3 & V4 & V3));
+    E0   <= SUMS(0); -- SUM-A3
+    E1   <= SUMS(1); -- SUM-A4
+    E2   <= SUMS(2); -- SUM-A5
+    E3   <= SUMS(3); -- SUM-A6
 
     -- IOU_2 @D-4:L9-1
     VID6_N <= not VID6;

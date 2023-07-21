@@ -24,7 +24,7 @@ end VIDEO_SCANNER;
 -- more efficient and simpler than 6x LS161s chained with a ripple carry overflow.
 architecture RTL of VIDEO_SCANNER is
     signal counters : unsigned(23 downto 0); -- It's safe if we don't initialize counters: at power-up POC_N is LOW
-                                             --    and will initialize the signal.
+    --    and will initialize the signal.
 
     signal HPE_N_INT, VA_INT, TC_INT : std_logic;
 begin
@@ -35,7 +35,6 @@ begin
         elsif (rising_edge(P_PHI_2)) then
             if (HPE_N_INT = '0') then
                 counters(6 downto 0) <= "1000000";
-                counters(7)          <= VA_INT;
             else
                 counters <= counters + 1;
             end if;

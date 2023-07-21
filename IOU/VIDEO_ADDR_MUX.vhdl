@@ -32,20 +32,24 @@ begin
     ZB_INT    <= VB when HIRESEN_N = '0' else not VID_PG2_N;
     ZC_INT    <= VC when HIRESEN_N = '0' else '0';
     ZD_INT    <= VID_PG2_N when HIRESEN_N = '0' else '0';
-    ZE_INT    <= HIRESEN_N nor VID_PG2_N;
+    ZE_INT    <= HIRESEN_N nor VID_PG2_N; -- IOU_2 @A-4:L9-4
 
     -- IOU_1 @D-3:A9
     RA_ENABLE_N <= Q3_PRAS_N nand P_PHI_1;
 
-    RA0 <= V2 when PRAS_N = '0' else H0;
-    RA1 <= E3 when PRAS_N = '0' else H1;
-    RA2 <= ZA_INT when PRAS_N = '0' else H2;
-    RA3 <= ZB_INT when PRAS_N = '0' else E0;
+    -- IOU_1 @C-D-3:A9 & B9
+    -- The inputs of the LS257 are incorrect on the schematics. Doulble-checked against
+    -- "Understanding the Apple IIe" by Jim Sather, p.5-8
+    -- and "Apple II reference manual for //e only", p.157
+    RA0 <= H0 when PRAS_N = '1' else V1;
+    RA1 <= H1 when PRAS_N = '1' else V2;
+    RA2 <= H2 when PRAS_N = '1' else ZA_INT;
+    RA3 <= E0 when PRAS_N = '1' else ZB_INT;
 
-    RA4 <= ZC_INT when PRAS_N = '0' else E1;
-    RA5 <= ZD_INT when PRAS_N = '0' else E2;
-    RA6 <= ZE_INT when PRAS_N = '0' else V0; -- ZE/V1 has been simplified to ZE since boning option 64K is always high
-    RA7 <= '0' when PRAS_N = '0' else V1;
+    RA4 <= E1 when PRAS_N = '1' else ZC_INT;
+    RA5 <= E2 when PRAS_N = '1' else ZD_INT;
+    RA6 <= E3 when PRAS_N = '1' else ZE_INT; -- ZE/V1 has been simplified to ZE since boning option 64K is always high
+    RA7 <= V0 when PRAS_N = '1' else '0';
 
     ZA <= ZA_INT;
     ZB <= ZB_INT;

@@ -1,6 +1,5 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
-use ieee.numeric_std.all;
 
 -- When the computer is powered on, the RESET_N is forced LOW for a certain time. This is what is described on MMU_1:
 --

@@ -87,7 +87,7 @@ begin
         VA        <= '1';
         VB        <= '1';
         VC        <= '1';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(ZA = '1') report "expect ZA HIGH" severity error;
         assert(ZB = '1') report "expect ZB HIGH" severity error;
         assert(ZC = '1') report "expect ZC HIGH" severity error;
@@ -96,7 +96,7 @@ begin
 
         PG2_N   <= '1';
         EN80VID <= '0';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(ZA = '1') report "expect ZA HIGH" severity error;
         assert(ZB = '1') report "expect ZB HIGH" severity error;
         assert(ZC = '1') report "expect ZC HIGH" severity error;
@@ -105,7 +105,7 @@ begin
 
         PG2_N   <= '0';
         EN80VID <= '1';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(ZA = '1') report "expect ZA HIGH" severity error;
         assert(ZB = '1') report "expect ZB HIGH" severity error;
         assert(ZC = '1') report "expect ZC HIGH" severity error;
@@ -114,7 +114,7 @@ begin
 
         EN80VID   <= '0';
         HIRESEN_N <= '1';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(ZA = '0') report "expect ZA LOW" severity error;
         assert(ZB = '1') report "expect ZB HIGH" severity error;
         assert(ZC = '0') report "expect ZC LOW" severity error;
@@ -123,7 +123,7 @@ begin
 
         PG2_N   <= '1';
         EN80VID <= '0';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(ZA = '1') report "expect ZA HIGH" severity error;
         assert(ZB = '0') report "expect ZB LOW" severity error;
         assert(ZC = '0') report "expect ZC LOW" severity error;
@@ -132,7 +132,7 @@ begin
 
         PG2_N   <= '0';
         EN80VID <= '1';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(ZA = '1') report "expect ZA HIGH" severity error;
         assert(ZB = '0') report "expect ZB LOW" severity error;
         assert(ZC = '0') report "expect ZC LOW" severity error;
@@ -142,25 +142,26 @@ begin
         -- RA0-RA7 tests
         Q3_PRAS_N <= '0';
         P_PHI_1   <= '0';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "expect RA_ENABLE_N HIGH" severity error;
 
         Q3_PRAS_N <= '1';
         P_PHI_1   <= '0';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "expect RA_ENABLE_N HIGH" severity error;
 
         Q3_PRAS_N <= '0';
         P_PHI_1   <= '1';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "expect RA_ENABLE_N HIGH" severity error;
 
         Q3_PRAS_N <= '1';
         P_PHI_1   <= '1';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(RA_ENABLE_N = '0') report "expect RA_ENABLE_N LOW" severity error;
 
         PRAS_N    <= '0';
+        V1        <= '1';
         V2        <= '1';
         E3        <= '1';
         PG2_N     <= '0';
@@ -169,7 +170,7 @@ begin
         VA        <= '1';
         VB        <= '1';
         VC        <= '1';
-        wait for 1 ms;
+        wait for 1 ns;
         assert(RA0 = '1') report "expect RA0 HIGH" severity error;
         assert(RA1 = '1') report "expect RA1 HIGH" severity error;
         assert(RA2 = '1') report "expect RA2 HIGH" severity error;
@@ -179,21 +180,24 @@ begin
         assert(RA6 = '1') report "expect RA6 HIGH" severity error;
         assert(RA7 = '0') report "expect RA7 LOW" severity error;
 
-        PRAS_N <= '1';
-        VA     <= 'U';
-        VB     <= 'U';
-        VC     <= 'U';
-        V2     <= 'U';
-        E3     <= 'U';
-        H0     <= '1';
-        H1     <= '1';
-        H2     <= '1';
-        E0     <= '1';
-        E1     <= '1';
-        E2     <= '1';
-        V0     <= '1';
-        V1     <= '1';
-        wait for 1 ms;
+        PRAS_N    <= '1';
+        VA        <= 'U';
+        VB        <= 'U';
+        VC        <= 'U';
+        V2        <= 'U';
+        E3        <= '1';
+        H0        <= '1';
+        H1        <= '1';
+        H2        <= '1';
+        E0        <= '1';
+        E1        <= '1';
+        E2        <= '1';
+        V0        <= '1';
+        V1        <= '1';
+        EN80VID   <= 'U';
+        HIRESEN_N <= 'U';
+        PG2_N     <= 'U';
+        wait for 1 ns;
         assert(RA0 = '1') report "expect RA0 HIGH" severity error;
         assert(RA1 = '1') report "expect RA1 HIGH" severity error;
         assert(RA2 = '1') report "expect RA2 HIGH" severity error;
