@@ -48,7 +48,7 @@ begin
 
     RA4 <= E1 when PRAS_N = '1' else ZC_INT;
     RA5 <= E2 when PRAS_N = '1' else ZD_INT;
-    RA6 <= E3 when PRAS_N = '1' else ZE_INT; -- ZE/V1 has been simplified to ZE since boning option 64K is always high
+    RA6 <= E3 when PRAS_N = '1' else ZE_INT; -- ZE/V1 has been simplified to ZE since bonding option 64K is always high
     RA7 <= V0 when PRAS_N = '1' else '0';
 
     ZA <= ZA_INT;

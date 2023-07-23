@@ -14,7 +14,7 @@ entity HAL_TIMING_MOCK is
 end HAL_TIMING_MOCK;
 
 architecture MOCK of HAL_TIMING_MOCK is
-    constant HALF_14M_CYCLE : time := 35 ns;
+    constant HALF_14M_CYCLE : time := 34.920639355 ns;
 
     signal CLK_COUNTER : integer := 0;
 begin
