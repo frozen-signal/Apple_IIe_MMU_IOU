@@ -14,6 +14,7 @@ architecture VIDEO_ADDR_MUX_TEST of VIDEO_ADDR_MUX_TB is
             VA, VB, VC     : in std_logic;
             Q3_PRAS_N      : in std_logic;
             PRAS_N         : in std_logic;
+            RAS_N          : in std_logic;
             P_PHI_1        : in std_logic;
             V0, V1, V2     : in std_logic;
             H0, H1, H2     : in std_logic;
@@ -32,6 +33,7 @@ architecture VIDEO_ADDR_MUX_TEST of VIDEO_ADDR_MUX_TB is
     signal VA, VB, VC     : std_logic;
     signal Q3_PRAS_N      : std_logic;
     signal PRAS_N         : std_logic;
+    signal RAS_N          : std_logic;
     signal P_PHI_1        : std_logic;
     signal V0, V1, V2     : std_logic;
     signal H0, H1, H2     : std_logic;
@@ -52,6 +54,7 @@ begin
         VC          => VC,
         Q3_PRAS_N   => Q3_PRAS_N,
         PRAS_N      => PRAS_N,
+        RAS_N       => PRAS_N,  -- We don't test the ROW hold time; we simply use PRAS_N without the delay
         P_PHI_1     => P_PHI_1,
         V0          => V0,
         V1          => V1,
@@ -185,15 +188,15 @@ begin
         VB        <= 'U';
         VC        <= 'U';
         V2        <= 'U';
-        E3        <= '1';
         H0        <= '1';
         H1        <= '1';
         H2        <= '1';
         E0        <= '1';
         E1        <= '1';
         E2        <= '1';
+        E3        <= '1';
         V0        <= '1';
-        V1        <= '1';
+        V1        <= 'U';
         EN80VID   <= 'U';
         HIRESEN_N <= 'U';
         PG2_N     <= 'U';
@@ -205,7 +208,7 @@ begin
         assert(RA4 = '1') report "expect RA4 HIGH" severity error;
         assert(RA5 = '1') report "expect RA5 HIGH" severity error;
         assert(RA6 = '1') report "expect RA6 HIGH" severity error;
-        assert(RA7 = '1') report "expect RA7 LOW" severity error;
+        assert(RA7 = '1') report "expect RA7 HIGH" severity error;
 
         assert false report "Test done." severity note;
         wait;

@@ -39,6 +39,22 @@ end IOU;
 architecture RTL of IOU is
     constant NTSC : std_logic := '1'; -- FIXME: How should options be handled? Input pin? Leave as constant?
 
+    -- FIXME: Use generics to switch
+    -- component RAS_HOLD_TIME_ALTERA is
+    --     port (
+    --         PRAS_N : in std_logic;
+
+    --         RAS_N : out std_logic
+    --     );
+    -- end component;
+    component RAS_HOLD_TIME_TEST is
+        port (
+            PRAS_N : in std_logic;
+
+            RAS_N : out std_logic
+        );
+    end component;
+
     component POWER_ON_DETECTION is
         port (
             PHI_0 : in std_logic;
@@ -238,6 +254,7 @@ architecture RTL of IOU is
             VA, VB, VC     : in std_logic;
             Q3_PRAS_N      : in std_logic;
             PRAS_N         : in std_logic;
+            RAS_N          : in std_logic;
             P_PHI_1        : in std_logic;
             V0, V1, V2     : in std_logic;
             H0, H1, H2     : in std_logic;
@@ -324,6 +341,7 @@ architecture RTL of IOU is
         );
     end component;
 
+    signal RAS_N : std_logic;
     signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                                   : std_logic;
     signal P_PHI_2, PHI_1, CTC14S                                                                 : std_logic;
     signal FORCE_RESET_N_LOW, RESET_N, IN_RESET                                                   : std_logic;
@@ -345,6 +363,15 @@ architecture RTL of IOU is
 
     signal H0_INT, LGR_TXT_N_INT, ORA7_INT : std_logic;
 begin
+    -- U_RAS_HOLD_TIME : RAS_HOLD_TIME_ALTERA port map(
+    --     PRAS_N => PRAS_N,
+    --     RAS_N => RAS_N
+    -- );
+    U_RAS_HOLD_TIME : RAS_HOLD_TIME_TEST port map(
+        PRAS_N => PRAS_N,
+        RAS_N => RAS_N
+    );
+
     U_POWER_ON_DETECTION : POWER_ON_DETECTION port map(
         PHI_0 => PHI_0,
         POC_N => POC_N
@@ -577,6 +604,7 @@ begin
         VC          => VC,
         Q3_PRAS_N   => Q3_PRAS_N,
         PRAS_N      => PRAS_N,
+        RAS_N       => RAS_N,
         P_PHI_1     => P_PHI_1,
         V0          => V0,
         V1          => V1,

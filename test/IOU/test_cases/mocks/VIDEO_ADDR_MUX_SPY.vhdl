@@ -10,6 +10,7 @@ entity VIDEO_ADDR_MUX_SPY is
         VA, VB, VC     : in std_logic;
         Q3_PRAS_N      : in std_logic;
         PRAS_N         : in std_logic;
+        RAS_N          : in std_logic;
         P_PHI_1        : in std_logic;
         V0, V1, V2     : in std_logic;
         H0, H1, H2     : in std_logic;
@@ -31,6 +32,7 @@ architecture SPY of VIDEO_ADDR_MUX_SPY is
             VA, VB, VC     : in std_logic;
             Q3_PRAS_N      : in std_logic;
             PRAS_N         : in std_logic;
+            RAS_N          : in std_logic;
             P_PHI_1        : in std_logic;
             V0, V1, V2     : in std_logic;
             H0, H1, H2     : in std_logic;
@@ -55,6 +57,7 @@ begin
         VC          => VC,
         Q3_PRAS_N   => Q3_PRAS_N,
         PRAS_N      => PRAS_N,
+        RAS_N       => RAS_N,
         P_PHI_1     => P_PHI_1,
         V0          => V0,
         V1          => V1,

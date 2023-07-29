@@ -25,6 +25,22 @@ entity MMU is
 end MMU;
 
 architecture RTL of MMU is
+    -- FIXME: Use generics to switch
+    -- component RAS_HOLD_TIME_ALTERA is
+    --     port (
+    --         PRAS_N : in std_logic;
+
+    --         RAS_N : out std_logic
+    --     );
+    -- end component;
+    component RAS_HOLD_TIME_TEST is
+        port (
+            PRAS_N : in std_logic;
+
+            RAS_N : out std_logic
+        );
+    end component;
+
     component MMU_ADDR_DECODER is
         port (
             A     : in std_logic_vector(15 downto 0);
@@ -298,16 +314,18 @@ architecture RTL of MMU is
         port (
             A         : in std_logic_vector(15 downto 0);
             PRAS_N    : in std_logic;
+            RAS_N     : in std_logic;
             P_PHI_0   : in std_logic;
             Q3_PRAS_N : in std_logic;
             DXXX_N    : in std_logic;
             BANK1     : in std_logic;
 
-            RA       : out std_logic_vector(7 downto 0);
-            ENABLE_N : out std_logic
+            RA          : out std_logic_vector(7 downto 0);
+            RA_ENABLE_N : out std_logic
         );
     end component;
 
+    signal RAS_N : std_logic;
     signal PHI_1, INH                                                                            : std_logic;
     signal CXXX_FXXX, FXXX_N, EXXX_N, DXXX_N, CXXX, C8_FXX, C8_FXX_N, C0_7XX_N, E_FXXX_N, D_FXXX : std_logic;
     signal MC0XX_N, MC3XX, MC00X_N, MC01X_N, MC04X_N, MC05X_N, MC06X_N, MC07X_N, MCFFF_N         : std_logic;
@@ -329,6 +347,15 @@ architecture RTL of MMU is
 begin
     PHI_1 <= not PHI_0;
     INH   <= not INH_N;
+
+    -- U_RAS_HOLD_TIME : RAS_HOLD_TIME_ALTERA port map(
+    --     PRAS_N => PRAS_N,
+    --     RAS_N => RAS_N
+    -- );
+    U_RAS_HOLD_TIME : RAS_HOLD_TIME_TEST port map(
+        PRAS_N => PRAS_N,
+        RAS_N => RAS_N
+    );
 
     U_ADDR_DECODER : MMU_ADDR_DECODER port map(
         A           => A,
@@ -566,13 +593,14 @@ begin
     U_MMU_RA : MMU_RA port map(
         A         => A,
         PRAS_N    => PRAS_N,
+        RAS_N     => RAS_N,
         P_PHI_0   => P_PHI_0,
         Q3_PRAS_N => Q3_PRAS_N,
         DXXX_N    => DXXX_N,
         BANK1     => BANK1,
 
         RA       => UNGATED_RA,
-        ENABLE_N => RA_ENABLE_N
+        RA_ENABLE_N => RA_ENABLE_N
     );
     ORA <= UNGATED_RA when RA_ENABLE_N = '0' else "ZZZZZZZZ";
 

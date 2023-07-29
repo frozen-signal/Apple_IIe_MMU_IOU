@@ -9,13 +9,14 @@ architecture MMU_RA_TEST of MMU_RA_TB is
         port (
             A         : in std_logic_vector(15 downto 0);
             PRAS_N    : in std_logic;
+            RAS_N     : in std_logic;
             P_PHI_0   : in std_logic;
             Q3_PRAS_N : in std_logic;
             DXXX_N    : in std_logic;
             BANK1     : in std_logic;
 
             RA       : out std_logic_vector(7 downto 0);
-            ENABLE_N : out std_logic
+            RA_ENABLE_N : out std_logic
         );
     end component;
 
@@ -26,40 +27,41 @@ architecture MMU_RA_TEST of MMU_RA_TB is
     signal DXXX_N    : std_logic;
     signal BANK1     : std_logic;
     signal RA        : std_logic_vector(7 downto 0);
-    signal ENABLE_N  : std_logic;
+    signal RA_ENABLE_N  : std_logic;
 
 begin
     dut : MMU_RA port map(
         A         => A,
         PRAS_N    => PRAS_N,
+        RAS_N     => PRAS_N, -- We don't test the ROW hold time; we simply use PRAS_N without the delay
         P_PHI_0   => P_PHI_0,
         Q3_PRAS_N => Q3_PRAS_N,
         DXXX_N    => DXXX_N,
         BANK1     => BANK1,
         RA        => RA,
-        ENABLE_N  => ENABLE_N
+        RA_ENABLE_N  => RA_ENABLE_N
     );
 
     process begin
         P_PHI_0   <= '1';
         Q3_PRAS_N <= '1';
         wait for 1 ns;
-        assert(ENABLE_N = '0') report "When P_PHI_0 and Q3_PRAS_N are HIGH; expect ENABLE LOW" severity error;
+        assert(RA_ENABLE_N = '0') report "When P_PHI_0 and Q3_PRAS_N are HIGH; expect ENABLE LOW" severity error;
 
         P_PHI_0   <= '0';
         Q3_PRAS_N <= '1';
         wait for 1 ns;
-        assert(ENABLE_N = '1') report "When P_PHI_0 is LOW and Q3_PRAS_N is HIGH; expect ENABLE HIGH" severity error;
+        assert(RA_ENABLE_N = '1') report "When P_PHI_0 is LOW and Q3_PRAS_N is HIGH; expect ENABLE HIGH" severity error;
 
         P_PHI_0   <= '1';
         Q3_PRAS_N <= '0';
         wait for 1 ns;
-        assert(ENABLE_N = '1') report "When P_PHI_0 is HIGH and Q3_PRAS_N is LOW; expect ENABLE HIGH" severity error;
+        assert(RA_ENABLE_N = '1') report "When P_PHI_0 is HIGH and Q3_PRAS_N is LOW; expect ENABLE HIGH" severity error;
 
         P_PHI_0   <= '0';
         Q3_PRAS_N <= '0';
         wait for 1 ns;
-        assert(ENABLE_N = '1') report "When P_PHI_0 and Q3_PRAS_N LOW; expect ENABLE HIGH" severity error;
+        assert(RA_ENABLE_N = '1') report "When P_PHI_0 and Q3_PRAS_N LOW; expect ENABLE HIGH" severity error;
 
         A     <= "XXXXXXX00X000000";
         PRAS_N <= '1';
