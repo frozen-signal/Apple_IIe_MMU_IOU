@@ -2,8 +2,9 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- When the computer is powered on, POC is used to detect the power-on event. This is what is described on MMU_1:
+-- When the computer is powered on, the POC signal is used to detect the power-on event.
 --
+-- This is what is described on MMU_1:
 -- The circuits at B-3:A3-2 and the 555 timer at B-2:B3 are a power-on detection circuit. That
 -- circuit will hold POC HIGH for about 300ms, then drive POC LOW. When that happens other circuits will
 -- be allowed to initialize (See IOU_RESET). During that time, RESET_N is held LOW.

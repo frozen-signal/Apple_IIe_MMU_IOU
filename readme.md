@@ -1,5 +1,5 @@
 Note: This project is currently under development.<br/>
-![IOU](https://img.shields.io/badge/IOU-Non_Functionnal-red)<br/>
+![IOU](https://img.shields.io/badge/IOU-Partially_Functionnal-yellow)<br/>
 ![MMU](https://img.shields.io/badge/MMU-Partially_Functionnal-yellow)<br/>
 
 
@@ -41,6 +41,7 @@ And all testbenches can be simulated with this command:
 
 # Directory Structure
 * **COMMON**: Components common to the MMU and the IOU.
+* **CUSTOM**: Components that may need to be changed depending on the hardware used.
 * **TTL**: Implementation of a few TTL components used in the schematics.
 * **MMU**: Components that makes the MMU.
 * **IOU**: Components that makes the IOU.
