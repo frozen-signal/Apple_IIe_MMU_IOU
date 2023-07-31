@@ -20,7 +20,6 @@ architecture VIDEO_ADDR_MUX_TEST of VIDEO_ADDR_MUX_TB is
             H0, H1, H2     : in std_logic;
             E0, E1, E2, E3 : in std_logic;
 
-            ZA, ZB, ZC, ZD, ZE : out std_logic;
             RA_ENABLE_N        : out std_logic;
             RA0, RA1, RA2, RA3,
             RA4, RA5, RA6, RA7 : out std_logic
@@ -39,7 +38,6 @@ architecture VIDEO_ADDR_MUX_TEST of VIDEO_ADDR_MUX_TB is
     signal H0, H1, H2     : std_logic;
     signal E0, E1, E2, E3 : std_logic;
 
-    signal ZA, ZB, ZC, ZD, ZE : std_logic;
     signal RA_ENABLE_N        : std_logic;
     signal RA0, RA1, RA2, RA3,
     RA4, RA5, RA6, RA7 : std_logic;
@@ -66,11 +64,6 @@ begin
         E1          => E1,
         E2          => E2,
         E3          => E3,
-        ZA          => ZA,
-        ZB          => ZB,
-        ZC          => ZC,
-        ZD          => ZD,
-        ZE          => ZE,
         RA_ENABLE_N => RA_ENABLE_N,
         RA0         => RA0,
         RA1         => RA1,
@@ -84,6 +77,8 @@ begin
 
     process begin
         -- ZA-ZE tests
+        PRAS_N <= '0';
+
         PG2_N     <= '0';
         EN80VID   <= '0';
         HIRESEN_N <= '0';
@@ -91,56 +86,56 @@ begin
         VB        <= '1';
         VC        <= '1';
         wait for 1 ns;
-        assert(ZA = '1') report "expect ZA HIGH" severity error;
-        assert(ZB = '1') report "expect ZB HIGH" severity error;
-        assert(ZC = '1') report "expect ZC HIGH" severity error;
-        assert(ZD = '0') report "expect ZD LOW" severity error;
-        assert(ZE = '1') report "expect ZE HIGH" severity error;
+        assert(RA2 = '1') report "expect ZA HIGH" severity error;
+        assert(RA3 = '1') report "expect ZB HIGH" severity error;
+        assert(RA4 = '1') report "expect ZC HIGH" severity error;
+        assert(RA5 = '0') report "expect ZD LOW" severity error;
+        assert(RA6 = '1') report "expect ZE HIGH" severity error;
 
         PG2_N   <= '1';
         EN80VID <= '0';
         wait for 1 ns;
-        assert(ZA = '1') report "expect ZA HIGH" severity error;
-        assert(ZB = '1') report "expect ZB HIGH" severity error;
-        assert(ZC = '1') report "expect ZC HIGH" severity error;
-        assert(ZD = '1') report "expect ZD HIGH" severity error;
-        assert(ZE = '0') report "expect ZE LOW" severity error;
+        assert(RA2 = '1') report "expect ZA HIGH" severity error;
+        assert(RA3 = '1') report "expect ZB HIGH" severity error;
+        assert(RA4 = '1') report "expect ZC HIGH" severity error;
+        assert(RA5 = '1') report "expect ZD HIGH" severity error;
+        assert(RA6 = '0') report "expect ZE LOW" severity error;
 
         PG2_N   <= '0';
         EN80VID <= '1';
         wait for 1 ns;
-        assert(ZA = '1') report "expect ZA HIGH" severity error;
-        assert(ZB = '1') report "expect ZB HIGH" severity error;
-        assert(ZC = '1') report "expect ZC HIGH" severity error;
-        assert(ZD = '1') report "expect ZD HIGH" severity error;
-        assert(ZE = '0') report "expect ZE LOW" severity error;
+        assert(RA2 = '1') report "expect ZA HIGH" severity error;
+        assert(RA3 = '1') report "expect ZB HIGH" severity error;
+        assert(RA4 = '1') report "expect ZC HIGH" severity error;
+        assert(RA5 = '1') report "expect ZD HIGH" severity error;
+        assert(RA6 = '0') report "expect ZE LOW" severity error;
 
         EN80VID   <= '0';
         HIRESEN_N <= '1';
         wait for 1 ns;
-        assert(ZA = '0') report "expect ZA LOW" severity error;
-        assert(ZB = '1') report "expect ZB HIGH" severity error;
-        assert(ZC = '0') report "expect ZC LOW" severity error;
-        assert(ZD = '0') report "expect ZD LOW" severity error;
-        assert(ZE = '0') report "expect ZE LOW" severity error;
+        assert(RA2 = '0') report "expect ZA LOW" severity error;
+        assert(RA3 = '1') report "expect ZB HIGH" severity error;
+        assert(RA4 = '0') report "expect ZC LOW" severity error;
+        assert(RA5 = '0') report "expect ZD LOW" severity error;
+        assert(RA6 = '0') report "expect ZE LOW" severity error;
 
         PG2_N   <= '1';
         EN80VID <= '0';
         wait for 1 ns;
-        assert(ZA = '1') report "expect ZA HIGH" severity error;
-        assert(ZB = '0') report "expect ZB LOW" severity error;
-        assert(ZC = '0') report "expect ZC LOW" severity error;
-        assert(ZD = '0') report "expect ZD LOW" severity error;
-        assert(ZE = '0') report "expect ZE LOW" severity error;
+        assert(RA2 = '1') report "expect ZA HIGH" severity error;
+        assert(RA3 = '0') report "expect ZB LOW" severity error;
+        assert(RA4 = '0') report "expect ZC LOW" severity error;
+        assert(RA5 = '0') report "expect ZD LOW" severity error;
+        assert(RA6 = '0') report "expect ZE LOW" severity error;
 
         PG2_N   <= '0';
         EN80VID <= '1';
         wait for 1 ns;
-        assert(ZA = '1') report "expect ZA HIGH" severity error;
-        assert(ZB = '0') report "expect ZB LOW" severity error;
-        assert(ZC = '0') report "expect ZC LOW" severity error;
-        assert(ZD = '0') report "expect ZD LOW" severity error;
-        assert(ZE = '0') report "expect ZE LOW" severity error;
+        assert(RA2 = '1') report "expect ZA HIGH" severity error;
+        assert(RA3 = '0') report "expect ZB LOW" severity error;
+        assert(RA4 = '0') report "expect ZC LOW" severity error;
+        assert(RA5 = '0') report "expect ZD LOW" severity error;
+        assert(RA6 = '0') report "expect ZE LOW" severity error;
 
         -- RA0-RA7 tests
         Q3_PRAS_N <= '0';
@@ -194,9 +189,9 @@ begin
         E0        <= '1';
         E1        <= '1';
         E2        <= '1';
-        E3        <= '1';
+        E3        <= 'U';
         V0        <= '1';
-        V1        <= 'U';
+        V1        <= '1';
         EN80VID   <= 'U';
         HIRESEN_N <= 'U';
         PG2_N     <= 'U';
@@ -208,7 +203,7 @@ begin
         assert(RA4 = '1') report "expect RA4 HIGH" severity error;
         assert(RA5 = '1') report "expect RA5 HIGH" severity error;
         assert(RA6 = '1') report "expect RA6 HIGH" severity error;
-        assert(RA7 = '1') report "expect RA7 HIGH" severity error;
+        assert(RA7 = '1') report "expect RA7 LOW" severity error;
 
         assert false report "Test done." severity note;
         wait;

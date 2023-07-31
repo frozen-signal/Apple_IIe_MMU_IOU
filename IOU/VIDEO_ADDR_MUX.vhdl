@@ -15,7 +15,6 @@ entity VIDEO_ADDR_MUX is
         H0, H1, H2     : in std_logic;
         E0, E1, E2, E3 : in std_logic;
 
-        ZA, ZB, ZC, ZD, ZE : out std_logic;
         RA_ENABLE_N        : out std_logic;
         RA0, RA1, RA2, RA3,
         RA4, RA5, RA6, RA7 : out std_logic
@@ -41,8 +40,16 @@ architecture RTL of VIDEO_ADDR_MUX is
     end component;
 
     signal VID_PG2_N : std_logic;
-    signal ZA_INT, ZB_INT, ZC_INT, ZD_INT, ZE_INT : std_logic;
+    signal ZA, ZB, ZC, ZD, ZE : std_logic;
 begin
+    -- IOU_2 @C-4:E2-8
+    VID_PG2_N <= PG2_N or EN80VID;
+    ZA    <= VA when HIRESEN_N = '0' else VID_PG2_N;
+    ZB    <= VB when HIRESEN_N = '0' else not VID_PG2_N;
+    ZC    <= VC when HIRESEN_N = '0' else '0';
+    ZD    <= VID_PG2_N when HIRESEN_N = '0' else '0';
+    ZE    <= HIRESEN_N nor VID_PG2_N; -- IOU_2 @A-4:L9-4
+
     IOU_RA_MUX : RA_MUX port map(
         Q3_PRAS_N => Q3_PRAS_N,
         PRAS_N => PRAS_N,
@@ -50,24 +57,22 @@ begin
         P_PHI => P_PHI_1,
 
         -- IOU_1 @C-D-3:A9 & B9
-        -- The inputs of the LS257 are incorrect on the schematics. Doulble-checked against
-        -- "Understanding the Apple IIe" by Jim Sather, p.5-8
-        -- and "Apple II reference manual for //e only", p.157
         ROW_RA0 => H0,
         ROW_RA1 => H1,
         ROW_RA2 => H2,
         ROW_RA3 => E0,
         ROW_RA4 => E1,
         ROW_RA5 => E2,
-        ROW_RA6 => E3,
-        ROW_RA7 => V0,
-        COL_RA0 => V1,
-        COL_RA1 => V2,
-        COL_RA2 => ZA_INT,
-        COL_RA3 => ZB_INT,
-        COL_RA4 => ZC_INT,
-        COL_RA5 => ZD_INT,
-        COL_RA6 => ZE_INT, -- ZE/V1 has been simplified to ZE since bonding option 64K is always high
+        ROW_RA6 => V0,
+        ROW_RA7 => V1,
+
+        COL_RA0 => V2,
+        COL_RA1 => E3,
+        COL_RA2 => ZA,
+        COL_RA3 => ZB,
+        COL_RA4 => ZC,
+        COL_RA5 => ZD,
+        COL_RA6 => ZE, -- ZE/V1 has been simplified to ZE since bonding option 64K is always high
         COL_RA7 => '0',
 
         RA_ENABLE_N => RA_ENABLE_N,  -- IOU_1 @D-3:A9
@@ -80,19 +85,5 @@ begin
         RA6 => RA6,
         RA7 => RA7
     );
-
-    -- IOU_2 @C-4:E2-8
-    VID_PG2_N <= PG2_N or EN80VID;
-    ZA_INT    <= VA when HIRESEN_N = '0' else VID_PG2_N;
-    ZB_INT    <= VB when HIRESEN_N = '0' else not VID_PG2_N;
-    ZC_INT    <= VC when HIRESEN_N = '0' else '0';
-    ZD_INT    <= VID_PG2_N when HIRESEN_N = '0' else '0';
-    ZE_INT    <= HIRESEN_N nor VID_PG2_N; -- IOU_2 @A-4:L9-4
-
-    ZA <= ZA_INT;
-    ZB <= ZB_INT;
-    ZC <= ZC_INT;
-    ZD <= ZD_INT;
-    ZE <= ZE_INT;
 
 end RTL;

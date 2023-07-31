@@ -260,7 +260,6 @@ architecture RTL of IOU is
             H0, H1, H2     : in std_logic;
             E0, E1, E2, E3 : in std_logic;
 
-            ZA, ZB, ZC, ZD, ZE : out std_logic;
             RA_ENABLE_N        : out std_logic;
             RA0, RA1, RA2, RA3,
             RA4, RA5, RA6, RA7 : out std_logic
@@ -354,7 +353,7 @@ architecture RTL of IOU is
     signal ITEXT, MIX, PG2, PG2_N, HIRES                                                          : std_logic;
     signal MUX_RA0, MUX_RA1, MUX_RA2, MUX_RA3, MUX_RA4, MUX_RA5, MUX_RA6, MUX_RA7                 : std_logic;
     signal IN_RA0, IN_RA1, IN_RA2, IN_RA3, IN_RA4, IN_RA5, IN_RA6                                 : std_logic;
-    signal ZA, ZB, ZC, ZD, ZE, RA_ENABLE_N                                                        : std_logic;
+    signal RA_ENABLE_N                                                                            : std_logic;
     signal MD7_ENABLE_N, UNGATED_MD7, PGR_TXT_N, PCLRGAT, PSYNC_N, POC_N, AKSTB                   : std_logic;
     signal D_KSTRB_N, STRBLE_N, CLR_DELAY_N, SET_DELAY                                            : std_logic;
     signal KEYLE, CLRKEY_N, AUTOREPEAT_DELAY, AUTOREPEAT_ACTIVE                                   : std_logic;
@@ -616,11 +615,6 @@ begin
         E1          => E1,
         E2          => E2,
         E3          => E3,
-        ZA          => ZA,
-        ZB          => ZB,
-        ZC          => ZC,
-        ZD          => ZD,
-        ZE          => ZE,
         RA_ENABLE_N => RA_ENABLE_N,
         RA0         => MUX_RA0,
         RA1         => MUX_RA1,

@@ -16,7 +16,6 @@ entity VIDEO_ADDR_MUX_SPY is
         H0, H1, H2     : in std_logic;
         E0, E1, E2, E3 : in std_logic;
 
-        ZA, ZB, ZC, ZD, ZE : out std_logic;
         RA_ENABLE_N        : out std_logic;
         RA0, RA1, RA2, RA3,
         RA4, RA5, RA6, RA7 : out std_logic
@@ -38,7 +37,6 @@ architecture SPY of VIDEO_ADDR_MUX_SPY is
             H0, H1, H2     : in std_logic;
             E0, E1, E2, E3 : in std_logic;
 
-            ZA, ZB, ZC, ZD, ZE : out std_logic;
             RA_ENABLE_N        : out std_logic;
             RA0, RA1, RA2, RA3,
             RA4, RA5, RA6, RA7 : out std_logic
@@ -69,11 +67,6 @@ begin
         E1          => E1,
         E2          => E2,
         E3          => E3,
-        ZA          => ZA,
-        ZB          => ZB,
-        ZC          => ZC,
-        ZD          => ZD,
-        ZE          => ZE,
         RA_ENABLE_N => RA_ENABLE_N_INT,
         RA0         => RA0_INT,
         RA1         => RA1_INT,
