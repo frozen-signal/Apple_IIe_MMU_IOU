@@ -89,6 +89,9 @@ architecture IOU_TB_SCANNER_MUX of IOU_TB_SCANNER_MUX_ENTITY is
     -- So the second segment is at $0480, the third at $0500 and so on. Page 2 follows the same logic, but starts at $0800.
     -- The wrap around means that the address following $047F is not $0480, but $0400. In other words, when scanning a line the address(15 downto 7)
     -- remains the same for the totality of the line.
+    --
+    -- Also note that address ORA0-7 during ROW and COLUMN strobe are not in a 'naive' order; they are not ROW OAR7-0 for address low bits and COLUMN ORA7-0 for
+    -- address high bits.
     procedure assertNextLine(constant txt_line_num                                 : integer;
                              constant expected_first_display_addr                  : in std_logic_vector(15 downto 0);
                              constant expected_first_hbl_addr                      : in std_logic_vector(15 downto 0);
@@ -96,6 +99,8 @@ architecture IOU_TB_SCANNER_MUX of IOU_TB_SCANNER_MUX_ENTITY is
                              signal ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0 : in std_logic;
                              signal PRAS_N                                         : in std_logic;
                              signal DBG_LINE, DBG_CHR_LINE, DBG_CHR : out std_logic_vector(7 downto 0)) is
+        variable row_real_ora : std_logic_vector(7 downto 0);
+        variable col_real_ora : std_logic_vector(7 downto 0);
         variable real_ora : std_logic_vector(15 downto 0);
         variable expected_ora_display : std_logic_vector(15 downto 0);
         variable expected_ora_hbl : std_logic_vector(15 downto 0);
@@ -117,10 +122,19 @@ architecture IOU_TB_SCANNER_MUX of IOU_TB_SCANNER_MUX_ENTITY is
                 wait until falling_edge(TB_RA_ENABLE_N);
                 wait for 1 ns;
                 DBG_CHR <= std_logic_vector(to_unsigned(chr_num, DBG_CHR'length));
-                real_ora(7 downto 0) := ORA7 & ORA6 & ORA5 & ORA4 & ORA3 & ORA2 & ORA1 & ORA0;
+
+                row_real_ora(7 downto 0) := ORA7 & ORA6 & ORA5 & ORA4 & ORA3 & ORA2 & ORA1 & ORA0;
+
                 wait until falling_edge(PRAS_N);
                 wait for 1 ns;
-                real_ora(15 downto 8) := ORA7 & ORA6 & ORA5 & ORA4 & ORA3 & ORA2 & ORA1 & ORA0;
+                col_real_ora(7 downto 0) := ORA7 & ORA6 & ORA5 & ORA4 & ORA3 & ORA2 & ORA1 & ORA0;
+
+                real_ora(15 downto 0) := col_real_ora(7 downto 2)   -- '0' & ZE downto ZA
+                                       & col_real_ora(0)            -- V2
+                                       & row_real_ora(7)            -- V1
+                                       & row_real_ora(6)            -- V0
+                                       & col_real_ora(1)            -- E3
+                                       & row_real_ora(5 downto 0);  -- E2 downto E0 & H2 downto H0
 
                 assert(TB_HBL = '1') report "Expected to be in horizontal blanking." severity error;
                 assert(real_ora = expected_ora_hbl)
@@ -138,10 +152,19 @@ architecture IOU_TB_SCANNER_MUX of IOU_TB_SCANNER_MUX_ENTITY is
                 wait until falling_edge(TB_RA_ENABLE_N);
                 wait for 1 ns;
                 DBG_CHR <= std_logic_vector(to_unsigned(chr_num, DBG_CHR'length));
-                real_ora(7 downto 0) := ORA7 & ORA6 & ORA5 & ORA4 & ORA3 & ORA2 & ORA1 & ORA0;
+
+                row_real_ora(7 downto 0) := ORA7 & ORA6 & ORA5 & ORA4 & ORA3 & ORA2 & ORA1 & ORA0;
+
                 wait until falling_edge(PRAS_N);
                 wait for 1 ns;
-                real_ora(15 downto 8) := ORA7 & ORA6 & ORA5 & ORA4 & ORA3 & ORA2 & ORA1 & ORA0;
+                col_real_ora(7 downto 0) := ORA7 & ORA6 & ORA5 & ORA4 & ORA3 & ORA2 & ORA1 & ORA0;
+
+                real_ora(15 downto 0) := col_real_ora(7 downto 2)   -- '0' & ZE downto ZA
+                                       & col_real_ora(0)            -- V2
+                                       & row_real_ora(7)            -- V1
+                                       & row_real_ora(6)            -- V0
+                                       & col_real_ora(1)            -- E3
+                                       & row_real_ora(5 downto 0);  -- E2 downto E0 & H2 downto H0
 
                 assert(TB_HBL = '0') report "Unexpected horizontal blanking during scanning." severity error;
                 assert(real_ora = expected_ora_display)
@@ -228,47 +251,46 @@ architecture IOU_TB_SCANNER_MUX of IOU_TB_SCANNER_MUX_ENTITY is
         wait until falling_edge(TB_TC);
         wait until rising_edge(TB_VBL_N);
 
-        -- FIXME fix this test
-        -- -- "Understanding the Apple IIe" by Jim Sather, P 5-12
-        -- -- Screen top
-        -- assertNextLine(0, x"0400", x"0468", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(1, x"0480", x"04E8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(2, x"0500", x"0568", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(3, x"0580", x"05E8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(4, x"0600", x"0668", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(5, x"0680", x"06E8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(6, x"0700", x"0768", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(7, x"0780", x"07E8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        -- "Understanding the Apple IIe" by Jim Sather, P 5-12
+        -- Screen top
+        assertNextLine(0, x"0400", x"0468", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(1, x"0480", x"04E8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(2, x"0500", x"0568", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(3, x"0580", x"05E8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(4, x"0600", x"0668", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(5, x"0680", x"06E8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(6, x"0700", x"0768", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(7, x"0780", x"07E8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
 
-        -- -- Screen middle
-        -- assertNextLine(8, x"0428", x"0410", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(9, x"04A8", x"0490", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(10, x"0528", x"0510", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(11, x"05A8", x"0590", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(12, x"0628", x"0610", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(13, x"06A8", x"0690", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(14, x"0728", x"0710", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(15, x"07A8", x"0790", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(16, x"0450", x"0438", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        -- Screen middle
+        assertNextLine(8, x"0428", x"0410", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(9, x"04A8", x"0490", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(10, x"0528", x"0510", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(11, x"05A8", x"0590", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(12, x"0628", x"0610", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(13, x"06A8", x"0690", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(14, x"0728", x"0710", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(15, x"07A8", x"0790", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(16, x"0450", x"0438", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
 
-        -- -- Screen bottom
-        -- assertNextLine(17, x"04D0", x"04B8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(18, x"0550", x"0538", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(19, x"05D0", x"05B8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(20, x"0650", x"0638", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(21, x"06D0", x"06B8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(22, x"0750", x"0738", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(23, x"07D0", x"07B8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        -- Screen bottom
+        assertNextLine(17, x"04D0", x"04B8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(18, x"0550", x"0538", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(19, x"05D0", x"05B8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(20, x"0650", x"0638", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(21, x"06D0", x"06B8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(22, x"0750", x"0738", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(23, x"07D0", x"07B8", '0', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
 
-        -- -- Vertical blanking
-        -- assertNextLine(24, x"0478", x"0460", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(25, x"04F8", x"04E0", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(26, x"0578", x"0560", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(27, x"05F8", x"05E0", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(28, x"0678", x"0660", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(29, x"06F8", x"06E0", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(30, x"0778", x"0760", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
-        -- assertNextLine(31, x"07F8", x"07E0", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        -- Vertical blanking
+        assertNextLine(24, x"0478", x"0460", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(25, x"04F8", x"04E0", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(26, x"0578", x"0560", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(27, x"05F8", x"05E0", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(28, x"0678", x"0660", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(29, x"06F8", x"06E0", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(30, x"0778", x"0760", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
+        assertNextLine(31, x"07F8", x"07E0", '1', ORA7, ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, PRAS_N, DBG_LINE, DBG_CHR_LINE, DBG_CHR);
 
         FINISHED <= '1';
         assert false report "Test done." severity note;
