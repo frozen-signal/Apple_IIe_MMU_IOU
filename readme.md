@@ -1,8 +1,9 @@
-Note: This project is currently under development.<br/>
-![IOU](https://img.shields.io/badge/IOU-Mostly_Functionnal_*-green)<br/>
+Note: This project is currently under development and not ready to be used in a hardware implementation.<br/>
+<br/>
+![IOU](https://img.shields.io/badge/IOU-Partially_Functionnal_*-yellow)<br/>
 ![MMU](https://img.shields.io/badge/MMU-Partially_Functionnal-yellow)<br/>
 
-\* The IOU still has problems with the 64K/80COL expansion card plugged-in. And there are some small enhancements still missing.
+\* The IOU still has problems with the 64K/80COL expansion card plugged-in and has an issue with HIRES graphics. There are also some small enhancements still missing.
 
 # Apple IIe MMU and IOU custom ICs
 
