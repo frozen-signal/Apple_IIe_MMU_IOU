@@ -57,8 +57,8 @@ begin
         RESET_N <= '0';
         wait for 1 ns;
         wait for 1 ns;
-        assert(ITEXT = '0') report "When RESET_N is LOW, value of ITEXT be LOW" severity error;
-        assert(MIX = '0') report "When RESET_N is LOW, value of MIX should be LOW" severity error;
+        assert(ITEXT = 'U') report "When RESET_N is LOW, value of ITEXT should not change" severity error;
+        assert(MIX = 'U') report "When RESET_N is LOW, value of MIX should not change" severity error;
         assert(PG2 = '0') report "When RESET_N is LOW, value of PG2 should be LOW" severity error;
         assert(HIRES = '0') report "When RESET_N is LOW, value of HIRES should be LOW" severity error;
         assert(AN0 = '0') report "When RESET_N is LOW, value of AN0 should be LOW" severity error;
@@ -73,8 +73,8 @@ begin
         A      <= "000";
         D      <= '1';
         wait for 1 ns;
-        assert(ITEXT = '0') report "When switches are disabled, value of ITEXT should not change" severity error;
-        assert(MIX = '0') report "When switches are disabled, value of MIX should not change" severity error;
+        assert(ITEXT = 'U') report "When switches are disabled, value of ITEXT should not change" severity error;
+        assert(MIX = 'U') report "When switches are disabled, value of MIX should not change" severity error;
         assert(PG2 = '0') report "When switches are disabled, value of PG2 should not change" severity error;
         assert(HIRES = '0') report "When switches are disabled, value of HIRES should not change" severity error;
         assert(AN0 = '0') report "When switches are disabled, value of AN0 should not change" severity error;
@@ -87,7 +87,7 @@ begin
         D      <= '1';
         wait for 1 ns;
         assert(ITEXT = '1') report "When address 000, value of ITEXT should take the value of D" severity error;
-        assert(MIX = '0') report "When address 000, value of MIX should not change" severity error;
+        assert(MIX = 'U') report "When address 000, value of MIX should not change" severity error;
         assert(PG2 = '0') report "When address 000, value of PG2 should not change" severity error;
         assert(HIRES = '0') report "When address 000, value of HIRES should not change" severity error;
         assert(AN0 = '0') report "When address 000, value of AN0 should not change" severity error;

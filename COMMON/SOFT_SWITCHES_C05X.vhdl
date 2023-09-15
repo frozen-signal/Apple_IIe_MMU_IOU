@@ -20,41 +20,43 @@ entity SOFT_SWITCHES_C05X is
 end SOFT_SWITCHES_C05X;
 
 architecture RTL of SOFT_SWITCHES_C05X is
-
-    component LATCH_9334 is
-        port (
-            C_N : in std_logic;
-            E_N : in std_logic;
-
-            D    : in std_logic;
-            ADDR : in std_logic_vector(2 downto 0);
-
-            Q0, Q1, Q2, Q3,
-            Q4, Q5, Q6, Q7 : out std_logic
-        );
-    end component;
 begin
     -- The book "Understanding the Apple IIe" by Jim Sather says that ITEXT and MIX are not changed by RESET_N going LOW. This is further supported
     -- by the fact that the schematics of Apple IIe's predecessor has the CLR pin of the 74LS259 tied to +5v
     -- (see page 207, component F4 of figure C-12 of "The Apple II Circuit Description" by W. Gayler).
-    -- However, the emulator schematics show the CLR pin tied to RESET_N. And the two switches that exist in both the MMU and IOU (PG2 and HIRES),
-    -- which both ASICs should always agree on their value, is shown to be cleared by RESET_N LOW. Plus, the ASIC schematics also show
-    -- the soft switches tied to reset. So, we'll side with the Apple's schematics.
+
+    -- ITEXT     RESET: WC050, SET: WC051, READ: C01A
+    -- MIX       RESET: WC052, SET: WC053, READ: C01B
+    -- PG2       RESET: WC054, SET: WC055, READ: C01C
+    -- HIRES     RESET: WC056, SET: WC057, READ: C01D
+    -- AN0       RESET: WC058, SET: WC059
+    -- AN1       RESET: WC05A, SET: WC05B
+    -- AN2       RESET: WC05C, SET: WC05D
+    -- AN3       RESET: WC05E, SET: WC05F
 
     -- IOU_1 @A-2:F7
-    SOFT_SWITCHES_LATCH : LATCH_9334 port map(
-        C_N  => RESET_N,
-        E_N  => C05X_N,
-        D    => D,
-        ADDR => SWITCH_ADDR,
-        Q0   => ITEXT, -- RESET: WC050, SET: WC051, READ: C01A
-        Q1   => MIX,   -- RESET: WC052, SET: WC053, READ: C01B
-        Q2   => PG2,   -- RESET: WC054, SET: WC055, READ: C01C
-        Q3   => HIRES, -- RESET: WC056, SET: WC057, READ: C01D
-        Q4   => AN0,   -- RESET: WC058, SET: WC059
-        Q5   => AN1,   -- RESET: WC05A, SET: WC05B
-        Q6   => AN2,   -- RESET: WC05C, SET: WC05D
-        Q7   => AN3    -- RESET: WC05E, SET: WC05F
-    );
+    process (RESET_N, C05X_N, D, SWITCH_ADDR) begin
+        if RESET_N = '0' then
+            -- CLEAR all excpet ITEXT and MIX
+            PG2 <= '0';
+            HIRES <= '0';
+            AN0 <= '0';
+            AN1 <= '0';
+            AN2 <= '0';
+            AN3 <= '0';
+        elsif C05X_N = '0' then
+            case (SWITCH_ADDR) is
+                when "000"  => ITEXT <= D;
+                when "001"  => MIX <= D;
+                when "010"  => PG2 <= D;
+                when "011"  => HIRES <= D;
+                when "100"  => AN0 <= D;
+                when "101"  => AN1 <= D;
+                when "110"  => AN2 <= D;
+                when "111"  => AN3 <= D;
+                when others => null;
+            end case;
+        end if;
+    end process;
 
 end RTL;
