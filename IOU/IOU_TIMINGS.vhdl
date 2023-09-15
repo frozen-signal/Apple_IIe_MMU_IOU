@@ -8,7 +8,7 @@ entity IOU_TIMINGS is
         PRAS_N  : in std_logic;
         TC14S   : in std_logic;
 
-        P_PHI_2 : out std_logic; -- Probaly means Phase-shifted PHI_2
+        P_PHI_2 : out std_logic; -- P_PHI_2 is HIGH for one 14M clk before and one 14M clock after a PHI_0 rising edge
         PHI_1   : out std_logic;
         CTC14S  : out std_logic
     );
