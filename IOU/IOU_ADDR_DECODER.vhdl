@@ -34,7 +34,7 @@ architecture RTL of IOU_ADDR_DECODER is
 begin
     -- A discrepency between "Understanding the Apple IIe" by Jim Sather and the emulator schematic is that Jim Sather writes that MD7 is
     -- enabled the last three 14M periods of PHASE 0 and the first 14M period of the following PHASE 1.
-    -- According to the emulator schematics, C01X_N is forced HIGH on Q3 HIGH (see LS138 below). And Soft Switches are not enabled when
+    -- According to the emulator schematics, C01X_N is forced HIGH on Q3 HIGH (see pin G2B_N of the LS138 below). And Soft Switches are not enabled when
     -- RC001X_N is HIGH.
 
     -- IOU_1 @D-3:H6

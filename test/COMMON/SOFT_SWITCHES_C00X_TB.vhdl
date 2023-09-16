@@ -12,7 +12,7 @@ architecture SOFT_SWITCHES_C00X_TEST of SOFT_SWITCHES_C00X_TB is
             C00X_N      : in std_logic;
             R_W_N       : in std_logic;
             RESET_N     : in std_logic;
-            PHI_0       : in std_logic;
+            PHI_1       : in std_logic;
 
             EN80VID   : out std_logic;
             FLG1      : out std_logic;
@@ -31,7 +31,7 @@ architecture SOFT_SWITCHES_C00X_TEST of SOFT_SWITCHES_C00X_TB is
     signal C00X_N  : std_logic;
     signal R_W_N   : std_logic;
     signal RESET_N : std_logic;
-    signal PHI_0   : std_logic;
+    signal PHI_1   : std_logic;
 
     signal EN80VID   : std_logic;
     signal FLG1      : std_logic;
@@ -50,7 +50,7 @@ begin
         C00X_N      => C00X_N,
         R_W_N       => R_W_N,
         RESET_N     => RESET_N,
-        PHI_0       => PHI_0,
+        PHI_1       => PHI_1,
 
         EN80VID   => EN80VID,
         FLG1      => FLG1,
@@ -64,7 +64,7 @@ begin
     );
 
     process begin
-        PHI_0 <= '1';
+        PHI_1 <= '0';
 
         RESET_N <= '0';
         wait for 1 ns;
@@ -96,6 +96,22 @@ begin
         assert(S_80COL = '0') report "When switches are disabled, value of S_80COL should not change" severity error;
         assert(PAYMAR = '0') report "When switches are disabled, value of PAYMAR should not change" severity error;
 
+        PHI_1 <= '1';
+        R_W_N  <= '0';
+        C00X_N <= '0';
+        A      <= "000";
+        D      <= '1';
+        wait for 1 ns;
+        assert(EN80VID = '0') report "When switches are disabled, value of EN80VID should not change" severity error;
+        assert(FLG1 = '0') report "When switches are disabled, value of FLG1 should not change" severity error;
+        assert(FLG2 = '0') report "When switches are disabled, value of FLG2 should not change" severity error;
+        assert(PENIO_N = '0') report "When switches are disabled, value of PENIO_N should not change" severity error;
+        assert(ALTSTKZP = '0') report "When switches are disabled, value of ALTSTKZP should not change" severity error;
+        assert(INTC300_N = '0') report "When switches are disabled, value of INTC300_N should not change" severity error;
+        assert(S_80COL = '0') report "When switches are disabled, value of S_80COL should not change" severity error;
+        assert(PAYMAR = '0') report "When switches are disabled, value of PAYMAR should not change" severity error;
+
+        PHI_1 <= '0';
         R_W_N  <= '0';
         C00X_N <= '0';
         A      <= "000";
@@ -187,20 +203,6 @@ begin
         assert(S_80COL = '1') report "When address 111, value of S_80COL should not change" severity error;
         assert(PAYMAR = '1') report "When address 111, value of PAYMAR should take the value of D" severity error;
 
-        PHI_0 <= '0';
-        wait for 1 ns;
-
-        A <= "000";
-        D <= '0';
-        wait for 1 ns;
-        assert(EN80VID = '1') report "During opposite PHASE, value of EN80VID should not change" severity error;
-        assert(FLG1 = '1') report "During opposite PHASE, value of FLG1 should not change" severity error;
-        assert(FLG2 = '1') report "During opposite PHASE, value of FLG2 should not change" severity error;
-        assert(PENIO_N = '1') report "During opposite PHASE, value of PENIO_N should not change" severity error;
-        assert(ALTSTKZP = '1') report "During opposite PHASE, value of ALTSTKZP should not change" severity error;
-        assert(INTC300_N = '1') report "During opposite PHASE, value of INTC300_N should not change" severity error;
-        assert(S_80COL = '1') report "During opposite PHASE, value of S_80COL should not change" severity error;
-        assert(PAYMAR = '1') report "During opposite PHASE, value of PAYMAR should not change" severity error;
         assert false report "Test done." severity note;
         wait;
 
