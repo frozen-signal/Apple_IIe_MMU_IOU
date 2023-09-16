@@ -4,7 +4,8 @@ use ieee.numeric_std.all;
 
 entity VIDEO_GENERATOR is
     port (
-        P_PHI_1    : in std_logic;
+        PHI_0      : in std_logic;
+        PRAS_N     : in std_logic;
         H3, H4, H5 : in std_logic;
         V3, V4     : in std_logic;
         VID6, VID7 : in std_logic;
@@ -67,18 +68,13 @@ begin
     -- IOU_2 @D-4:L8-3
     RA10_N <= (not (VID6_N or PAYMAR or (FLASH or LGR_TXT_N))) or VID7;
 
-    -- IOU_1 @B-2:R7-1
-    process (P_PHI_1, PCLRGAT)
+    process (PHI_0, PRAS_N)
     begin
-        if (P_PHI_1 = '1') then
+        if (PHI_0 = '1' and rising_edge(PRAS_N)) then
+            -- IOU_1 @B-2:R7-1
             CLRGAT_N <= not PCLRGAT;
-        end if;
-    end process;
 
-    -- IOU_1 @B-2:R7-15
-    process (P_PHI_1, PSYNC_N)
-    begin
-        if (P_PHI_1 = '1') then
+            -- IOU_1 @B-2:R7-15
             SYNC_N <= PSYNC_N;
         end if;
     end process;
