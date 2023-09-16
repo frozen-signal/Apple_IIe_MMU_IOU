@@ -290,7 +290,7 @@ architecture RTL of IOU is
 
     component IOU_KEYBOARD is
         port (
-            P_PHI_2            : in std_logic;
+            PHI_0              : in std_logic;
             PAKST              : in std_logic;
             BL_N               : in std_logic;
             KSTRB              : in std_logic;
@@ -644,7 +644,7 @@ begin
     );
 
     U_IOU_KEYBOARD : IOU_KEYBOARD port map(
-        P_PHI_2           => P_PHI_2,
+        PHI_0             => PHI_0,
         PAKST             => PAKST,
         BL_N              => BL_N,
         KSTRB             => KSTRB,
