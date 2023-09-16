@@ -191,7 +191,8 @@ architecture RTL of IOU is
 
     component VIDEO_GENERATOR is
         port (
-            P_PHI_1    : in std_logic;
+            PHI_0      : in std_logic;
+            PRAS_N     : in std_logic;
             H3, H4, H5 : in std_logic;
             V3, V4     : in std_logic;
             VID6, VID7 : in std_logic;
@@ -513,7 +514,8 @@ begin
     LGR_TXT_N <= LGR_TXT_N_INT;
 
     U_VIDEO_GENERATOR : VIDEO_GENERATOR port map(
-        P_PHI_1   => P_PHI_1,
+        PHI_0     => PHI_0,
+        PRAS_N    => PRAS_N,
         H3        => H3,
         H4        => H4,
         H5        => H5,

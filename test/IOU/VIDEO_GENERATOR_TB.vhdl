@@ -8,7 +8,8 @@ end VIDEO_GENERATOR_TB;
 architecture VIDEO_GENERATOR_TEST of VIDEO_GENERATOR_TB is
     component VIDEO_GENERATOR is
         port (
-            P_PHI_1    : in std_logic;
+            PHI_0      : in std_logic;
+            PRAS_N     : in std_logic;
             H3, H4, H5 : in std_logic;
             V3, V4     : in std_logic;
             VID6, VID7 : in std_logic;
@@ -26,7 +27,8 @@ architecture VIDEO_GENERATOR_TEST of VIDEO_GENERATOR_TB is
         );
     end component;
 
-    signal P_PHI_1    : std_logic;
+    signal PHI_0, PRAS_N : std_logic;
+
     signal H3, H4, H5 : std_logic;
     signal V3, V4     : std_logic;
     signal VID6, VID7 : std_logic;
@@ -44,7 +46,8 @@ architecture VIDEO_GENERATOR_TEST of VIDEO_GENERATOR_TB is
 
 begin
     dut : VIDEO_GENERATOR port map(
-        P_PHI_1   => P_PHI_1,
+        PHI_0     => PHI_0,
+        PRAS_N    => PRAS_N,
         H3        => H3,
         H4        => H4,
         H5        => H5,
@@ -485,37 +488,51 @@ begin
         assert(RA10_N = '0') report "expect RA10_N LOW" severity error;
 
         -- CLRGAT_N ---------------------------------------
-        P_PHI_1 <= '0';
+        PHI_0 <= '0';
+        PRAS_N <= '1';
         PCLRGAT <= '0';
         wait for 1 ns;
         assert(CLRGAT_N = 'U') report "expect CLRGAT_N unchanged" severity error;
 
-        P_PHI_1 <= '1';
+        PHI_0 <= '1';
+        PRAS_N <= '0';
+        wait for 1 ns;
+        assert(CLRGAT_N = 'U') report "expect CLRGAT_N unchanged" severity error;
+
+        PRAS_N <= '1';
+        PCLRGAT <= '0';
         wait for 1 ns;
         assert(CLRGAT_N = '1') report "expect CLRGAT_N HIGH" severity error;
 
-        P_PHI_1 <= '0';
+        PRAS_N <= '0';
         wait for 1 ns;
 
-        P_PHI_1 <= '1';
+        PRAS_N <= '1';
         PCLRGAT <= '1';
         wait for 1 ns;
         assert(CLRGAT_N = '0') report "expect CLRGAT_N LOW" severity error;
 
         -- SYNC_N ---------------------------------------
-        P_PHI_1 <= '0';
+        PHI_0 <= '0';
+        PRAS_N <= '1';
         PSYNC_N <= '0';
         wait for 1 ns;
         assert(SYNC_N = 'U') report "expect SYNC_N unchanged" severity error;
 
-        P_PHI_1 <= '1';
+        PHI_0 <= '1';
+        PRAS_N <= '0';
+        wait for 1 ns;
+        assert(SYNC_N = 'U') report "expect SYNC_N unchanged" severity error;
+
+        PHI_0 <= '1';
+        PRAS_N <= '1';
         wait for 1 ns;
         assert(SYNC_N = '0') report "expect SYNC_N LOW" severity error;
 
-        P_PHI_1 <= '0';
+        PRAS_N <= '0';
         wait for 1 ns;
 
-        P_PHI_1 <= '1';
+        PRAS_N <= '1';
         PSYNC_N <= '1';
         wait for 1 ns;
         assert(SYNC_N = '1') report "expect SYNC_N HIGH" severity error;
