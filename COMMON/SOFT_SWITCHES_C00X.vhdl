@@ -9,10 +9,7 @@ entity SOFT_SWITCHES_C00X is
         C00X_N      : in std_logic;
         R_W_N       : in std_logic;
         RESET_N     : in std_logic;
-        -- These are not directly shown in the emulator schematics. In the IOU, C00X_N is computed from Q3 and C0XX_N (IOU_1 @D-3:H6-15)
-        -- And C0XX_N is an input pin of the IOU coming from the LS138 UB5 (board schematics, part 2, upper right) which is gated by PHI_0 (PHI_1 LOW)
-        -- But for the MMU, we also gate by PHI_0 here.
-        PHI_0 : in std_logic;
+        PHI_1       : in std_logic;
 
         EN80VID   : out std_logic;
         FLG1      : out std_logic;
@@ -44,7 +41,7 @@ architecture RTL of SOFT_SWITCHES_C00X is
     signal ENABLE_N : std_logic;
     signal Q5_VALUE : std_logic;
 begin
-    ENABLE_N <= R_W_N or C00X_N or (not PHI_0);
+    ENABLE_N <= R_W_N or C00X_N or PHI_1;
 
     SOFT_SWITCHES_LATCH : LATCH_9334 port map(
         C_N  => RESET_N,
