@@ -2,6 +2,9 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity IOU is
+    generic(
+        NTSC_CONSTANT : std_logic := '1'
+    );
     port (
         -- IN only
         PHI_0      : in std_logic;
@@ -37,7 +40,7 @@ entity IOU is
 end IOU;
 
 architecture RTL of IOU is
-    constant NTSC : std_logic := '1'; -- FIXME: How should options be handled? Input pin? Leave as constant?
+    constant NTSC : std_logic := NTSC_CONSTANT;
 
     -- FIXME: Use generics to switch
     -- component RAS_HOLD_TIME_ALTERA is
@@ -352,7 +355,6 @@ architecture RTL of IOU is
     signal C00X_N, C01X_N, C02X_N, C03X_N, C04X_N, C05X_N, C07X_N, RC00X_N                        : std_logic;
     signal ITEXT, MIX, PG2, PG2_N, HIRES                                                          : std_logic;
     signal MUX_RA0, MUX_RA1, MUX_RA2, MUX_RA3, MUX_RA4, MUX_RA5, MUX_RA6, MUX_RA7                 : std_logic;
-    signal IN_RA0, IN_RA1, IN_RA2, IN_RA3, IN_RA4, IN_RA5, IN_RA6                                 : std_logic;
     signal RA_ENABLE_N                                                                            : std_logic;
     signal MD7_ENABLE_N, UNGATED_MD7, PGR_TXT_N, PCLRGAT, PSYNC_N, POC_N, AKSTB                   : std_logic;
     signal D_KSTRB_N, STRBLE_N, CLR_DELAY_N, SET_DELAY                                            : std_logic;
@@ -537,22 +539,15 @@ begin
         RA10_N    => RA10_N
     );
 
-    IN_RA0 <= ORA0;
-    IN_RA1 <= ORA1;
-    IN_RA2 <= ORA2;
-    IN_RA3 <= ORA3;
-    IN_RA4 <= ORA4;
-    IN_RA5 <= ORA5;
-    IN_RA6 <= ORA6;
     U_VIDEO_ADDR_LATCH : VIDEO_ADDR_LATCH port map(
         P_PHI_2 => P_PHI_2,
-        RA0     => IN_RA0,
-        RA1     => IN_RA1,
-        RA2     => IN_RA2,
-        RA3     => IN_RA3,
-        RA4     => IN_RA4,
-        RA5     => IN_RA5,
-        RA6     => IN_RA6,
+        RA0     => ORA0,
+        RA1     => ORA1,
+        RA2     => ORA2,
+        RA3     => ORA3,
+        RA4     => ORA4,
+        RA5     => ORA5,
+        RA6     => ORA6,
         LA0     => LA0,
         LA1     => LA1,
         LA2     => LA2,
