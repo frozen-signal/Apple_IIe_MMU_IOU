@@ -175,7 +175,7 @@ architecture RTL of IOU is
 
     component VIDEO_GRAPHICS is
         port (
-            P_PHI_2    : in std_logic;
+            PHI_0      : in std_logic;
             V2, V4     : in std_logic;
             VA, VB, VC : in std_logic;
             H0         : in std_logic;
@@ -494,7 +494,7 @@ begin
     );
 
     U_VIDEO_GRAPHICS : VIDEO_GRAPHICS port map(
-        P_PHI_2   => P_PHI_2,
+        PHI_0     => PHI_0,
         V2        => V2,
         V4        => V4,
         VA        => VA,
