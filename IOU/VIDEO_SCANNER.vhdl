@@ -6,7 +6,7 @@ entity VIDEO_SCANNER is
     port (
         POC_N   : in std_logic;
         NTSC    : in std_logic;
-        P_PHI_2 : in std_logic;
+        PHI_0   : in std_logic;
 
         HPE_N                  : out std_logic;
         V5, V4, V3, V2, V1, V0 : out std_logic;
@@ -23,16 +23,15 @@ end VIDEO_SCANNER;
 -- tries to keep close to the emulator schematics, but this is an exception. The implementation below is
 -- more efficient and simpler than 6x LS161s chained with a ripple carry overflow.
 architecture RTL of VIDEO_SCANNER is
-    signal counters : unsigned(23 downto 0); -- It's safe if we don't initialize counters: at power-up POC_N is LOW
-    --    and will initialize the signal.
+    signal counters : unsigned(20 downto 0); -- It's safe if we don't initialize counters: at power-up POC_N is LOW and will initialize the signal.
 
     signal HPE_N_INT, VA_INT, TC_INT : std_logic;
 begin
-    process (P_PHI_2, POC_N)
+    process (PHI_0, POC_N)
     begin
         if (POC_N = '0') then
-            counters <= "111111110000000000000000";
-        elsif (rising_edge(P_PHI_2)) then
+            counters <= "111110000000000000000";
+        elsif (rising_edge(PHI_0)) then
             if (HPE_N_INT = '0') then
                 counters(6 downto 0) <= "1000000";
             else

@@ -121,7 +121,7 @@ architecture RTL of MMU is
             C00X_N      : in std_logic;
             R_W_N       : in std_logic;
             RESET_N     : in std_logic;
-            PHI_0       : in std_logic;
+            PHI_1       : in std_logic;
 
             EN80VID   : out std_logic;
             FLG1      : out std_logic;
@@ -428,7 +428,7 @@ begin
         C00X_N      => MC00X_N,
         R_W_N       => R_W_N,
         RESET_N     => MPON_N,
-        PHI_0       => PHI_0,
+        PHI_1       => PHI_1,
 
         EN80VID   => EN80VID,
         FLG1      => FLG1,

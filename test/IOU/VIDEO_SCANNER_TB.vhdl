@@ -10,7 +10,7 @@ architecture VIDEO_SCANNER_TEST of VIDEO_SCANNER_TB is
         port (
             POC_N   : in std_logic;
             NTSC    : in std_logic;
-            P_PHI_2 : in std_logic;
+            PHI_0   : in std_logic;
 
             HPE_N                  : out std_logic;
             V5, V4, V3, V2, V1, V0 : out std_logic;
@@ -25,7 +25,7 @@ architecture VIDEO_SCANNER_TEST of VIDEO_SCANNER_TB is
 
     signal POC_N   : std_logic;
     signal NTSC    : std_logic;
-    signal P_PHI_2 : std_logic;
+    signal PHI_0   : std_logic;
 
     signal TC                     : std_logic;
     signal V5, V4, V3, V2, V1, V0 : std_logic;
@@ -40,7 +40,7 @@ begin
     dut : VIDEO_SCANNER port map(
         POC_N   => POC_N,
         NTSC    => NTSC,
-        P_PHI_2 => P_PHI_2,
+        PHI_0   => PHI_0,
         V5      => V5,
         V4      => V4,
         V3      => V3,
@@ -67,7 +67,7 @@ begin
     begin
         -- When POC_N is low, the video scanner should clear its values (asynchronously)
         -- POC_N will be LOW when computer is turned on. This is the only time the video scanner is cleared. ----------
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         POC_N   <= '0';
         NTSC    <= '1';
         wait for 1 ns;
@@ -92,7 +92,7 @@ begin
         -- After POC_N goes HIGH, initial values are loaded.
         POC_N <= '1';
         wait for 489.9634322 ns;
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         wait for 489.9634322 ns;
         assert(H0 = '0') report "H0 should be LOW" severity error;
         assert(H1 = '0') report "H1 should be LOW" severity error;
@@ -114,9 +114,9 @@ begin
         assert(TC = '0') report "TC should be LOW" severity error;
 
         for i in 1 to 15 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -139,9 +139,9 @@ begin
         assert(V5 = '0') report "V5 should be LOW" severity error;
         assert(TC = '0') report "TC should be LOW" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 489.9634322 ns;
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         wait for 489.9634322 ns;
 
         -- C9 should rollover and D9 increase 1
@@ -164,9 +164,9 @@ begin
         assert(TC = '0') report "TC should be LOW" severity error;
 
         for i in 80 to 191 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -191,9 +191,9 @@ begin
 
         -- 130: 128 steps + 2x loads
         for i in 1 to 130 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -218,9 +218,9 @@ begin
 
         -- 260: 256 steps + 4x loads
         for i in 1 to 260 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -245,9 +245,9 @@ begin
 
         -- 520: 512 steps + 8x loads
         for i in 1 to 520 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -272,9 +272,9 @@ begin
 
         -- 1040: 1024 steps + 16x loads
         for i in 1 to 1040 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -299,9 +299,9 @@ begin
 
         -- 2080: 2048 steps + 32x loads
         for i in 1 to 2080 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -326,9 +326,9 @@ begin
 
         -- 4160: 4096 steps + 64x loads
         for i in 1 to 4160 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -353,9 +353,9 @@ begin
 
         -- 8320: 8192 steps + 128x loads
         for i in 1 to 8320 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -380,9 +380,9 @@ begin
 
         -- 16640: 16384 steps + 256x loads
         for i in 1 to 16640 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -404,9 +404,9 @@ begin
         assert(V4 = '1') report "V4 should be HIGH" severity error;
         assert(V5 = '1') report "V5 should be HIGH" severity error;
         assert(TC = '1') report "TC should be HIGH" severity error;
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 489.9634322 ns;
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         wait for 489.9634322 ns;
 
         -- Once the video scanner power-on cycle is completed, a complete video scanner cycle will be 17030 P_PHI_2 cycles (for NTSC).
@@ -430,9 +430,9 @@ begin
         assert(V5 = '0') report "V5 should be LOW" severity error;
 
         for i in 1 to 17029 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
@@ -455,41 +455,41 @@ begin
         assert(TC = '1') report "TC should be HIGH" severity error;
 
         for i in 1 to 17030 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
         assert(PAKST = '0') report "PAKST should be LOW" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 489.9634322 ns;
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         wait for 489.9634322 ns;
 
         assert(PAKST = '1') report "PAKST should be HIGH" severity error;
 
         for i in 1 to 34060 + 68120 + 136240 - 2 loop
-            P_PHI_2 <= '0';
+            PHI_0   <= '0';
             wait for 489.9634322 ns;
-            P_PHI_2 <= '1';
+            PHI_0   <= '1';
             wait for 489.9634322 ns;
         end loop;
 
         assert(TC14S = '0') report "TC14S should be LOW" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 489.9634322 ns;
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         wait for 489.9634322 ns;
 
         assert(TC14S = '1') report "TC14S should be HIGH" severity error;
         assert(FLASH = '0') report "FLASH should be LOW" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 489.9634322 ns;
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         wait for 489.9634322 ns;
 
         assert(FLASH = '1') report "FLASH should be HIGH" severity error;
