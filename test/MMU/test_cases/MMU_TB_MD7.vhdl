@@ -111,12 +111,15 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- Set EN80VID
         TEST_STEP <= x"01";
         R_W_N     <= '0';
         A         <= x"C001";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C018";
@@ -129,6 +132,7 @@ begin
         R_W_N     <= '0';
         A         <= x"C000";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C018";
@@ -149,12 +153,15 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- Set FLG1
         TEST_STEP <= x"04";
         R_W_N     <= '0';
         A         <= x"C003";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C013";
@@ -167,6 +174,7 @@ begin
         R_W_N     <= '0';
         A         <= x"C002";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C013";
@@ -176,6 +184,8 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- FLG2 -----------------------------------------------------------
         TEST_STEP <= x"06";
@@ -187,12 +197,16 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
+
 
         -- Set FLG2
         TEST_STEP <= x"07";
         R_W_N     <= '0';
         A         <= x"C005";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C014";
@@ -205,6 +219,7 @@ begin
         R_W_N     <= '0';
         A         <= x"C004";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C014";
@@ -214,6 +229,8 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- PENIO_N ---------------------------------------------------------
         TEST_STEP <= x"09";
@@ -225,12 +242,15 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- Set PENIO_N
         TEST_STEP <= x"0A";
         R_W_N     <= '0';
         A         <= x"C007";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C015";
@@ -243,6 +263,7 @@ begin
         R_W_N     <= '0';
         A         <= x"C006";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C015";
@@ -252,6 +273,8 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- ALTSTKZP -------------------------------------------------------
         TEST_STEP <= x"0C";
@@ -263,12 +286,15 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- Set ALTSTKZP
         TEST_STEP <= x"0D";
         R_W_N     <= '0';
         A         <= x"C009";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C016";
@@ -281,6 +307,7 @@ begin
         R_W_N     <= '0';
         A         <= x"C008";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C016";
@@ -290,6 +317,8 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- INTC300_N ------------------------------------------------------
         TEST_STEP <= x"0F";
@@ -301,12 +330,15 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- Set INTC300_N
         TEST_STEP <= x"10";
         R_W_N     <= '0';
         A         <= x"C00B";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C017";
@@ -319,6 +351,7 @@ begin
         R_W_N     <= '0';
         A         <= x"C00A";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C017";
@@ -328,6 +361,8 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- C05X SOFT SWITCHES -------------------------------------------------------------------------------------
         -- We can't directly probe the C05X soft switches. We can check their value via CASEN_N
@@ -337,14 +372,17 @@ begin
         R_W_N     <= '0';
         A         <= x"C057"; -- SET HIRES
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         R_W_N <= '0';
         A     <= x"C055"; -- SET PG2
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         R_W_N <= '0';
         A     <= x"C001"; -- SET EN80VID
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"2000";
@@ -354,20 +392,25 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- HIRES is SET, PG2 is RESET -------------------------------------
         TEST_STEP <= x"13";
         R_W_N     <= '0';
         A         <= x"C057"; -- SET HIRES
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         R_W_N <= '0';
         A     <= x"C054"; -- RESET PG2
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         R_W_N <= '0';
         A     <= x"C001"; -- SET EN80VID
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"2000";
@@ -377,20 +420,25 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- HIRES is RESET, PG2 is SET -------------------------------------
         TEST_STEP <= x"14";
         R_W_N     <= '0';
         A         <= x"C056"; -- RESET HIRES
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         R_W_N <= '0';
         A     <= x"C055"; -- SET PG2
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         R_W_N <= '0';
         A     <= x"C001"; -- SET EN80VID
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"2000";
@@ -400,6 +448,8 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- C08X SOFT SWITCHES -------------------------------------------------------------------------------------
         -- BANK1/BANK2 ----------------------------------------------------
@@ -412,12 +462,15 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- Set BANK1
         TEST_STEP <= x"16";
         R_W_N     <= '1';
         A         <= x"C088";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C011";
@@ -430,6 +483,7 @@ begin
         R_W_N     <= '1';
         A         <= x"C080";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C011";
@@ -439,6 +493,8 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- RDRAM/RDROM ----------------------------------------------------
         TEST_STEP <= x"18";
@@ -450,12 +506,15 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- Set RDRAM
         TEST_STEP <= x"19";
         R_W_N     <= '1';
         A         <= x"C080";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C012";
@@ -468,6 +527,7 @@ begin
         R_W_N     <= '1';
         A         <= x"C081";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C012";
@@ -477,30 +537,37 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- WRPROT ---------------------------------------------------------
         TEST_STEP <= x"1B";
         R_W_N     <= '0';
         A         <= x"C057"; -- SET HIRES
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         R_W_N <= '0';
         A     <= x"C054"; -- RESET PG2
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         R_W_N <= '0';
         A     <= x"C001"; -- SET EN80VID
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C081"; -- To set WRPROT, first read any odd address in C08X range...
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '1';
         A     <= x"C080"; -- ...then read even address in C08X range.
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '0';
         A     <= x"D000";
@@ -513,6 +580,7 @@ begin
         A     <= x"C081";
         wait until rising_edge(PHI_0);
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         R_W_N <= '0';
         A     <= x"D000";
@@ -522,6 +590,8 @@ begin
 
         TEST_STEP <= "UUUUUUUU";
         resetMMU(PHI_0, A);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
 
         -- MD7 ENABLING -------------------------------------------------------------------------------------------
         -- When the MPU reads the state of an MMU soft switch, the MD7 enable gate appears to be PHASE0 + PHASE0' • Q3 • RAS'
@@ -538,6 +608,7 @@ begin
 
         TEST_STEP <= x"1D";
         wait until falling_edge(PHI_0);
+        wait until falling_edge(CLK_14M);
         assert(MD7 = '0') report "expect MD7 LOW (PHI_1 * Q3 * PRAS_N phase)" severity error;
 
         TEST_STEP <= x"1E";

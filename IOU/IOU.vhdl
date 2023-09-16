@@ -107,7 +107,7 @@ architecture RTL of IOU is
         port (
             POC_N   : in std_logic;
             NTSC    : in std_logic;
-            P_PHI_2 : in std_logic;
+            PHI_0   : in std_logic;
 
             HPE_N                  : out std_logic;
             V5, V4, V3, V2, V1, V0 : out std_logic;
@@ -411,7 +411,7 @@ begin
     U_VIDEO_SCANNER : VIDEO_SCANNER port map(
         POC_N   => POC_N,
         NTSC    => NTSC,
-        P_PHI_2 => P_PHI_2,
+        PHI_0   => PHI_0,
         HPE_N   => HPE_N,
         V5      => V5,
         V4      => V4,
