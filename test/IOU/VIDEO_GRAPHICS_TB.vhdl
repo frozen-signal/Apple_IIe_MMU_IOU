@@ -8,7 +8,7 @@ end VIDEO_GRAPHICS_TB;
 architecture VIDEO_GRAPHICS_TEST of VIDEO_GRAPHICS_TB is
     component VIDEO_GRAPHICS is
         port (
-            P_PHI_2    : in std_logic;
+            PHI_0      : in std_logic;
             V2, V4     : in std_logic;
             VA, VB, VC : in std_logic;
             H0         : in std_logic;
@@ -22,7 +22,7 @@ architecture VIDEO_GRAPHICS_TEST of VIDEO_GRAPHICS_TB is
         );
     end component;
 
-    signal P_PHI_2    : std_logic;
+    signal PHI_0      : std_logic;
     signal V2, V4     : std_logic;
     signal VA, VB, VC : std_logic;
     signal H0         : std_logic;
@@ -36,7 +36,7 @@ architecture VIDEO_GRAPHICS_TEST of VIDEO_GRAPHICS_TB is
 
 begin
     dut : VIDEO_GRAPHICS port map(
-        P_PHI_2   => P_PHI_2,
+        PHI_0     => PHI_0,
         V2        => V2,
         V4        => V4,
         VA        => VA,
@@ -62,10 +62,10 @@ begin
         wait for 1 ns;
         assert(PGR_TXT_N = 'U') report "expect PGR_TXT_N unchanged" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0 <= '0';
         wait for 1 ns;
 
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         MIX     <= '0';
         V2      <= '0';
         V4      <= '0';
@@ -73,10 +73,10 @@ begin
         wait for 1 ns;
         assert(PGR_TXT_N = '1') report "expect PGR_TXT_N HIGH" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 1 ns;
 
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         MIX     <= '0';
         V2      <= '0';
         V4      <= '0';
@@ -84,10 +84,10 @@ begin
         wait for 1 ns;
         assert(PGR_TXT_N = '0') report "expect PGR_TXT_N LOW" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 1 ns;
 
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         MIX     <= '0';
         V2      <= '1';
         V4      <= '1';
@@ -95,10 +95,10 @@ begin
         wait for 1 ns;
         assert(PGR_TXT_N = '1') report "expect PGR_TXT_N HIGH" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 1 ns;
 
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         MIX     <= '1';
         V2      <= '0';
         V4      <= '1';
@@ -106,10 +106,10 @@ begin
         wait for 1 ns;
         assert(PGR_TXT_N = '1') report "expect PGR_TXT_N HIGH" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 1 ns;
 
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         MIX     <= '1';
         V2      <= '1';
         V4      <= '0';
@@ -117,10 +117,10 @@ begin
         wait for 1 ns;
         assert(PGR_TXT_N = '1') report "expect PGR_TXT_N HIGH" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 1 ns;
 
-        P_PHI_2 <= '1';
+        PHI_0   <= '1';
         MIX     <= '1';
         V2      <= '1';
         V4      <= '1';
@@ -130,10 +130,10 @@ begin
 
         -- SEGA, SEGB, SEGC -------------------------------
         -- LGR_TXT_N --------------------------------------
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         wait for 1 ns;
 
-        P_PHI_2   <= '1';
+        PHI_0     <= '1';
         H0        <= '0';
         VA        <= '0';
         HIRESEN_N <= '0';
@@ -145,7 +145,7 @@ begin
         assert(SEGC = '0') report "expect SEGC LOW" severity error;
         assert(LGR_TXT_N = '0') report "expect LGR_TXT_N LOW" severity error;
 
-        P_PHI_2   <= '0';
+        PHI_0     <= '0';
         H0        <= '0';
         VA        <= '1';
         HIRESEN_N <= '0';
@@ -157,7 +157,7 @@ begin
         assert(SEGC = '0') report "expect SEGC unchanged" severity error;
         assert(LGR_TXT_N = '0') report "expect LGR_TXT_N unchanged" severity error;
 
-        P_PHI_2   <= '1';
+        PHI_0     <= '1';
         H0        <= '0';
         VA        <= '1';
         HIRESEN_N <= '0';
@@ -171,6 +171,13 @@ begin
         assert(SEGA = '1') report "expect SEGA HIGH" severity error;
         assert(SEGB = '1') report "expect SEGB HIGH" severity error;
         assert(SEGC = '1') report "expect SEGC HIGH" severity error;
+        assert(LGR_TXT_N = '0') report "expect LGR_TXT_N unchanged" severity error;
+
+        PHI_0     <= '0';
+        wait for 1 ns;
+
+        PHI_0     <= '1';
+        wait for 1 ns;
         assert(LGR_TXT_N = '1') report "expect LGR_TXT_N HIGH" severity error;
 
         assert false report "Test done." severity note;
