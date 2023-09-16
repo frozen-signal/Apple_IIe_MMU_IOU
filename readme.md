@@ -3,7 +3,7 @@ Note: This project is currently under development and not ready to be used in a 
 ![IOU](https://img.shields.io/badge/IOU-Fully_Functionnal_*-green)<br/>
 ![MMU](https://img.shields.io/badge/MMU-Partially_Functionnal_**-yellow)<br/>
 
-\* The IOU has not been tested extensively for the moment, but has no known issue. There are also some small enhancements still missing.
+\* The IOU has not been tested extensively for the moment, but has no known issue. There are also some small enhancements still missing.<br/>
 \** The MMU is still in development and is likely to have problems.
 
 # Apple IIe MMU and IOU custom ICs
