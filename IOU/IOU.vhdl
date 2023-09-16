@@ -249,14 +249,13 @@ architecture RTL of IOU is
 
     component VIDEO_ADDR_MUX is
         port (
+            PHI_1          : in std_logic;
+            Q3             : in std_logic;
             PG2_N          : in std_logic;
             EN80VID        : in std_logic;
             HIRESEN_N      : in std_logic;
             VA, VB, VC     : in std_logic;
-            Q3_PRAS_N      : in std_logic;
-            PRAS_N         : in std_logic;
             RAS_N          : in std_logic;
-            P_PHI_1        : in std_logic;
             V0, V1, V2     : in std_logic;
             H0, H1, H2     : in std_logic;
             E0, E1, E2, E3 : in std_logic;
@@ -597,16 +596,15 @@ begin
 
     PG2_N <= not PG2;
     U_VIDEO_ADDR_MUX : VIDEO_ADDR_MUX port map(
+        PHI_1       => PHI_1,
+        Q3          => Q3,
         PG2_N       => PG2_N,
         EN80VID     => EN80VID,
         HIRESEN_N   => HIRESEN_N,
         VA          => VA,
         VB          => VB,
         VC          => VC,
-        Q3_PRAS_N   => Q3_PRAS_N,
-        PRAS_N      => PRAS_N,
         RAS_N       => RAS_N,
-        P_PHI_1     => P_PHI_1,
         V0          => V0,
         V1          => V1,
         V2          => V2,

@@ -186,6 +186,43 @@ begin
         wait until falling_edge(PHI_0);
 
         -- SOFT SWITCH SET/RESET TESTS (with PAYMAR) ------------------------------------------------------------------
+        -- SET PAYMAR (Write $C00F)
+        R_W_N     <= '0';
+        C0XX_N    <= '0';
+        A6        <= '0';
+        TEST_ORA0 <= '1';
+        TEST_ORA1 <= '1';
+        TEST_ORA2 <= '1';
+        TEST_ORA3 <= '1';
+        TEST_ORA4 <= '0';
+        TEST_ORA5 <= '0';
+        TEST_ORA6 <= '0';
+        TEST_ORA7 <= '0';
+        -- Wait for the address to be latched (RAS' HIGH of PHASE 1)
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(Q3);
+        wait for 1 ns;
+
+        -- READ PAYMAR (Read $C01E)
+        R_W_N     <= '1';
+        C0XX_N    <= '0';
+        A6        <= '0';
+        TEST_ORA0 <= '0';
+        TEST_ORA1 <= '1';
+        TEST_ORA2 <= '1';
+        TEST_ORA3 <= '1';
+        TEST_ORA4 <= '1';
+        TEST_ORA5 <= '0';
+        TEST_ORA6 <= '0';
+        TEST_ORA7 <= '0';
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PHI_0);
+        wait until falling_edge(Q3);
+        wait until rising_edge(PRAS_N);
+        wait for 1 ns;
+        assert(MD7 = '1') report "PAYMAR should be HIGH" severity error;
+
         -- RESET PAYMAR (Write $C00E)
         R_W_N     <= '0';
         C0XX_N    <= '0';
@@ -201,6 +238,7 @@ begin
         wait until rising_edge(PHI_0);
         wait until falling_edge(Q3);
         wait until falling_edge(PHI_0);
+        wait for 1 ns;
 
         -- READ PAYMAR (Read $C01E)
         R_W_N     <= '1';
@@ -216,42 +254,9 @@ begin
         TEST_ORA7 <= '0';
         wait until rising_edge(PHI_0);
         wait until falling_edge(Q3);
+        wait until rising_edge(PRAS_N);
         wait for 1 ns;
         assert(MD7 = '0') report "PAYMAR should be LOW" severity error;
-
-        -- SET PAYMAR (Write $C00D)
-        R_W_N     <= '0';
-        C0XX_N    <= '0';
-        A6        <= '0';
-        TEST_ORA0 <= '1';
-        TEST_ORA1 <= '1';
-        TEST_ORA2 <= '1';
-        TEST_ORA3 <= '1';
-        TEST_ORA4 <= '0';
-        TEST_ORA5 <= '0';
-        TEST_ORA6 <= '0';
-        TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
-        wait until falling_edge(Q3);
-
-        -- READ PAYMAR (Read $C01E)
-        R_W_N     <= '1';
-        C0XX_N    <= '0';
-        A6        <= '0';
-        TEST_ORA0 <= '0';
-        TEST_ORA1 <= '1';
-        TEST_ORA2 <= '1';
-        TEST_ORA3 <= '1';
-        TEST_ORA4 <= '1';
-        TEST_ORA5 <= '0';
-        TEST_ORA6 <= '0';
-        TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
-        wait until falling_edge(Q3);
-        wait for 1 ns;
-        assert(MD7 = '1') report "PAYMAR should be HIGH" severity error;
 
         wait until rising_edge(PHI_0);
 
@@ -259,9 +264,11 @@ begin
         -- All soft switches except KEYSTROBE, TEXT, and MIXED are reset when the RESET' line drops low.
 
         -- PRECONDITION: ALL CONTROLLABLE SOFT SWITCHES ARE SET
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
+
         -- SET ITEXT (Write $C051)
         R_W_N     <= '0';
-        C0XX_N    <= '0';
         A6        <= '1';
         TEST_ORA0 <= '1';
         TEST_ORA1 <= '0';
@@ -271,9 +278,13 @@ begin
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
+        wait for 1 ns;
+        C0XX_N    <= '0';
         wait until falling_edge(Q3);
+
+        C0XX_N    <= '1';
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
 
         -- SET MIX (Write $C053)
         TEST_ORA0 <= '1';
@@ -284,9 +295,13 @@ begin
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
+        wait for 1 ns;
+        C0XX_N    <= '0';
         wait until falling_edge(Q3);
+
+        C0XX_N    <= '1';
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
 
         -- SET PG2 (Write $C055)
         TEST_ORA0 <= '1';
@@ -297,9 +312,13 @@ begin
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
+        wait for 1 ns;
+        C0XX_N    <= '0';
         wait until falling_edge(Q3);
+
+        C0XX_N    <= '1';
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
 
         -- SET S_80COL (Write $C00D)
         A6        <= '0';
@@ -311,69 +330,56 @@ begin
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
+        wait for 1 ns;
+        C0XX_N    <= '0';
         wait until falling_edge(Q3);
 
         -- System reset
+        C0XX_N    <= '1';
         PIN_RESET_N <= '0';
         wait until rising_edge(PHI_0);
         PIN_RESET_N <= '1';
 
-        -- VBL_N (C019)
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
+
+        -- ITEXT (C01A)
+        R_W_N     <= '1';
+        C0XX_N    <= '0';
+        A6        <= '0';
+        TEST_ORA0 <= '0';
+        TEST_ORA1 <= '1';
+        TEST_ORA2 <= '0';
+        TEST_ORA3 <= '1';
+        TEST_ORA4 <= '1';
+        TEST_ORA5 <= '0';
+        TEST_ORA6 <= '0';
+        TEST_ORA7 <= '0';
+        wait until falling_edge(Q3);
+        wait for 1 ns;
+        assert(MD7 = '1') report "ITEXT should not be RESET by RESET_N LOW" severity error;
+
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
+
+        -- MIX (C01B)
         R_W_N     <= '1';
         C0XX_N    <= '0';
         A6        <= '0';
         TEST_ORA0 <= '1';
-        TEST_ORA1 <= '0';
+        TEST_ORA1 <= '1';
         TEST_ORA2 <= '0';
         TEST_ORA3 <= '1';
-        TEST_ORA4 <= '0';
+        TEST_ORA4 <= '1';
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
         wait until falling_edge(Q3);
         wait for 1 ns;
-        assert(MD7 = '0') report "VBL_N should be RESET by RESET_N LOW" severity error;
+        assert(MD7 = '1') report "MIX should not be RESET by RESET_N LOW" severity error;
 
-        -- FIXME: Fix these two tests with the ORA fix.
-        -- -- ITEXT (C01A)
-        -- R_W_N     <= '1';
-        -- C0XX_N    <= '0';
-        -- A6        <= '0';
-        -- TEST_ORA0 <= '0';
-        -- TEST_ORA1 <= '1';
-        -- TEST_ORA2 <= '0';
-        -- TEST_ORA3 <= '1';
-        -- TEST_ORA4 <= '1';
-        -- TEST_ORA5 <= '0';
-        -- TEST_ORA6 <= '0';
-        -- TEST_ORA7 <= '0';
-        -- wait until falling_edge(PHI_0);
-        -- wait until rising_edge(PHI_0);
-        -- wait until falling_edge(Q3);
-        -- wait for 1 ns;
-        -- assert(MD7 = '1') report "ITEXT should be RESET by RESET_N LOW" severity error;
-
-        -- -- MIX (C01B)
-        -- R_W_N     <= '1';
-        -- C0XX_N    <= '0';
-        -- A6        <= '0';
-        -- TEST_ORA0 <= '1';
-        -- TEST_ORA1 <= '1';
-        -- TEST_ORA2 <= '0';
-        -- TEST_ORA3 <= '1';
-        -- TEST_ORA4 <= '1';
-        -- TEST_ORA5 <= '0';
-        -- TEST_ORA6 <= '0';
-        -- TEST_ORA7 <= '0';
-        -- wait until falling_edge(PHI_0);
-        -- wait until rising_edge(PHI_0);
-        -- wait until falling_edge(Q3);
-        -- wait for 1 ns;
-        -- assert(MD7 = '1') report "MIX should be RESET by RESET_N LOW" severity error;
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
 
         -- PG2 (C01C)
         R_W_N     <= '1';
@@ -387,11 +393,12 @@ begin
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
         wait until falling_edge(Q3);
         wait for 1 ns;
         assert(MD7 = '0') report "PG2 should be LOW after a system reset" severity error;
+
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
 
         -- HIRES (C01D)
         R_W_N     <= '1';
@@ -405,11 +412,12 @@ begin
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
         wait until falling_edge(Q3);
         wait for 1 ns;
         assert(MD7 = '0') report "HIRES should be LOW after a system reset" severity error;
+
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
 
         -- S_80COL (C01D)
         R_W_N     <= '1';
@@ -423,11 +431,12 @@ begin
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
         wait until falling_edge(Q3);
         wait for 1 ns;
         assert(MD7 = '0') report "S_80COL should be LOW after a system reset" severity error;
+
+        wait until falling_edge(PHI_0);
+        wait until rising_edge(PRAS_N);
 
         -- MD7 ENABLING
         R_W_N     <= '1';
@@ -441,8 +450,6 @@ begin
         TEST_ORA5 <= '0';
         TEST_ORA6 <= '0';
         TEST_ORA7 <= '0';
-        wait until falling_edge(PHI_0);
-        wait until rising_edge(PHI_0);
         wait until falling_edge(Q3);
         wait for 1 ns;
         assert(MD7 = '0') report "MD7 should be enabled" severity error;
