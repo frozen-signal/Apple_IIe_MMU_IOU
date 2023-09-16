@@ -93,22 +93,22 @@ architecture IOU_TB_SCANNER_VERTICAL_NTSC of IOU_TB_SCANNER_VERTICAL_NTSC_ENTITY
         wait until rising_edge(TB_HPE_N);
         real_v := TB_V5 & TB_V4 & TB_V3 & TB_V2 & TB_V1 & TB_V0 & TB_VC & TB_VB & TB_VA;
         assert(real_v = (expected_value & "00"))
-        report "Vertical (NTSC) 543210CBA for line (X=00) " & line_num & " incorrect." severity error;
+            report "Vertical (NTSC) 543210CBA for line (X=00) " & line_num & " incorrect." severity error;
 
         wait until rising_edge(TB_HPE_N);
         real_v := TB_V5 & TB_V4 & TB_V3 & TB_V2 & TB_V1 & TB_V0 & TB_VC & TB_VB & TB_VA;
         assert(real_v = (expected_value & "01"))
-        report "Vertical (NTSC) 543210CBA for line (X=01) " & line_num & " incorrect." severity error;
+            report "Vertical (NTSC) 543210CBA for line (X=01) " & line_num & " incorrect." severity error;
 
         wait until rising_edge(TB_HPE_N);
         real_v := TB_V5 & TB_V4 & TB_V3 & TB_V2 & TB_V1 & TB_V0 & TB_VC & TB_VB & TB_VA;
         assert(real_v = (expected_value & "10"))
-        report "Vertical (NTSC) 543210CBA for line (X=10) " & line_num & " incorrect." severity error;
+            report "Vertical (NTSC) 543210CBA for line (X=10) " & line_num & " incorrect." severity error;
 
         wait until rising_edge(TB_HPE_N);
         real_v := TB_V5 & TB_V4 & TB_V3 & TB_V2 & TB_V1 & TB_V0 & TB_VC & TB_VB & TB_VA;
         assert(real_v = (expected_value & "11"))
-        report "Vertical (NTSC) 543210CBA for line (X=11) " & line_num & " incorrect." severity error;
+            report "Vertical (NTSC) 543210CBA for line (X=11) " & line_num & " incorrect." severity error;
 
     end procedure;
 
@@ -121,12 +121,12 @@ architecture IOU_TB_SCANNER_VERTICAL_NTSC of IOU_TB_SCANNER_VERTICAL_NTSC_ENTITY
         wait until rising_edge(TB_HPE_N);
         real_v := TB_V5 & TB_V4 & TB_V3 & TB_V2 & TB_V1 & TB_V0 & TB_VC & TB_VB & TB_VA;
         assert(real_v = (expected_value & '0'))
-        report "Vertical (NTSC) 543210CBA for line (X=0) " & line_num & " incorrect." severity error;
+            report "Vertical (NTSC) 543210CBA for line (X=0) " & line_num & " incorrect." severity error;
 
         wait until rising_edge(TB_HPE_N);
         real_v := TB_V5 & TB_V4 & TB_V3 & TB_V2 & TB_V1 & TB_V0 & TB_VC & TB_VB & TB_VA;
         assert(real_v = (expected_value & '1'))
-        report "Vertical (NTSC) 543210CBA for line (X=1) " & line_num & " incorrect." severity error;
+            report "Vertical (NTSC) 543210CBA for line (X=1) " & line_num & " incorrect." severity error;
     end procedure;
 
     signal CLK_14M : std_logic := '0';

@@ -195,7 +195,10 @@ begin
         TB_FORCE_POC_N <= '1';
         wait for 1 ns;
 
-        -- ORA0-ORA6 are latched to LA0-LA5 and LA7 at RAS' rising during PHASE 1
+        -- ORA0-ORA6 are latched to LA0-LA5 and LA7 during RAS' HIGH of PHASE 1
+        wait until rising_edge(PHI_0); -- wait for PHASE 0
+        wait until falling_edge(PRAS_N); -- wait for falling RAS of PHI_0
+
         TEST_ORA0 <= '0';
         TEST_ORA1 <= '0';
         TEST_ORA2 <= '0';
@@ -224,6 +227,8 @@ begin
         assert(TB_LA5 = '0') report "TB_LA5 should be LOW" severity error;
         assert(TB_LA7 = '0') report "TB_LA6 should be LOW" severity error;
 
+        wait until falling_edge(PRAS_N); -- RAS' falling of PHASE 0
+
         TEST_ORA0 <= '1';
         TEST_ORA1 <= '1';
         TEST_ORA2 <= '1';
@@ -241,6 +246,16 @@ begin
         assert(TB_LA4 = '0') report "TB_LA4 should not have changed" severity error;
         assert(TB_LA5 = '0') report "TB_LA5 should not have changed" severity error;
         assert(TB_LA7 = '0') report "TB_LA6 should not have changed" severity error;
+
+        wait until rising_edge(PRAS_N); -- RAS' rising of PHASE 1
+        wait for 1 ns;
+        assert(TB_LA0 = '1') report "TB_LA0 should be HIGH" severity error;
+        assert(TB_LA1 = '1') report "TB_LA1 should be HIGH" severity error;
+        assert(TB_LA2 = '1') report "TB_LA2 should be HIGH" severity error;
+        assert(TB_LA3 = '1') report "TB_LA3 should be HIGH" severity error;
+        assert(TB_LA4 = '1') report "TB_LA4 should be HIGH" severity error;
+        assert(TB_LA5 = '1') report "TB_LA5 should be HIGH" severity error;
+        assert(TB_LA7 = '1') report "TB_LA6 should be HIGH" severity error;
 
         -- Test ORA output enabling
         wait until falling_edge(PHI_0);

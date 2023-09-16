@@ -312,13 +312,12 @@ architecture RTL of MMU is
 
     component MMU_RA is
         port (
-            A         : in std_logic_vector(15 downto 0);
-            PRAS_N    : in std_logic;
-            RAS_N     : in std_logic;
-            P_PHI_0   : in std_logic;
-            Q3_PRAS_N : in std_logic;
-            DXXX_N    : in std_logic;
-            BANK1     : in std_logic;
+            A      : in std_logic_vector(15 downto 0);
+            RAS_N  : in std_logic;
+            PHI_0  : in std_logic;
+            Q3     : in std_logic;
+            DXXX_N : in std_logic;
+            BANK1  : in std_logic;
 
             RA          : out std_logic_vector(7 downto 0);
             RA_ENABLE_N : out std_logic
@@ -592,10 +591,9 @@ begin
 
     U_MMU_RA : MMU_RA port map(
         A         => A,
-        PRAS_N    => PRAS_N,
         RAS_N     => RAS_N,
-        P_PHI_0   => P_PHI_0,
-        Q3_PRAS_N => Q3_PRAS_N,
+        PHI_0     => PHI_0,
+        Q3        => Q3,
         DXXX_N    => DXXX_N,
         BANK1     => BANK1,
 
