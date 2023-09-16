@@ -8,7 +8,7 @@ end IOU_KEYBOARD_TB;
 architecture IOU_KEYBOARD_TEST of IOU_KEYBOARD_TB is
     component IOU_KEYBOARD is
         port (
-            P_PHI_2            : in std_logic;
+            PHI_0              : in std_logic;
             PAKST              : in std_logic;
             BL_N               : in std_logic;
             KSTRB              : in std_logic;
@@ -33,7 +33,7 @@ architecture IOU_KEYBOARD_TEST of IOU_KEYBOARD_TB is
         );
     end component;
 
-    signal P_PHI_2            : std_logic;
+    signal PHI_0            : std_logic;
     signal PAKST              : std_logic;
     signal BL_N               : std_logic;
     signal KSTRB              : std_logic;
@@ -57,7 +57,7 @@ architecture IOU_KEYBOARD_TEST of IOU_KEYBOARD_TB is
 
 begin
     dut : IOU_KEYBOARD port map(
-        P_PHI_2           => P_PHI_2,
+        PHI_0             => PHI_0,
         PAKST             => PAKST,
         BL_N              => BL_N,
         KSTRB             => KSTRB,
@@ -87,7 +87,7 @@ begin
         POC_N <= '1';
 
         -- AKSTB, WNDW_N, D_KSTRB_N -----------------------
-        P_PHI_2 <= '0';
+        PHI_0   <= '0';
         PAKST   <= '1';
         BL_N    <= '0';
         KSTRB   <= '0';
@@ -102,7 +102,7 @@ begin
         assert(WNDW_N = 'U') report "expect WNDW_N unchanged" severity error;
         assert(D_KSTRB_N = 'U') report "expect D_KSTRB_N unchanged" severity error;
 
-        P_PHI_2 <= '1';
+        PHI_0 <= '1';
         wait for 1 ns;
         assert(AKSTB = '0') report "expect AKSTB LOW" severity error;
         assert(WNDW_N = '1') report "expect WNDW_N HIGH" severity error;
@@ -116,10 +116,10 @@ begin
         assert(WNDW_N = '1') report "expect WNDW_N HIGH" severity error;
         assert(D_KSTRB_N = '1') report "expect D_KSTRB_N HIGH" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0 <= '0';
         wait for 1 ns;
 
-        P_PHI_2 <= '1';
+        PHI_0 <= '1';
         wait for 1 ns;
         assert(AKSTB = '0') report "expect AKSTB LOW" severity error;
         assert(WNDW_N = '0') report "expect WNDW_N LOW" severity error;
@@ -137,11 +137,11 @@ begin
         wait for 1 ns;
         assert(STRBLE_N = '1') report "expect STRBLE_N HIGH" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0 <= '0';
         wait for 1 ns;
 
         KSTRB   <= '0';
-        P_PHI_2 <= '1';
+        PHI_0 <= '1';
         wait for 1 ns;
         assert(D_KSTRB_N = '1') report "PRECONDITION: D_KSTRB_N should be HIGH" severity error;
         assert(STRBLE_N = '1') report "expect STRBLE_N HIGH" severity error;
@@ -239,15 +239,15 @@ begin
         assert(SET_DELAY = '0') report "expect SET_DELAY LOW" severity error;
 
         -- CLR_DELAY_N --------------------------------------
-        P_PHI_2 <= '0';
+        PHI_0 <= '0';
         wait for 1 ns;
-        P_PHI_2 <= '1';
+        PHI_0 <= '1';
         KSTRB   <= '1';
         wait for 1 ns;
-        P_PHI_2 <= '0';
+        PHI_0 <= '0';
         wait for 1 ns;
         KSTRB   <= '0';
-        P_PHI_2 <= '1';
+        PHI_0 <= '1';
         wait for 1 ns;
         KSTRB <= '1';
         wait for 1 ns;
@@ -317,9 +317,9 @@ begin
         assert(AKSTB = '0') report "PRECONDITION: AKSTB should be LOW" severity error;
         assert(KEYLE = '0') report "When AKSTB is LOW we should be in the 'no key emitted' part of the auto-repeat cycle" severity error;
 
-        P_PHI_2 <= '0';
+        PHI_0 <= '0';
         wait for 1 ns;
-        P_PHI_2 <= '1';
+        PHI_0 <= '1';
         wait for 1 ns;
         PAKST <= '1';
         wait for 1 ns;

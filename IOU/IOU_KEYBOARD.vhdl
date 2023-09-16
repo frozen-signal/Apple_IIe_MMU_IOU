@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity IOU_KEYBOARD is
     port (
-        P_PHI_2            : in std_logic;
+        PHI_0              : in std_logic;
         PAKST              : in std_logic;
         BL_N               : in std_logic;
         KSTRB              : in std_logic;
@@ -40,11 +40,11 @@ architecture RTL of IOU_KEYBOARD is
     signal AUTOREPEAT_DELAY_INT, AUTOREPEAT_ACTIVE_INT                            : std_logic;
 begin
     -- IOU_1 @C-3:M8
-    process (P_PHI_2)
+    process (PHI_0)
     begin
-        if (rising_edge(P_PHI_2)) then
+        if (rising_edge(PHI_0)) then
             M8_3          <= not PAKST;
-            WNDW_N        <= not BL_N;
+            WNDW_N        <= not BL_N;  -- FIXME: This should not be in IOU_KEYBOARD
             D_KSTRB_N_INT <= not KSTRB;
         end if;
     end process;
