@@ -12,7 +12,7 @@ entity RAS_HOLD_TIME_ALTERA is
 end RAS_HOLD_TIME_ALTERA;
 
 architecture RTL of RAS_HOLD_TIME_ALTERA is
-    constant NUM_LCELLS : positive := 8;
+    constant NUM_LCELLS : positive := 14;
 
     component LCELL
         port (
