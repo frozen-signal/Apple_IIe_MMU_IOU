@@ -18,8 +18,10 @@ architecture VIDEO_GENERATOR_TEST of VIDEO_GENERATOR_TB is
             FLASH      : in std_logic;
             PCLRGAT    : in std_logic;
             PSYNC_N    : in std_logic;
+            BL_N       : in std_logic;
 
             E0, E1, E2, E3 : out std_logic;
+            WNDW_N         : out std_logic;
             CLRGAT_N       : out std_logic;
             SYNC_N         : out std_logic;
             RA9_N          : out std_logic;
@@ -37,8 +39,10 @@ architecture VIDEO_GENERATOR_TEST of VIDEO_GENERATOR_TB is
     signal FLASH      : std_logic;
     signal PCLRGAT    : std_logic;
     signal PSYNC_N    : std_logic;
+    signal BL_N       : std_logic;
 
     signal E0, E1, E2, E3 : std_logic;
+    signal WNDW_N         : std_logic;
     signal CLRGAT_N       : std_logic;
     signal SYNC_N         : std_logic;
     signal RA9_N          : std_logic;
@@ -60,10 +64,12 @@ begin
         FLASH     => FLASH,
         PCLRGAT   => PCLRGAT,
         PSYNC_N   => PSYNC_N,
+        BL_N      => BL_N,
         E0        => E0,
         E1        => E1,
         E2        => E2,
         E3        => E3,
+        WNDW_N    => WNDW_N,
         CLRGAT_N  => CLRGAT_N,
         SYNC_N    => SYNC_N,
         RA9_N     => RA9_N,
@@ -423,6 +429,27 @@ begin
         assert(E2 = '0') report "expect E2 LOW" severity error;
         assert(E1 = '1') report "expect E1 HIGH" severity error;
         assert(E0 = '0') report "expect E0 LOW" severity error;
+
+        -- WNDW_N tests -----------------------
+        PHI_0   <= '0';
+        BL_N    <= '0';
+        wait for 1 ns;
+        assert(WNDW_N = 'U') report "expect WNDW_N unchanged" severity error;
+
+        PHI_0 <= '1';
+        wait for 1 ns;
+        assert(WNDW_N = '1') report "expect WNDW_N HIGH" severity error;
+
+        BL_N  <= '1';
+        wait for 1 ns;
+        assert(WNDW_N = '1') report "expect WNDW_N HIGH" severity error;
+
+        PHI_0 <= '0';
+        wait for 1 ns;
+
+        PHI_0 <= '1';
+        wait for 1 ns;
+        assert(WNDW_N = '0') report "expect WNDW_N LOW" severity error;
 
         -- RA9_N tests
         VID6      <= '0';

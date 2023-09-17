@@ -12,6 +12,8 @@ entity RAS_HOLD_TIME_ALTERA is
 end RAS_HOLD_TIME_ALTERA;
 
 architecture RTL of RAS_HOLD_TIME_ALTERA is
+    constant NUM_LCELLS : positive := 8;
+
     component LCELL
         port (
             A_IN : in std_logic;
@@ -19,28 +21,19 @@ architecture RTL of RAS_HOLD_TIME_ALTERA is
         );
     end component;
 
-    signal PRAS_N_5NS, PRAS_N_10NS, PRAS_N_15NS, PRAS_N_20NS, PRAS_N_25NS : std_logic;
+    signal PRAS_N_DELAY : std_logic_vector((NUM_LCELLS-1) downto 0);
 begin
-    DELAY_5NS : LCELL port map(
+    INITIAL_DELAY : LCELL port map(
         A_IN => PRAS_N,
-        A_OUT => PRAS_N_5NS
-    );
-    DELAY_10NS : LCELL port map(
-        A_IN => PRAS_N_5NS,
-        A_OUT => PRAS_N_10NS
-    );
-    DELAY_15NS : LCELL port map(
-        A_IN => PRAS_N_10NS,
-        A_OUT => PRAS_N_15NS
-    );
-    DELAY_20NS : LCELL port map(
-        A_IN => PRAS_N_15NS,
-        A_OUT => PRAS_N_20NS
-    );
-    DELAY_25NS : LCELL port map(
-        A_IN => PRAS_N_20NS,
-        A_OUT => PRAS_N_25NS
+        A_OUT => PRAS_N_DELAY(0)
     );
 
-    RAS_N <= PRAS_N_25NS;
+    g_GENERATE_DELAY: for i in 0 to (NUM_LCELLS-2) generate
+        DELAY : LCELL port map(
+            A_IN => PRAS_N_DELAY(i),
+            A_OUT => PRAS_N_DELAY(i+1)
+        );
+    end generate g_GENERATE_DELAY;
+
+    RAS_N <= PRAS_N_DELAY(NUM_LCELLS-1);
 end RTL;
