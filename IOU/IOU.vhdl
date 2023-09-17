@@ -204,8 +204,10 @@ architecture RTL of IOU is
             FLASH      : in std_logic;
             PCLRGAT    : in std_logic;
             PSYNC_N    : in std_logic;
+            BL_N       : in std_logic;
 
             E0, E1, E2, E3 : out std_logic;
+            WNDW_N         : out std_logic;
             CLRGAT_N       : out std_logic;
             SYNC_N         : out std_logic;
             RA9_N          : out std_logic;
@@ -295,7 +297,6 @@ architecture RTL of IOU is
         port (
             PHI_0              : in std_logic;
             PAKST              : in std_logic;
-            BL_N               : in std_logic;
             KSTRB              : in std_logic;
             AKD                : in std_logic;
             POC_N              : in std_logic;
@@ -306,7 +307,6 @@ architecture RTL of IOU is
             RC01X_N            : in std_logic;
 
             AKSTB             : out std_logic;
-            WNDW_N            : out std_logic;
             D_KSTRB_N         : out std_logic;
             STRBLE_N          : out std_logic;
             CLR_DELAY_N       : out std_logic; -- This signal is P8-8 in the schematics
@@ -529,10 +529,12 @@ begin
         FLASH     => FLASH,
         PCLRGAT   => PCLRGAT,
         PSYNC_N   => PSYNC_N,
+        BL_N      => BL_N,
         E0        => E0,
         E1        => E1,
         E2        => E2,
         E3        => E3,
+        WNDW_N    => WNDW_N,
         CLRGAT_N  => CLRGAT_N,
         SYNC_N    => SYNC_N,
         RA9_N     => RA9_N,
@@ -641,7 +643,6 @@ begin
     U_IOU_KEYBOARD : IOU_KEYBOARD port map(
         PHI_0             => PHI_0,
         PAKST             => PAKST,
-        BL_N              => BL_N,
         KSTRB             => KSTRB,
         AKD               => AKD,
         POC_N             => POC_N,
@@ -654,7 +655,6 @@ begin
         C01X_N            => C01X_N,
         RC01X_N           => RC01X_N,
         AKSTB             => AKSTB,
-        WNDW_N            => WNDW_N,
         D_KSTRB_N         => D_KSTRB_N,
         STRBLE_N          => STRBLE_N,
         CLR_DELAY_N       => CLR_DELAY_N,

@@ -14,8 +14,10 @@ entity VIDEO_GENERATOR is
         FLASH      : in std_logic;
         PCLRGAT    : in std_logic;
         PSYNC_N    : in std_logic;
+        BL_N       : in std_logic;
 
         E0, E1, E2, E3 : out std_logic;
+        WNDW_N         : out std_logic;
         CLRGAT_N       : out std_logic;
         SYNC_N         : out std_logic;
         RA9_N          : out std_logic;
@@ -67,6 +69,14 @@ begin
 
     -- IOU_2 @D-4:L8-3
     RA10_N <= (not (VID6_N or PAYMAR or (FLASH or LGR_TXT_N))) or VID7;
+
+    -- IOU_1 @C-3:M8
+    process (PHI_0)
+    begin
+        if (rising_edge(PHI_0)) then
+            WNDW_N <= not BL_N;
+        end if;
+    end process;
 
     process (PHI_0, PRAS_N)
     begin

@@ -5,7 +5,6 @@ entity IOU_KEYBOARD is
     port (
         PHI_0              : in std_logic;
         PAKST              : in std_logic;
-        BL_N               : in std_logic;
         KSTRB              : in std_logic;
         AKD                : in std_logic;
         POC_N              : in std_logic;
@@ -16,7 +15,6 @@ entity IOU_KEYBOARD is
         RC01X_N            : in std_logic;
 
         AKSTB             : out std_logic;
-        WNDW_N            : out std_logic;
         D_KSTRB_N         : out std_logic;
         STRBLE_N          : out std_logic;
         CLR_DELAY_N       : out std_logic; -- This signal is P8-8 in the schematics
@@ -44,7 +42,6 @@ begin
     begin
         if (rising_edge(PHI_0)) then
             M8_3          <= not PAKST;
-            WNDW_N        <= not BL_N;  -- FIXME: This should not be in IOU_KEYBOARD
             D_KSTRB_N_INT <= not KSTRB;
         end if;
     end process;

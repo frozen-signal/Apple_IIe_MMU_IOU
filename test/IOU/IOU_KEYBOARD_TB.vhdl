@@ -10,7 +10,6 @@ architecture IOU_KEYBOARD_TEST of IOU_KEYBOARD_TB is
         port (
             PHI_0              : in std_logic;
             PAKST              : in std_logic;
-            BL_N               : in std_logic;
             KSTRB              : in std_logic;
             AKD                : in std_logic;
             POC_N              : in std_logic;
@@ -21,7 +20,6 @@ architecture IOU_KEYBOARD_TEST of IOU_KEYBOARD_TB is
             RC01X_N            : in std_logic;
 
             AKSTB             : out std_logic;
-            WNDW_N            : out std_logic;
             D_KSTRB_N         : out std_logic;
             STRBLE_N          : out std_logic;
             CLR_DELAY_N       : out std_logic;
@@ -35,7 +33,6 @@ architecture IOU_KEYBOARD_TEST of IOU_KEYBOARD_TB is
 
     signal PHI_0            : std_logic;
     signal PAKST              : std_logic;
-    signal BL_N               : std_logic;
     signal KSTRB              : std_logic;
     signal AKD                : std_logic;
     signal POC_N              : std_logic;
@@ -45,7 +42,6 @@ architecture IOU_KEYBOARD_TEST of IOU_KEYBOARD_TB is
     signal C01X_N             : std_logic;
     signal RC01X_N            : std_logic;
     signal AKSTB              : std_logic;
-    signal WNDW_N             : std_logic;
     signal D_KSTRB_N          : std_logic;
     signal STRBLE_N           : std_logic;
     signal CLR_DELAY_N        : std_logic;
@@ -59,7 +55,6 @@ begin
     dut : IOU_KEYBOARD port map(
         PHI_0             => PHI_0,
         PAKST             => PAKST,
-        BL_N              => BL_N,
         KSTRB             => KSTRB,
         AKD               => AKD,
         POC_N             => POC_N,
@@ -72,7 +67,6 @@ begin
         C01X_N            => C01X_N,
         RC01X_N           => RC01X_N,
         AKSTB             => AKSTB,
-        WNDW_N            => WNDW_N,
         D_KSTRB_N         => D_KSTRB_N,
         STRBLE_N          => STRBLE_N,
         CLR_DELAY_N       => CLR_DELAY_N,
@@ -86,34 +80,28 @@ begin
     process begin
         POC_N <= '1';
 
-        -- AKSTB, WNDW_N, D_KSTRB_N -----------------------
+        -- AKSTB, D_KSTRB_N -----------------------
         PHI_0   <= '0';
         PAKST   <= '1';
-        BL_N    <= '0';
         KSTRB   <= '0';
         wait for 1 ns;
         assert(AKSTB = 'U') report "expect AKSTB unchanged" severity error;
-        assert(WNDW_N = 'U') report "expect WNDW_N unchanged" severity error;
         assert(D_KSTRB_N = 'U') report "expect D_KSTRB_N unchanged" severity error;
 
         PAKST <= '0';
         wait for 1 ns;
         assert(AKSTB = '0') report "expect AKSTB LOW" severity error;
-        assert(WNDW_N = 'U') report "expect WNDW_N unchanged" severity error;
         assert(D_KSTRB_N = 'U') report "expect D_KSTRB_N unchanged" severity error;
 
         PHI_0 <= '1';
         wait for 1 ns;
         assert(AKSTB = '0') report "expect AKSTB LOW" severity error;
-        assert(WNDW_N = '1') report "expect WNDW_N HIGH" severity error;
         assert(D_KSTRB_N = '1') report "expect D_KSTRB_N HIGH" severity error;
 
         PAKST <= '1';
-        BL_N  <= '1';
         KSTRB <= '1';
         wait for 1 ns;
         assert(AKSTB = '1') report "expect AKSTB HIGH" severity error;
-        assert(WNDW_N = '1') report "expect WNDW_N HIGH" severity error;
         assert(D_KSTRB_N = '1') report "expect D_KSTRB_N HIGH" severity error;
 
         PHI_0 <= '0';
@@ -122,7 +110,6 @@ begin
         PHI_0 <= '1';
         wait for 1 ns;
         assert(AKSTB = '0') report "expect AKSTB LOW" severity error;
-        assert(WNDW_N = '0') report "expect WNDW_N LOW" severity error;
         assert(D_KSTRB_N = '0') report "expect D_KSTRB_N LOW" severity error;
 
         -- STRBLE_N ---------------------------------------
