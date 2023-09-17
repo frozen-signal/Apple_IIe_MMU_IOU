@@ -3,12 +3,29 @@ Note: This project is currently under development and not ready to be used in a 
 ![IOU](https://img.shields.io/badge/IOU-Fully_Functionnal_*-green)<br/>
 ![MMU](https://img.shields.io/badge/MMU-Partially_Functionnal_**-yellow)<br/>
 
-\* The IOU has been with all the hardware available to the developer, and no known issue has been found. The code however need a good cleanup.<br/>
+\* The IOU has been tested with the hardware listed below, and no known issue has been found. The code however need a good cleanup.<br/>
 \** The MMU is still in development and is likely to have problems.
 
 # Apple IIe MMU and IOU custom ICs
 
 This is a VHDL implementation of the Apple IIe's MMU and IOU custom ICs, based on the actual schematics that were used during the development of the Apple IIe.
+
+## Hardware tests
+The IOU has been tested with these hardware components:
+- Motherboards:
+  - Rev.B motherboard.
+- CPU:
+  - 6502 with unenhanced ROMs
+  - 65C02 with enhanced ROMS
+- AUX Cards:
+  - RAMWORKS III aux card
+  - 80-Col Expansion card (820-0067-D)
+  - 80-Col Expansion card (820-0067-B)
+- ROMS:
+  - Enhanced ROMS from ReActiveMicro
+  - Unhanced ROMS (342-0132-B, 342-0133-A, 342-0134-A, 342-0135-A)
+
+The MMU has not been tested.
 
 # Compiling and testing
 ## Prerequisites
