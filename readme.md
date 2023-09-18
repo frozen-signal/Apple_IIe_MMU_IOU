@@ -22,9 +22,15 @@ The IOU has been tested with these hardware components:
   - RAMWORKS III aux card
   - 80-Col Expansion card (820-0067-B)
   - 80-Col Expansion card (820-0067-D)
-- ROMS:
+- ROMs:
   - Enhanced ROMS from ReActiveMicro
   - Unhanced ROMS (342-0132-B, 342-0133-A, 342-0134-A, 342-0135-A)
+- Disk Interfaces
+  - Apple 5.25 Drive Controller Card (655-0101-E)
+  - Disk ][ Interface Card (650-X104)
+- Other
+  - Mouse Interface 670-0030-C
+
 
 The MMU has not been tested.
 
