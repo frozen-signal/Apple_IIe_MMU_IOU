@@ -7,6 +7,6 @@ A component that drives a signal HIGH when power-on event is detected, keep it h
 **Need to be modified if** your FPGA/CPLD do not initialize flip-flops and other memory elements at '0' on power-on.
 
 #### RAS_HOLD_TIME
-A component that adds a 25ns delay to PRAS_N. Required by the Apple IIe's multiplexed DRAM.
+A component that adds a 60ns delay to PRAS_N. Required by the Apple IIe's multiplexed DRAM.
 <br/>
 **Presently only ALTERA devices are supported.** More devices will be added later.

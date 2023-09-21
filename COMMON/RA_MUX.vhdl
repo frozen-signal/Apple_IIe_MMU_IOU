@@ -22,9 +22,7 @@ begin
     RA_ENABLE_N <= not ((Q3 and PHI) or ((not PHI) and (not Q3) and RAS_N));
 
     -- The Apple IIe RAM reads ROW address on the falling edge of PRAS_N and requires to hold that address for
-    -- a certain delay (t_RAH in the datasheets; 25ns in the case of the 4564-20 DRAM, but a logic analyser
-    -- seems to indicate that the hold delay is close to 40ns-50ns). So we set the ROW before
-    -- the falling edge of PRAS_N and hold it for as long as RAS_N is HIGH.
+    -- a certain delay (~60ns). So we set the ROW before the falling edge of PRAS_N and hold it for as long as RAS_N is HIGH.
     RA0 <= ROW_RA0 when RAS_N = '1' else COL_RA0;
     RA1 <= ROW_RA1 when RAS_N = '1' else COL_RA1;
     RA2 <= ROW_RA2 when RAS_N = '1' else COL_RA2;

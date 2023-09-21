@@ -3,15 +3,15 @@ use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 -- NOTE: This implementation of RAS_HOLD_TIME can only be used with Altera devices that support the LCELL primitive.
-entity RAS_HOLD_TIME_ALTERA is
+entity RAS_HOLD_TIME is
     port (
         PRAS_N : in std_logic;
 
         RAS_N : out std_logic
     );
-end RAS_HOLD_TIME_ALTERA;
+end RAS_HOLD_TIME;
 
-architecture RTL of RAS_HOLD_TIME_ALTERA is
+architecture RTL of RAS_HOLD_TIME is
     constant NUM_LCELLS : positive := 14;
 
     component LCELL
