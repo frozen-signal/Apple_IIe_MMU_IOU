@@ -42,15 +42,7 @@ end IOU;
 architecture RTL of IOU is
     constant NTSC : std_logic := NTSC_CONSTANT;
 
-    -- FIXME: Use generics to switch
-    -- component RAS_HOLD_TIME_ALTERA is
-    --     port (
-    --         PRAS_N : in std_logic;
-
-    --         RAS_N : out std_logic
-    --     );
-    -- end component;
-    component RAS_HOLD_TIME_TEST is
+    component RAS_HOLD_TIME is
         port (
             PRAS_N : in std_logic;
 
@@ -364,11 +356,7 @@ architecture RTL of IOU is
 
     signal H0_INT, LGR_TXT_N_INT, ORA7_INT : std_logic;
 begin
-    -- U_RAS_HOLD_TIME : RAS_HOLD_TIME_ALTERA port map(
-    --     PRAS_N => PRAS_N,
-    --     RAS_N => RAS_N
-    -- );
-    U_RAS_HOLD_TIME : RAS_HOLD_TIME_TEST port map(
+    U_RAS_HOLD_TIME : RAS_HOLD_TIME port map(
         PRAS_N => PRAS_N,
         RAS_N => RAS_N
     );
