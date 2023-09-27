@@ -13,5 +13,5 @@ This can be used with Lattice FPGAs that support the SB_HFOSC primitive.
 This can be used with Lattice FPGAs that support the OSCJ primitive.
 
 #### Specifications
-An implementation need to delay the PRAS_N signal by at least 60 ns and return the delayed signal with RAS_N.
+An implementation need to delay the PRAS_N signal by at least 60ns (~80ns seems to be the max) and return the delayed signal with RAS_N.
 
