@@ -9,4 +9,7 @@ A component that drives a signal HIGH when power-on event is detected, keep it h
 #### RAS_HOLD_TIME
 A component that adds a 60ns delay to PRAS_N. Required by the Apple IIe's multiplexed DRAM.
 <br/>
-**Presently only ALTERA devices are supported.** More devices will be added later.
+##### Devices supported
+- ALTERA devices that support the LCELL primitive.
+- LATTICE devices that support the SB_HFOSC primitive (iCE40 devices)
+- LATTICE devices that support the OSCJ primitive (MachXO3D)
