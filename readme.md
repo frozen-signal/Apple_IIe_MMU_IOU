@@ -1,10 +1,11 @@
 Note: This project is currently under development and not ready to be used in a hardware implementation.<br/>
 <br/>
 ![IOU](https://img.shields.io/badge/IOU-Fully_Functionnal_*-green)<br/>
-![MMU](https://img.shields.io/badge/MMU-Partially_Functionnal_**-yellow)<br/>
+![MMU](https://img.shields.io/badge/MMU-Partially_Functionnal_**-green)<br/>
 
-\* The IOU has been tested with the hardware listed below, and no issue has been found. The code however need a good cleanup.<br/>
-\** The MMU is still in development and is likely to have problems.
+\* The IOU has been tested with the hardware listed below, and no issue has been found.<br/>
+\** The MMU is functionnnal, but still need more testing.<br/>
+Also, the code need a good cleanup.
 
 # Apple IIe MMU and IOU custom ICs
 
@@ -32,7 +33,19 @@ The IOU has been tested with these hardware components:
   - Mouse Interface 670-0030-C
 
 
-The MMU has not been tested.
+The MMU still need more tests. It has currently been tested with these hardware components:
+- Motherboards:
+  - Rev.B motherboard.
+- CPU:
+  - 6502 with unenhanced ROMs
+- AUX Cards:
+  - 80-Col Expansion card (820-0067-B)
+  - 80-Col Expansion card (820-0067-D)
+- ROMs:
+  - Unhanced ROMS (342-0132-B, 342-0133-A, 342-0134-A, 342-0135-A)
+- Disk Interfaces
+  - Apple 5.25 Drive Controller Card (655-0101-E)
+
 
 # Compiling and testing
 ## Prerequisites
