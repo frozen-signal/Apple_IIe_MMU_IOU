@@ -1,17 +1,17 @@
-Note: This project is currently under development and not ready to be used in a hardware implementation.<br/>
-<br/>
-![IOU](https://img.shields.io/badge/IOU-Fully_Functionnal_*-green)<br/>
-![MMU](https://img.shields.io/badge/MMU-Partially_Functionnal_**-yellow)<br/>
-
-\* The IOU has been tested with the hardware listed below, and no issue has been found. The code however need a good cleanup.<br/>
-\** The MMU is still in development and is likely to have problems.
-
 # Apple IIe MMU and IOU custom ICs
 
 This is a VHDL implementation of the Apple IIe's MMU and IOU custom ICs, based on the actual schematics that were used during the development of the Apple IIe.
 
-## Hardware tests
-The IOU has been tested with these hardware components:
+## In development
+Note: This project is currently under development and, although functionnal, is not ready to be used in a hardware implementation.<br/>
+<br/>
+![IOU](https://img.shields.io/badge/IOU-Fully_Functionnal-green)<br/>
+![MMU](https://img.shields.io/badge/MMU-Fully_Functionnal-green)<br/>
+
+## Tested Hardware
+The implementation has been tested with these hardware components:
+
+### IOU
 - Motherboards:
   - Rev.B motherboard.
 - CPU:
@@ -31,8 +31,22 @@ The IOU has been tested with these hardware components:
 - Other
   - Mouse Interface 670-0030-C
 
+### MMU
+<b>Note</b>: The MMU still need more tests.
+- Motherboards:
+  - Rev.B motherboard.
+- CPU:
+  - 6502 with unenhanced ROMs
+- AUX Cards:
+  - 80-Col Expansion card (820-0067-B)
+  - 80-Col Expansion card (820-0067-D)
+- ROMs:
+  - Unhanced ROMS (342-0132-B, 342-0133-A, 342-0134-A, 342-0135-A)
+- Disk Interfaces
+  - Apple 5.25 Drive Controller Card (655-0101-E)
 
-The MMU has not been tested.
+### Note
+To facilitate debugging, the code has been kept very close to the logic seen in the schematics, at the cost of efficiency and readibility. Simplifications and cleaning of the sources will be done later.
 
 # Compiling and testing
 ## Prerequisites
@@ -114,10 +128,6 @@ These are the tri-state pins and their corresponing enable signal:
 | PIN_RESET_N  | FORCE_RESET_N_LOW | The IOU will force RESET_N low for ~35ms after power-on, then will let external components drive this signal. |
 | ORA0-7  | RA_ENABLE_N | Depending on the timings, ORA will be an input, an output pin or tri-state. |
 | MD7  | MD7_ENABLE_N | |
-
-## In development
-This project is in active development; while all the components are tested, bear in mind that problems might still exist.
-To facilitate debugging, the code has been kept very close to the logic seen in the schematics, at the cost of efficiency and readibility. Simplifications of the logic will be done later.
 
 ## License
 
