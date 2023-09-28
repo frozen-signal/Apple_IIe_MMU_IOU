@@ -21,9 +21,7 @@ end SOFT_SWITCHES_C05X;
 
 architecture RTL of SOFT_SWITCHES_C05X is
 begin
-    -- The book "Understanding the Apple IIe" by Jim Sather says that ITEXT and MIX are not changed by RESET_N going LOW. This is further supported
-    -- by the fact that the schematics of Apple IIe's predecessor has the CLR pin of the 74LS259 tied to +5v
-    -- (see page 207, component F4 of figure C-12 of "The Apple II Circuit Description" by W. Gayler).
+    -- Note: This component is also used by the MMU only for the PG2 and HIRES soft-switches.
 
     -- ITEXT     RESET: WC050, SET: WC051, READ: C01A
     -- MIX       RESET: WC052, SET: WC053, READ: C01B
@@ -37,8 +35,11 @@ begin
     -- IOU_1 @A-2:F7
     process (RESET_N, C05X_N, D, SWITCH_ADDR) begin
         if RESET_N = '0' then
-            -- CLEAR all excpet ITEXT and MIX
-            PG2 <= '0';
+            -- CLEAR all except ITEXT and MIX
+            -- The book "Understanding the Apple IIe" by Jim Sather says that ITEXT and MIX are not changed by RESET_N going LOW. This is further supported
+            -- by the fact that the schematics of Apple IIe's predecessor has the CLR pin of the 74LS259 tied to +5v
+            -- (see page 207, component F4 of figure C-12 of "The Apple II Circuit Description" by W. Gayler).
+            PG2   <= '0';
             HIRES <= '0';
             AN0 <= '0';
             AN1 <= '0';
