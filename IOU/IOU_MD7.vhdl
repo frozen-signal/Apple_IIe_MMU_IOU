@@ -47,8 +47,9 @@ begin
         end if;
     end process;
 
-    -- The MD7 definition on IOU_2 at C-2 and D-2 would have an incorrect enabling signal for the IOU.
-    -- The enabling has been based on "Understanding the Apple IIe" by Jim Sather.
+    -- The MD7 definition on IOU_2 at C-2 and D-2 have an enabling signal that is correct for a combined IOU-MMU,
+    -- but incorrect for just the IOU or just the MMU.
+    -- The enabling here has been based on "Understanding the Apple IIe" by Jim Sather.
 
     RC010_N <= RC01X_N or LA(0) or LA(1) or LA(2) or LA(3);
 
@@ -62,15 +63,15 @@ begin
     MD7_ENABLE_N <= TIMING_ENABLE_N or (RC01X_N and RC00X_N and RC019_RC01F_N);
 
     with (LA) select MD7_C01X <=
-    AKD when x"0",
-    VBL_N when x"9",
-    ITEXT when x"A",
-    MIX when x"B",
-    PG2 when x"C",
-    HIRES when x"D",
-    PAYMAR when x"E",
-    S_80COL when x"F",
-    '0' when others;
+        AKD     when x"0",
+        VBL_N   when x"9",
+        ITEXT   when x"A",
+        MIX     when x"B",
+        PG2     when x"C",
+        HIRES   when x"D",
+        PAYMAR  when x"E",
+        S_80COL when x"F",
+        '0'     when others;
 
     MD7 <= ((not RC00X_N) and KEY)
         or ((not RC01X_N) and MD7_C01X);

@@ -1,7 +1,8 @@
--- C00X range soft-switches located on IOU_2 @B-1:J7
 library IEEE;
 use IEEE.std_logic_1164.all;
 
+-- Note: Both the IOU and MMU react the exact same way to the C00X soft-switches; these two components
+-- must always change the soft-switches together and should always have the same values.
 entity SOFT_SWITCHES_C00X is
     port (
         D           : in std_logic;
@@ -41,6 +42,7 @@ architecture RTL of SOFT_SWITCHES_C00X is
     signal ENABLE_N : std_logic;
     signal Q5_VALUE : std_logic;
 begin
+    -- IOU_2 @B-1:J7
     ENABLE_N <= R_W_N or C00X_N or PHI_1;
 
     SOFT_SWITCHES_LATCH : LATCH_9334 port map(

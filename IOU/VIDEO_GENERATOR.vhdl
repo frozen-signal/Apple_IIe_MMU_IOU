@@ -26,14 +26,7 @@ entity VIDEO_GENERATOR is
 end VIDEO_GENERATOR;
 
 architecture RTL of VIDEO_GENERATOR is
-    signal K8_6   : std_logic;
-    signal K8_8   : std_logic;
-    signal L9_13  : std_logic;
-    signal K8_3   : std_logic;
-    signal H8_8   : std_logic;
-    signal N7_8   : std_logic;
     signal VID6_N : std_logic;
-    signal L6_6   : std_logic;
     signal H5_N   : std_logic;
     signal H3_N   : std_logic;
     signal SUMS   : unsigned(3 downto 0);
@@ -64,8 +57,7 @@ begin
 
     -- IOU_2 @D-4:L9-1
     VID6_N <= not VID6;
-    L6_6   <= not (LGR_TXT_N or PAYMAR or VID7);
-    RA9_N  <= VID6_N nor L6_6;
+    RA9_N  <= VID6_N nor (not (LGR_TXT_N or PAYMAR or VID7));
 
     -- IOU_2 @D-4:L8-3
     RA10_N <= (not (VID6_N or PAYMAR or (FLASH or LGR_TXT_N))) or VID7;

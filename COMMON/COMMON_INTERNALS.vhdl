@@ -30,8 +30,8 @@ begin
     RC01X_N <= (not R_W_N) or C01X_N;
 
     -- IOU_1 @A-4:J8-11
-    -- NOTE: In the schematics, RAS_N is PRAS_N xor '0'. Since RAS_N and PRAS_N always have the same value,
-    -- only PRAS_N has been used in this implementatsion
+    -- NOTE: In the schematics, RAS_N is PRAS_N xor '0'. This may seem weird since that will make RAS_N always equal
+    -- to PRAS_N. The reason they did this is to add a Hold Delay to PRAS_N (i.e.: RAS_N is PRAS_N delayed by a certain delay)
 
     -- IOU_1 @D-3:K9-3
     Q3_PRAS_N_INT <= Q3 or PRAS_N;

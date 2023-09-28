@@ -30,9 +30,7 @@ architecture RTL of IOU_KEYBOARD is
     signal M8_3     : std_logic;
     signal STRBLE   : std_logic;
     signal AKD_N    : std_logic;
-    signal N8_4     : std_logic;
     signal N9_SHIFT : std_logic_vector(2 downto 0);
-    signal N9_7     : std_logic;
 
     signal AKSTB_INT, D_KSTRB_N_INT, STRBLE_N_INT, CLR_DELAY_N_INT, SET_DELAY_INT : std_logic;
     signal AUTOREPEAT_DELAY_INT, AUTOREPEAT_ACTIVE_INT                            : std_logic;

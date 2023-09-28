@@ -34,7 +34,6 @@ begin
     -- MMU_2 @C-4:F2-5
     L5_6    <= INTC3ACC_N_INT or PHI_1;
     RSTC8_N <= MCFFF_N and MPON_N;
-    -- FIXME: is a process really needed?
     process (L5_6, RSTC8_N)
     begin
         if (L5_6 = '0') then

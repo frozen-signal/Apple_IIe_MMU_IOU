@@ -110,7 +110,7 @@ Note that all parts of the schematics associated with unselected values of these
 
 ## Hardware implementation
 ### IOU RESET_N pin
-The RESET_N pin (pin 15) of the IOU need to be pulled-up. If the CPLD/FPGA do not support internal pull-up, a 3KOhms resistor should be used.
+The RESET_N pin (pin 15) of the IOU need to be pulled-up. If the CPLD/FPGA do not support internal pull-up, a 10K ohms resistor should be used.
 
 ### Tri-State pins
 A hardware solution should take care not to break the tri-state capability of some of the pins of the MMU and IOU, for example by using a bus tranceiver without exporting a corresponding 'enable' signal from the VHDL.
