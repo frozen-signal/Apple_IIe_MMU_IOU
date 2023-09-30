@@ -16,8 +16,8 @@ entity RAS_HOLD_TIME is
 end RAS_HOLD_TIME;
 
 architecture RTL of RAS_HOLD_TIME is
-    constant OSC_FREQUENCY_MHZ : string := "53.20";
-    constant NUM_CLK_TICKS : positive := 2;
+    constant OSC_FREQUENCY_MHZ : string := "88.67";
+    constant NUM_CLK_TICKS : positive := 4;
 
 	component OSCJ
         -- synthesis translate_off

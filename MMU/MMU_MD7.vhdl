@@ -37,13 +37,13 @@ begin
     ENABLE_N <= RC011_RC018_N or not (PHI_0 or ((not PHI_0) and Q3 and PRAS_N));
 
     with A select MD7 <=
-        BANK2 when x"1",
-        RDRAM when x"2",
-        FLG1 when x"3",
-        FLG2 when x"4",
-        PENIO_N when x"5",
-        ALTSTKZP when x"6",
+        BANK2     when x"1",
+        RDRAM     when x"2",
+        FLG1      when x"3",
+        FLG2      when x"4",
+        PENIO_N   when x"5",
+        ALTSTKZP  when x"6",
         INTC300_N when x"7",
-        EN80VID when x"8",
+        EN80VID   when x"8",
         '0' when others;
 end RTL;
