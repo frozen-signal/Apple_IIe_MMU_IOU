@@ -41,20 +41,25 @@ begin
     -- looking at the DET.T that handles RDROM in the ASIC schematic
     CLK <= not DEV0_N;
 
-    MMU1_E4 : LS175 port map(
-        CLR_N => MPON_N,
-        CLK   => CLK,
-        D1    => A3,
-        D2    => D2,
-        D3    => D3,
-        D4    => D4,
-        Q1    => BANK1,       -- SET C088-C08F; Set BANK2 to RESET, READ C011
-        Q2    => RDRAM,       -- SET C080, C083; Set RDROM to RESET. This is HRAMRD in its SET state. READ C012
-        Q3    => OUT_FST_ACC, -- SET: READ odd address in the C08X range; RESET: In C08X range, read even addr or write
-        Q4    => WRPROT,      -- Also called HRAMWRT'
-        Q1_N  => BANK2,       -- SET C080-C087; Set BANK1 to RESET
-        Q2_N  => RDROM,       -- SET C081, C082; Set RDRAM to RESET, This is HRAMRD in its RESET state
-        Q3_N  => open,
-        Q4_N  => OUT_WREN     -- Also called PRE-WRITE
-    );
+    process (CLK, MPON_N)
+    begin
+        if (MPON_N = '0') then
+            BANK1       <= '0';
+            RDRAM       <= '0';
+            OUT_FST_ACC <= '0';
+            WRPROT      <= '0';
+            BANK2       <= '1';  -- BANK2 is always the inverse of BANK1
+            RDROM       <= '1';  -- RDROM is always the inverse of RDRAM
+            OUT_WREN    <= '1';  -- WREN is always the inverse of WRPROT
+        elsif (rising_edge(CLK)) then
+            BANK1       <= A3;        -- SET C088-C08F; Set BANK2 to RESET, READ C011
+            RDRAM       <= D2;        -- SET C080, C083; Set RDROM to RESET. This is HRAMRD in its SET state. READ C012
+            OUT_FST_ACC <= D3;        -- SET: READ odd address in the C08X range; RESET: In C08X range, read even addr or write
+            WRPROT      <= D4;        -- Also called HRAMWRT'
+            BANK2       <= not A3;    -- SET C080-C087; Set BANK1 to RESET
+            RDROM       <= not D2;    -- SET C081, C082; Set RDRAM to RESET, This is HRAMRD in its RESET state
+            OUT_WREN    <= not D4;    -- Also called PRE-WRITE
+        end if;
+    end process;
+
 end RTL;
