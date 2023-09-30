@@ -41,10 +41,10 @@ begin
             -- (see page 207, component F4 of figure C-12 of "The Apple II Circuit Description" by W. Gayler).
             PG2   <= '0';
             HIRES <= '0';
-            AN0 <= '0';
-            AN1 <= '0';
-            AN2 <= '0';
-            AN3 <= '0';
+            AN0   <= '0';
+            AN1   <= '0';
+            AN2   <= '0';
+            AN3   <= '0';
         elsif C05X_N = '0' then
             case (SWITCH_ADDR) is
                 when "000"  => ITEXT <= D;
