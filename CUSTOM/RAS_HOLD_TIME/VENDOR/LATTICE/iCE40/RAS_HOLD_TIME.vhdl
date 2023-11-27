@@ -17,7 +17,7 @@ architecture RTL of RAS_HOLD_TIME is
 
 	component SB_HFOSC
         generic (
-            CLKHF_DIV :string :="0b00"
+            CLKHF_DIV : string := "0b00"
         );
         port (
             CLKHFEN: in std_logic;
@@ -31,7 +31,7 @@ architecture RTL of RAS_HOLD_TIME is
 begin
     u_sb_hfosc : SB_HFOSC
     generic map (
-        CLKHF_DIV =>"0b00"
+        CLKHF_DIV => "0b00"
     )
     port map (
         CLKHFEN  => '1',
@@ -43,7 +43,7 @@ begin
     begin
         if rising_edge(CLK) then
             RAS_N <= SHIFT_REGISTER(SHIFT_REGISTER'high);
-            SHIFT_REGISTER<= shift_left(SHIFT_REGISTER, 1);
+            SHIFT_REGISTER <= shift_left(SHIFT_REGISTER, 1);
             SHIFT_REGISTER(SHIFT_REGISTER'low) <= PRAS_N;
         end if;
     end process;

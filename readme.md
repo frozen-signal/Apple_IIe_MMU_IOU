@@ -1,3 +1,7 @@
+## A quick update on the project
+We are currently experiencing small issues in the production of the release candidate units. Once produced, we will carefully re-test everything, and then the retail units will be available. It's hard to estimate a timeframe for when they will be available, but my guess is that they will be released in early 2024.
+<br/><br/>But rest assured, this project is NOT abandonned.
+
 # Apple IIe MMU and IOU custom ICs
 
 This is a VHDL implementation of the Apple IIe's MMU and IOU custom ICs, based on the actual schematics that were used during the development of the Apple IIe.
@@ -69,16 +73,44 @@ This will run the testbench `MY_COMPONENT_TB` and dump the generated signals in 
 gtkwave debug.vcd
 ```
 ## Compiling all
-Alternatively, all the sources can be analysed and elaborated with this command:
-```bash
-./make.sh
-```
-(You can ignore warnings saying "... is neither an entity nor a configuration")
+Alternatively, the 'make' utility can be used.
+The units must be imported when they have never been imported, after the library has been cleaned, and after any modification in the VHDL files.<br/>
+Once imported, the units must be built.<br/>
+And then the tests can be run.
 
-And all testbenches can be simulated with this command:
+### Cleaning the work library
 ```bash
-./testall.sh
+make clean
 ```
+
+### Importing units
+```bash
+make import VENDOR={ ALTERA | iCE40 | MachX03D }
+```
+VENDOR is optional; if omited, simulation units will be imported.<br/>
+When VENDOR is used, one of the supported devices must be passed:
+- `ALTERA`
+- `iCE40`
+- `MachX03D`
+
+### Building units
+```bash
+make build
+```
+
+### Running the tests
+```bash
+make test
+```
+
+### Obtaining the list of files
+To obtain the list of files required to build the IOU or the MMU.<br/>
+First, import the correct units with the `import` target.<br/>
+Then use:
+```bash
+make files ASIC={ MMU | IOU }
+```
+Where ASIC should be passed `MMU` or `IOU`.
 
 # Directory Structure
 * **COMMON**: Components common to the MMU and the IOU.
