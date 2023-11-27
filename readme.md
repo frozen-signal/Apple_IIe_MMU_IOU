@@ -1,5 +1,5 @@
 ## A quick update on the project
-We are currently experiencing small issues in the production of the release candidate units. Once produced, we will carefully re-test everything, and then the retail units will be available. It's hard to estimate a timeframe for when they will be available, but my guess is that they will be released in early 2024.
+We are currently experiencing small issues in the production of the release candidate units. Once produced, we will carefully re-test everything, and then the retail units will be produced and released. It's hard to estimate a timeframe for when they will be available, but my guess is that they will be released in early 2024.
 <br/><br/>But rest assured, this project is NOT abandonned.
 
 # Apple IIe MMU and IOU custom ICs
