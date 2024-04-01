@@ -18,7 +18,7 @@ entity IOU is
         IAKD       : in std_logic;
 
         -- in/out
-        PIN_RESET_N : inout std_logic; -- Tri-state
+        RESET_N : inout std_logic; -- Tri-state
         ORA6, ORA5, ORA4, ORA3,
         ORA2, ORA1, ORA0 : inout std_logic; -- Tri-state
 
@@ -338,7 +338,7 @@ architecture RTL of IOU is
     signal RAS_N : std_logic;
     signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                                   : std_logic;
     signal P_PHI_2, PHI_1, CTC14S                                                                 : std_logic;
-    signal FORCE_RESET_N_LOW, RESET_N, IN_RESET                                                   : std_logic;
+    signal FORCE_RESET_N_LOW                                                                      : std_logic;
     signal HPE_N, V5, V4, V3, V2, V1, V0, VC, VB, VA, H5, H4, H3, H2, H1, PAKST, TC, TC14S, FLASH : std_logic;
     signal HIRESEN_N, C040_7_N, HBL, BL_N, VBL_N, V1_N_V5_N, V2_V2_N, SERR, KSTRB, AKD            : std_logic;
     signal EN80VID, FLG1, FLG2, PENIO_N, ALTSTKZP, INTC300_N, INTC300, S_80COL, PAYMAR            : std_logic;
@@ -394,9 +394,7 @@ begin
         POC_N             => POC_N,
         FORCE_RESET_N_LOW => FORCE_RESET_N_LOW
     );
-    IN_RESET    <= PIN_RESET_N;
-    RESET_N     <= '0' when FORCE_RESET_N_LOW = '1' else IN_RESET;
-    PIN_RESET_N <= '0' when FORCE_RESET_N_LOW = '1' else 'Z';
+    RESET_N <= '0' when FORCE_RESET_N_LOW = '1' else 'Z';
 
     U_VIDEO_SCANNER : VIDEO_SCANNER port map(
         POC_N   => POC_N,

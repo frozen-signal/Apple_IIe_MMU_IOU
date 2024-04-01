@@ -76,7 +76,7 @@ architecture IOU_TEST_SOFT_SWITCHES of IOU_TEST_SOFT_SWITCHES_ENTITY is
             IKSTRB     : in std_logic;
             IAKD       : in std_logic;
 
-            PIN_RESET_N : inout std_logic;
+            RESET_N    : inout std_logic;
             ORA6, ORA5, ORA4, ORA3,
             ORA2, ORA1, ORA0 : inout std_logic;
 
@@ -104,7 +104,7 @@ architecture IOU_TEST_SOFT_SWITCHES of IOU_TEST_SOFT_SWITCHES_ENTITY is
     signal FINISHED : std_logic := '0';
     signal DEBUG    : std_logic;
 
-    signal R_W_N, C0XX_N, VID6, VID7, A6, IKSTRB, IAKD, PIN_RESET_N                                 : std_logic;
+    signal R_W_N, C0XX_N, VID6, VID7, A6, IKSTRB, IAKD, RESET_N                                     : std_logic;
     signal ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, ORA7, H0, SEGA, SEGB, SEGC, LGR_TXT_N          : std_logic;
     signal MD7, SPKR, CASSO, AN0, AN1, AN2, AN3, S_80COL_N, RA9_N, RA10_N, CLRGAT_N, SYNC_N, WNDW_N : std_logic;
     signal TEST_ORA0, TEST_ORA1, TEST_ORA2, TEST_ORA3, TEST_ORA4                                    : std_logic;
@@ -151,7 +151,7 @@ begin
         A6          => A6,
         IKSTRB      => IKSTRB,
         IAKD        => IAKD,
-        PIN_RESET_N => PIN_RESET_N,
+        RESET_N     => RESET_N,
         ORA6        => ORA6,
         ORA5        => ORA5,
         ORA4        => ORA4,
@@ -181,7 +181,7 @@ begin
     );
 
     process begin
-        PIN_RESET_N    <= '1';
+        RESET_N    <= '1';
         TB_FORCE_RESET <= '0';
         wait until falling_edge(PHI_0);
 
@@ -336,9 +336,9 @@ begin
 
         -- System reset
         C0XX_N    <= '1';
-        PIN_RESET_N <= '0';
+        RESET_N <= '0';
         wait until rising_edge(PHI_0);
-        PIN_RESET_N <= '1';
+        RESET_N <= '1';
 
         wait until falling_edge(PHI_0);
         wait until rising_edge(PRAS_N);

@@ -33,6 +33,14 @@ architecture RTL of MMU is
         );
     end component;
 
+    component ROMEN_HOLD_TIME is
+        port (
+            PHI_0 : in std_logic;
+
+            DELAYED_PHI_0 : out std_logic
+        );
+    end component;
+
     component MMU_ADDR_DECODER is
         port (
             A     : in std_logic_vector(15 downto 0);
@@ -244,16 +252,16 @@ architecture RTL of MMU is
 
     component MMU_ROMEN is
         port (
-            PHI_0      : in std_logic;
-            INTC8ACC   : in std_logic;
-            INTC3ACC_N : in std_logic;
-            CXXX       : in std_logic;
-            DXXX_N     : in std_logic;
-            E_FXXX_N   : in std_logic;
-            INH        : in std_logic;
-            RDROM      : in std_logic;
-            CENROM1    : in std_logic;
-            R_W_N      : in std_logic;
+            DELAYED_PHI_0 : in std_logic;
+            INTC8ACC      : in std_logic;
+            INTC3ACC_N    : in std_logic;
+            CXXX          : in std_logic;
+            DXXX_N        : in std_logic;
+            E_FXXX_N      : in std_logic;
+            INH           : in std_logic;
+            RDROM         : in std_logic;
+            CENROM1       : in std_logic;
+            R_W_N         : in std_logic;
 
             ROMEN2_N : out std_logic;
             ROMEN1_N : out std_logic
@@ -316,7 +324,8 @@ architecture RTL of MMU is
         );
     end component;
 
-    signal RAS_N : std_logic;
+    signal DELAYED_PHI_0 : std_logic;
+    signal RAS_N         : std_logic;
     signal PHI_1, INH                                                                            : std_logic;
     signal CXXX_FXXX, FXXX_N, EXXX_N, DXXX_N, CXXX, C8_FXX, C8_FXX_N, C0_7XX_N, E_FXXX_N, D_FXXX : std_logic;
     signal MC0XX_N, MC3XX, MC00X_N, MC01X_N, MC04X_N, MC05X_N, MC06X_N, MC07X_N, MCFFF_N         : std_logic;
@@ -342,6 +351,11 @@ begin
     U_RAS_HOLD_TIME : RAS_HOLD_TIME port map(
         PRAS_N => PRAS_N,
         RAS_N => RAS_N
+    );
+
+    U_ROMEN_HOLD_TIME : ROMEN_HOLD_TIME port map(
+        PHI_0 => PHI_0,
+        DELAYED_PHI_0 => DELAYED_PHI_0
     );
 
     U_ADDR_DECODER : MMU_ADDR_DECODER port map(
@@ -528,16 +542,16 @@ begin
     );
 
     U_MMU_ROMEN : MMU_ROMEN port map(
-        PHI_0      => PHI_0,
-        INTC8ACC   => INTC8ACC,
-        INTC3ACC_N => INTC3ACC_N,
-        CXXX       => CXXX,
-        DXXX_N     => DXXX_N,
-        E_FXXX_N   => E_FXXX_N,
-        INH        => INH,
-        RDROM      => RDROM,
-        CENROM1    => CENROM1,
-        R_W_N      => R_W_N,
+        DELAYED_PHI_0 => DELAYED_PHI_0,
+        INTC8ACC      => INTC8ACC,
+        INTC3ACC_N    => INTC3ACC_N,
+        CXXX          => CXXX,
+        DXXX_N        => DXXX_N,
+        E_FXXX_N      => E_FXXX_N,
+        INH           => INH,
+        RDROM         => RDROM,
+        CENROM1       => CENROM1,
+        R_W_N         => R_W_N,
 
         ROMEN2_N => ROMEN2_N,
         ROMEN1_N => ROMEN1_N

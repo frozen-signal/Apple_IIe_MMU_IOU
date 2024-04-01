@@ -1,14 +1,9 @@
-## A quick update on the project
-We are currently experiencing small issues in the production of the release candidate units. Once produced, we will carefully re-test everything, and then the retail units will be produced and released. It's hard to estimate a timeframe for when they will be available, but my guess is that they will be released in early 2024.
-<br/><br/>But rest assured, this project is NOT abandonned.
-
 # Apple IIe MMU and IOU custom ICs
 
 This is a VHDL implementation of the Apple IIe's MMU and IOU custom ICs, based on the actual schematics that were used during the development of the Apple IIe.
 
-## In development
-Note: This project is currently under development and, although functionnal, is not ready to be used in a hardware implementation.<br/>
-<br/>
+## Project status
+Prototypes of MMU and IOU has been tested and are functionnal. A pre-production run will soon be manufactured and carefully re-tested. It is likely that the code in this repository is functionnaly final; upcoming code changes are expected to be only code cleaning, code commenting, and documentation.
 ![IOU](https://img.shields.io/badge/IOU-Fully_Functionnal-green)<br/>
 ![MMU](https://img.shields.io/badge/MMU-Fully_Functionnal-green)<br/>
 
@@ -42,6 +37,7 @@ The implementation has been tested with these hardware components:
 - CPU:
   - 6502 with unenhanced ROMs
 - AUX Cards:
+  - RAMWORKS III aux card
   - 80-Col Expansion card (820-0067-B)
   - 80-Col Expansion card (820-0067-D)
 - ROMs:

@@ -88,7 +88,7 @@ architecture IOU_TEST_TIMINGS of IOU_TEST_TIMINGS_ENTITY is
             IKSTRB     : in std_logic;
             IAKD       : in std_logic;
 
-            PIN_RESET_N      : inout std_logic;
+            RESET_N    : inout std_logic;
             ORA6, ORA5, ORA4, ORA3,
             ORA2, ORA1, ORA0 : inout std_logic;
 
@@ -116,7 +116,7 @@ architecture IOU_TEST_TIMINGS of IOU_TEST_TIMINGS_ENTITY is
     signal FINISHED : std_logic := '0';
     signal DEBUG    : std_logic;
 
-    signal R_W_N, C0XX_N, VID6, VID7, A6, IKSTRB, IAKD, PIN_RESET_N,
+    signal R_W_N, C0XX_N, VID6, VID7, A6, IKSTRB, IAKD, RESET_N,
     ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, ORA7, H0, SEGA, SEGB, SEGC, LGR_TXT_N,
     MD7, SPKR, CASSO, AN0, AN1, AN2, AN3, S_80COL_N, RA9_N, RA10_N, CLRGAT_N, SYNC_N, WNDW_N : std_logic;
     signal TEST_ORA0, TEST_ORA1, TEST_ORA2, TEST_ORA3, TEST_ORA4,
@@ -163,7 +163,7 @@ begin
         A6          => A6,
         IKSTRB      => IKSTRB,
         IAKD        => IAKD,
-        PIN_RESET_N => PIN_RESET_N,
+        RESET_N     => RESET_N,
         ORA6        => ORA6,
         ORA5        => ORA5,
         ORA4        => ORA4,

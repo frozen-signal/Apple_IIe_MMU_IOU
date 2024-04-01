@@ -51,7 +51,7 @@ architecture IOU_TB_RESET_N_POWER_ON of IOU_TEST_RESET_N_POWER_ON_ENTITY is
             IKSTRB     : in std_logic;
             IAKD       : in std_logic;
 
-            PIN_RESET_N      : inout std_logic;
+            RESET_N    : inout std_logic;
             ORA6, ORA5, ORA4, ORA3,
             ORA2, ORA1, ORA0 : inout std_logic;
 
@@ -78,7 +78,7 @@ architecture IOU_TB_RESET_N_POWER_ON of IOU_TEST_RESET_N_POWER_ON_ENTITY is
 
     signal FINISHED : std_logic := '0';
 
-    signal R_W_N, C0XX_N, VID6, VID7, A6, IKSTRB, IAKD, PIN_RESET_N,
+    signal R_W_N, C0XX_N, VID6, VID7, A6, IKSTRB, IAKD, RESET_N,
         ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, ORA7, H0, SEGA, SEGB, SEGC, LGR_TXT_N,
         MD7, SPKR, CASSO, AN0, AN1, AN2, AN3, S_80COL_N, RA9_N, RA10_N, CLRGAT_N, SYNC_N, WNDW_N : std_logic;
 
@@ -104,7 +104,7 @@ begin
         A6          => A6,
         IKSTRB      => IKSTRB,
         IAKD        => IAKD,
-        PIN_RESET_N => PIN_RESET_N,
+        RESET_N     => RESET_N,
         ORA6        => ORA6,
         ORA5        => ORA5,
         ORA4        => ORA4,
@@ -137,7 +137,7 @@ begin
 
         wait until rising_edge(PHI_0);
 
-        if PIN_RESET_N /= '0' then
+        if RESET_N /= '0' then
             HAS_RESET_N_REMAINED_LOW <= '0';
         end if;
 
@@ -149,7 +149,7 @@ begin
         wait until rising_edge(PHI_0);
         wait for 1 ns;
 
-        assert(PIN_RESET_N = 'Z') report "RESET_N should be High-Z" severity error;
+        assert(RESET_N = 'Z') report "RESET_N should be High-Z" severity error;
 
         FINISHED <= '1';
         assert false report "Test done." severity note;
