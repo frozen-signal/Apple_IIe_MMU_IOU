@@ -53,67 +53,122 @@ begin
     );
 
     process begin
-        -- FIXME: Re-write the testbench
 
-        -- A15         <= '0';
-        -- A14         <= '0';
-        -- A13         <= '0';
-        -- A10         <= '0';
-        -- HIRES       <= '0';
-        -- PHI_0_7XX   <= '0';
-        -- EN80VID     <= '0';
-        -- PG2         <= '0';
-        -- FLG1        <= '0';
-        -- FLG2        <= '0';
-        -- R_W_N       <= '0';
-        -- ALTSTKZP    <= '0';
-        -- D_FXXX      <= '0';
-        -- PHI_0_1XX_N <= '0';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '0') report "expect SELMB_N LOW" severity error;
+        -- When accessing primary display range ($0400-$07FF) while EN80VID is set, the state of PG2 is set to SELMB_N
+        EN80VID  <= '1';
+        S_04_7XX <= '1';
+        PG2 <= '0';
+        wait for 1 ns;
+        assert(SELMB_N = '0') report "Expected SELMB_N to be LOW" severity error;
 
-        -- ALTSTKZP <= '1';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '1') report "expect SELMB_N HIGH" severity error;
+        PG2 <= '1';
+        wait for 1 ns;
+        assert(SELMB_N = '1') report "Expected SELMB_N to be HIGH" severity error;
 
-        -- ALTSTKZP    <= '0';
-        -- PHI_0_1XX_N <= '1';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '0') report "expect SELMB_N LOW" severity error;
+        EN80VID  <= '0';
+        R_W_N    <= '0';
+        FLG2     <= 'X';
+        wait for 1 ns;
+        assert(SELMB_N = 'X') report "This address range should be ignored when EN80VID is reset" severity error;
 
-        -- FLG2 <= '1';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '1') report "expect SELMB_N HIGH" severity error;
 
-        -- FLG1  <= '1';
-        -- FLG2  <= '0';
-        -- R_W_N <= '1';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '1') report "expect SELMB_N HIGH" severity error;
+        FLG2     <= 'U';
+        R_W_N    <= 'U';
+        S_04_7XX <= '0';
+        wait for 1 ns;
 
-        -- FLG1      <= '0';
-        -- FLG2      <= '0';
-        -- R_W_N     <= '0';
-        -- A10       <= '1';
-        -- PHI_0_7XX <= '1';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '0') report "expect SELMB_N LOW" severity error;
 
-        -- EN80VID <= '1';
-        -- PG2     <= '1';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '1') report "expect SELMB_N HIGH" severity error;
+        -- When accessing HIRES display range ($2000-$3FFF) while EN80VID and HIRES are set, the state of PG2 is set to SELMB_N
+        EN80VID  <= '1';
+        HIRES    <= '1';
+        S_2_3XXX <= '1';
+        PG2 <= '0';
+        wait for 1 ns;
+        assert(SELMB_N = '0') report "Expected SELMB_N to be LOW" severity error;
 
-        -- A10       <= '0';
-        -- PHI_0_7XX <= '0';
-        -- A15       <= '0';
-        -- A13       <= '1';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '0') report "expect SELMB_N LOW" severity error;
+        PG2 <= '1';
+        wait for 1 ns;
+        assert(SELMB_N = '1') report "Expected SELMB_N to be HIGH" severity error;
 
-        -- HIRES <= '1';
-        -- wait for 1 ns;
-        -- assert(SELMB_N = '1') report "expect SELMB_N HIGH" severity error;
+        EN80VID  <= '0';
+        R_W_N    <= '0';
+        FLG2     <= 'X';
+        wait for 1 ns;
+        assert(SELMB_N = 'X') report "This address range should be ignored when EN80VID is reset" severity error;
+
+        EN80VID  <= '1';
+        HIRES    <= '0';
+        R_W_N    <= '0';
+        FLG2     <= 'X';
+        wait for 1 ns;
+        assert(SELMB_N = 'X') report "This address range should be ignored when HIRES is reset" severity error;
+
+
+        S_2_3XXX <= '0';
+        EN80VID  <= 'U';
+        HIRES    <= 'U';
+        R_W_N    <= 'U';
+        FLG2     <= 'X';
+        PG2 <= 'U';
+        wait for 1 ns;
+
+
+        -- When accessing the $0000-$01FF memory range, the state of ALTSTKZP is set to SELMB_N
+        S_00_1XX <= '1';
+        ALTSTKZP <= '0';
+        wait for 1 ns;
+        assert(SELMB_N = '0') report "Expected SELMB_N to be LOW" severity error;
+
+        ALTSTKZP <= '1';
+        wait for 1 ns;
+        assert(SELMB_N = '1') report "Expected SELMB_N to be HIGH" severity error;
+
+
+        S_00_1XX <= '0';
+        ALTSTKZP <= 'U';
+        wait for 1 ns;
+
+
+        -- When accessing the $D000-$FFFF memory range, the state of ALTSTKZP is set to SELMB_N
+        D_FXXX <= '1';
+        ALTSTKZP <= '0';
+        wait for 1 ns;
+        assert(SELMB_N = '0') report "Expected SELMB_N to be LOW" severity error;
+
+        ALTSTKZP <= '1';
+        wait for 1 ns;
+        assert(SELMB_N = '1') report "Expected SELMB_N to be HIGH" severity error;
+
+
+        D_FXXX <= '0';
+        ALTSTKZP <= 'U';
+        wait for 1 ns;
+
+        -- If it's a read operation, the state of FLG1 is set to SELMB_N
+        R_W_N    <= '1';
+        FLG1     <= '0';
+        wait for 1 ns;
+        assert(SELMB_N = '0') report "Expected SELMB_N to be LOW" severity error;
+
+        FLG1     <= '1';
+        wait for 1 ns;
+        assert(SELMB_N = '1') report "Expected SELMB_N to be HIGH" severity error;
+
+
+        FLG1     <= 'U';
+
+
+        -- In any other cases, the state of FLG2 is set to SELMB_N
+        R_W_N    <= '0';
+        FLG2     <= '0';
+        wait for 1 ns;
+        assert(SELMB_N = '0') report "Expected SELMB_N to be LOW" severity error;
+
+        FLG2     <= '1';
+        wait for 1 ns;
+        assert(SELMB_N = '1') report "Expected SELMB_N to be HIGH" severity error;
+
+
 
         assert false report "Test done." severity note;
         wait;
