@@ -31,8 +31,9 @@ entity MMU_ADDR_DECODER is
         MC07X_N : out std_logic;
         MCFFF_N : out std_logic;
 
-        PHI_0_7XX   : out std_logic;
-        PHI_0_1XX_N : out std_logic;
+        S_00_1XX    : out std_logic;  -- HIGH when the ADDRESS at the MMU's input is between $0000 - $01FF ($0[0-1]XX)
+        S_04_7XX    : out std_logic;  -- HIGH when the ADDRESS at the MMU's input is between $0400 - $07FF ($0[4-7]XX)
+        S_2_3XXX    : out std_logic;  -- HIGH when the ADDRESS at the MMU's input is between $2000 - $3FFF ($[2-3]XXX)
         S_01XX_N    : out std_logic
     );
 end MMU_ADDR_DECODER;
@@ -50,7 +51,8 @@ architecture RTL of MMU_ADDR_DECODER is
     end component;
 
     signal CXXX_FXXX_INT, EXXX_N_INT, E_FXXX_N_INT, FXXX_N_INT, DXXX_N_INT   : std_logic;
-    signal CXXX_INT, MC0XX_N_INT, C8_FXX_INT, PHI_0_7XX_INT, PHI_0_1XX_N_INT : std_logic;
+    signal CXXX_INT, MC0XX_N_INT, C8_FXX_INT : std_logic;
+    signal S_0XXX, S_0XXX_N, S_X1XX, S_X0_1XX, S_X4_7XX : std_logic;
 begin
     -- MMU1 @B-4:F4(LS156)
     CXXX_FXXX_INT <= A(15) and A(14);
@@ -94,9 +96,23 @@ begin
         and A(5) and A(4) and A(3) and A(2) and A(1) and A(0));
 
     -- MMU_2 @D-2
-    PHI_0_7XX_INT   <= not (A(15) or A(14) or A(13) or A(12) or A(11));
-    PHI_0_1XX_N_INT <= PHI_0_7XX_INT nand (A(10) nor A(9)); -- There seems to be a typo in the schematics: It's labeled PHI_0_1XX but should be PHI_0_1XX_N (see also MMU2 @C-2:S3-1)
-    S_01XX_N        <= (not A(8) or PHI_0_1XX_N_INT);
+    -- PHI_0_1XX_N and PHI_0_7XX are only used in the computation of SELMB_N (See MMU_2 @B-1). The computation of SELMB_N in the logical schematics seems to have an error.
+    -- Using "Apple IIe Diagnostic, v2.1" reports an error while testing AUX RAM. Also, the game "Aliens" will hang while loading. Comparing a logic analyzer trace of the logical schematics vs the official MMU
+    -- will reveal a difference on /EN80 and /CASEN.
+    -- Instead this implementation will use the ASIC computation of SELMB_N
+    -- Also: PHI_0_1XX_N_INT:  There seems to be a typo in the schematics: It's labeled PHI_0_1XX but should be PHI_0_1XX_N (see also MMU2 @C-2:S3-1)
+
+    -- From ASIC Schematics
+    S_0XXX <= not (A(15) or A(14) or A(13) or A(12));
+    S_0XXX_N <= not S_0XXX;
+    S_2_3XXX <= not ((not A(13)) or A(14) or A(15));
+    S_X0_1XX <= not (A(11) or A(10) or A(9));
+    S_X4_7XX <= not (A(11) or (not A(10)));
+    S_X1XX <= not (A(11) or A(10) or A(9) or (not A(8)));
+
+    S_00_1XX <= (not S_X0_1XX) nor S_0XXX_N;
+    S_04_7XX <= (not S_X4_7XX) nor S_0XXX_N;
+    S_01XX_N <= not (S_0XXX and S_X1XX);
 
     CXXX_FXXX   <= CXXX_FXXX_INT;
     EXXX_N      <= EXXX_N_INT;
@@ -106,6 +122,5 @@ begin
     CXXX        <= CXXX_INT;
     MC0XX_N     <= MC0XX_N_INT;
     C8_FXX      <= C8_FXX_INT;
-    PHI_0_7XX   <= PHI_0_7XX_INT;
-    PHI_0_1XX_N <= PHI_0_1XX_N_INT;
+
 end RTL;

@@ -67,8 +67,9 @@ architecture RTL of MMU is
             MC07X_N : out std_logic;
             MCFFF_N : out std_logic;
 
-            PHI_0_7XX   : out std_logic;
-            PHI_0_1XX_N : out std_logic;
+            S_00_1XX    : out std_logic;
+            S_04_7XX    : out std_logic;
+            S_2_3XXX    : out std_logic;
             S_01XX_N    : out std_logic
         );
     end component;
@@ -170,18 +171,17 @@ architecture RTL of MMU is
 
     component MMU_SELMB is
         port (
-            A15, A14,
-            A13, A10    : in std_logic;
+            S_00_1XX    : in std_logic;
+            S_04_7XX    : in std_logic;
+            S_2_3XXX    : in std_logic;
+            D_FXXX      : in std_logic;
             HIRES       : in std_logic;
-            PHI_0_7XX   : in std_logic;
             EN80VID     : in std_logic;
             PG2         : in std_logic;
             FLG1        : in std_logic;
             FLG2        : in std_logic;
             R_W_N       : in std_logic;
             ALTSTKZP    : in std_logic;
-            D_FXXX      : in std_logic;
-            PHI_0_1XX_N : in std_logic;
 
             SELMB_N : out std_logic
         );
@@ -329,7 +329,9 @@ architecture RTL of MMU is
     signal PHI_1, INH                                                                            : std_logic;
     signal CXXX_FXXX, FXXX_N, EXXX_N, DXXX_N, CXXX, C8_FXX, C8_FXX_N, C0_7XX_N, E_FXXX_N, D_FXXX : std_logic;
     signal MC0XX_N, MC3XX, MC00X_N, MC01X_N, MC04X_N, MC05X_N, MC06X_N, MC07X_N, MCFFF_N         : std_logic;
-    signal PHI_0_7XX, PHI_0_1XX_N, S_01XX_N                                                      : std_logic;
+    signal LATCHED_MC05X_N                                                                       : std_logic;
+    signal S_00_1XX, S_04_7XX, S_2_3XXX                                                          : std_logic;
+    signal S_01XX_N                                                                              : std_logic;
     signal DEV0_N                                                                                : std_logic;
     signal MPON_N                                                                                : std_logic;
     signal BANK1, BANK2, RDRAM, RDROM, OUT_FST_ACC, WRPROT, OUT_WREN                             : std_logic;
@@ -380,8 +382,9 @@ begin
         MC06X_N     => MC06X_N,
         MC07X_N     => MC07X_N,
         MCFFF_N     => MCFFF_N,
-        PHI_0_7XX   => PHI_0_7XX,
-        PHI_0_1XX_N => PHI_0_1XX_N,
+        S_00_1XX    => S_00_1XX,
+        S_04_7XX    => S_04_7XX,
+        S_2_3XXX    => S_2_3XXX,
         S_01XX_N    => S_01XX_N
     );
 
@@ -442,10 +445,15 @@ begin
         PAYMAR    => open
     );
 
+    -- NOTE: In the schematics, the C05X soft switches uses the latched addresses for the IOU. Here, we use MC05X_N
+    -- (not present in the schematics) that we force HIGH during PHI_1 in order to prevent the soft-switches from changing.
+    -- See https://github.com/frozen-signal/Apple_IIe_MMU_IOU/issues/41, where the crumbling address at the end of PHI_0
+    -- would cause the MMU to momentarily see C055 and cause the accidental setting of PG2.
+    LATCHED_MC05X_N <= MC05X_N or PHI_1;
     U_SOFT_SWITCHES_C05X : SOFT_SWITCHES_C05X port map(
         D           => A(0),
         SWITCH_ADDR => A(3 downto 1),
-        C05X_N      => MC05X_N,
+        C05X_N      => LATCHED_MC05X_N,
         RESET_N     => MPON_N,
 
         ITEXT => open,
@@ -472,20 +480,17 @@ begin
     );
 
     U_MMU_SELMB : MMU_SELMB port map(
-        A15         => A(15),
-        A14         => A(14),
-        A13         => A(13),
-        A10         => A(10),
+        S_00_1XX    => S_00_1XX,
+        S_04_7XX    => S_04_7XX,
+        S_2_3XXX    => S_2_3XXX,
+        D_FXXX      => D_FXXX,
         HIRES       => HIRES,
-        PHI_0_7XX   => PHI_0_7XX,
         EN80VID     => EN80VID,
         PG2         => PG2,
         FLG1        => FLG1,
         FLG2        => FLG2,
         R_W_N       => R_W_N,
         ALTSTKZP    => ALTSTKZP,
-        D_FXXX      => D_FXXX,
-        PHI_0_1XX_N => PHI_0_1XX_N,
         SELMB_N     => SELMB_N
     );
 

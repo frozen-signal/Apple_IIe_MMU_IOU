@@ -32,8 +32,9 @@ architecture MMU_ADDR_DECODER_TEST of MMU_ADDR_DECODER_TB is
             MC07X_N : out std_logic;
             MCFFF_N : out std_logic;
 
-            PHI_0_7XX   : out std_logic;
-            PHI_0_1XX_N : out std_logic;
+            S_00_1XX    : out std_logic;
+            S_04_7XX    : out std_logic;
+            S_2_3XXX    : out std_logic;
             S_01XX_N    : out std_logic
         );
     end component;
@@ -41,7 +42,7 @@ architecture MMU_ADDR_DECODER_TEST of MMU_ADDR_DECODER_TB is
     signal A : std_logic_vector(15 downto 0);
     signal PHI_0, CXXX_FXXX, FXXX_N, EXXX_N, DXXX_N, CXXX, C8_FXX, C8_FXX_N, C0_7XX_N,
     E_FXXX_N, D_FXXX, MC0XX_N, MC3XX, MC00X_N, MC01X_N, MC04X_N, MC05X_N, MC06X_N, MC07X_N, MCFFF_N,
-    PHI_0_7XX, PHI_0_1XX_N, S_01XX_N : std_logic;
+    S_00_1XX, S_04_7XX, S_2_3XXX, S_01XX_N : std_logic;
 
 begin
     dut : MMU_ADDR_DECODER port map(
@@ -66,8 +67,9 @@ begin
         MC06X_N     => MC06X_N,
         MC07X_N     => MC07X_N,
         MCFFF_N     => MCFFF_N,
-        PHI_0_7XX   => PHI_0_7XX,
-        PHI_0_1XX_N => PHI_0_1XX_N,
+        S_00_1XX    => S_00_1XX,
+        S_04_7XX    => S_04_7XX,
+        S_2_3XXX    => S_2_3XXX,
         S_01XX_N    => S_01XX_N
     );
 
@@ -95,9 +97,7 @@ begin
         assert(MC06X_N = '1') report "When A is not in CXXX-FXXX range expect MC06X_N HIGH" severity error;
         assert(MC07X_N = '1') report "When A is not in CXXX-FXXX range expect MC07X_N HIGH" severity error;
         assert(MCFFF_N = '1') report "When A is not in CXXX-FXXX range expect MCFFF_N HIGH" severity error;
-        assert(PHI_0_7XX = '0') report "When A is not in 07XX range expect PHI_0_7XX LOW" severity error;
-        assert(PHI_0_1XX_N = '1') report "When A is not in 01XX range expect PHI_0_1XX_N HIGH" severity error;
-        assert(S_01XX_N = '1') report "When A is not in 00XX range expect 01XX_N HIGH" severity error;
+        assert(S_01XX_N = '1') report "When A is not in 01XX range expect 01XX_N HIGH" severity error;
 
         A <= x"F000";
         wait for 1 ns;
@@ -292,17 +292,62 @@ begin
         assert(MC07X_N = '1') report "When A is CFFF expect MC07X_N HIGH" severity error;
         assert(MCFFF_N = '0') report "When A is CFFF expect MCFFF_N LOW" severity error;
 
+
+        A <= x"0000";
+        wait for 1 ns;
+        assert(S_00_1XX = '1') report "When A is in 0000-01FF range expect S_00_1XX HIGH" severity error;
+        assert(S_04_7XX = '0') report "When A is not in 0400-07FF range expect S_04_7XX LOW" severity error;
+        assert(S_2_3XXX = '0') report "When A is not in 2000-3FFF range expect S_2_3XXX LOW" severity error;
+        assert(S_01XX_N = '1') report "When A is not in 01XX range expect S_01XX_N HIGH" severity error;
+
+        A <= x"01FF";
+        wait for 1 ns;
+        assert(S_00_1XX = '1') report "When A is in 0000-01FF range expect S_00_1XX HIGH" severity error;
+        assert(S_04_7XX = '0') report "When A is not in 0400-07FF range expect S_04_7XX LOW" severity error;
+        assert(S_2_3XXX = '0') report "When A is not in 2000-3FFF range expect S_2_3XXX LOW" severity error;
+        assert(S_01XX_N = '0') report "When A is in 01XX range expect S_01XX_N LOW" severity error;
+
+        A <= x"0200";
+        wait for 1 ns;
+        assert(S_00_1XX = '0') report "When A is not in 0000-01FF range expect S_00_1XX LOW" severity error;
+        assert(S_04_7XX = '0') report "When A is not in 0400-07FF range expect S_04_7XX LOW" severity error;
+        assert(S_2_3XXX = '0') report "When A is not in 2000-3FFF range expect S_2_3XXX LOW" severity error;
+        assert(S_01XX_N = '1') report "When A is not in 01XX range expect S_01XX_N HIGH" severity error;
+
+        A <= x"0400";
+        wait for 1 ns;
+        assert(S_00_1XX = '0') report "When A is not in 0000-01FF range expect S_00_1XX LOW" severity error;
+        assert(S_04_7XX = '1') report "When A is in 0400-07FF range expect S_04_7XX HIGH" severity error;
+        assert(S_2_3XXX = '0') report "When A is not in 2000-3FFF range expect S_2_3XXX LOW" severity error;
+        assert(S_01XX_N = '1') report "When A is not in 01XX range expect S_01XX_N HIGH" severity error;
+
         A <= x"07FF";
         wait for 1 ns;
-        assert(PHI_0_7XX = '1') report "When A is in 07XX range expect PHI_0_7XX HIGH" severity error;
+        assert(S_00_1XX = '0') report "When A is not in 0000-01FF range expect S_00_1XX LOW" severity error;
+        assert(S_04_7XX = '1') report "When A is in 0400-07FF range expect S_04_7XX HIGH" severity error;
+        assert(S_2_3XXX = '0') report "When A is not in 2000-3FFF range expect S_2_3XXX LOW" severity error;
+        assert(S_01XX_N = '1') report "When A is not in 01XX range expect S_01XX_N HIGH" severity error;
 
-        A <= x"01FF";
+        A <= x"2000";
         wait for 1 ns;
-        assert(PHI_0_1XX_N = '0') report "When A is in 01XX range expect PHI_0_1XX_N LOW" severity error;
+        assert(S_00_1XX = '0') report "When A is not in 0000-01FF range expect S_00_1XX LOW" severity error;
+        assert(S_04_7XX = '0') report "When A is not in 0400-07FF range expect S_04_7XX LOW" severity error;
+        assert(S_2_3XXX = '1') report "When A is in 2000-3FFF range expect S_2_3XXX HIGH" severity error;
+        assert(S_01XX_N = '1') report "When A is not in 01XX range expect S_01XX_N HIGH" severity error;
 
-        A <= x"01FF";
+        A <= x"3FFF";
         wait for 1 ns;
-        assert(S_01XX_N = '0') report "When A is in 00XX range expect S_01XX_N LOW" severity error;
+        assert(S_00_1XX = '0') report "When A is not in 0000-01FF range expect S_00_1XX LOW" severity error;
+        assert(S_04_7XX = '0') report "When A is not in 0400-07FF range expect S_04_7XX LOW" severity error;
+        assert(S_2_3XXX = '1') report "When A is in 2000-3FFF range expect S_2_3XXX HIGH" severity error;
+        assert(S_01XX_N = '1') report "When A is not in 01XX range expect S_01XX_N HIGH" severity error;
+
+        A <= x"4FFF";
+        wait for 1 ns;
+        assert(S_00_1XX = '0') report "When A is not in 0000-01FF range expect S_00_1XX LOW" severity error;
+        assert(S_04_7XX = '0') report "When A is not in 0400-07FF range expect S_04_7XX LOW" severity error;
+        assert(S_2_3XXX = '0') report "When A is not in 2000-3FFF range expect S_2_3XXX LOW" severity error;
+        assert(S_01XX_N = '1') report "When A is not in 01XX range expect S_01XX_N HIGH" severity error;
 
         assert false report "Test done." severity note;
         wait;

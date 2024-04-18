@@ -37,7 +37,7 @@ begin
 
     -- Contrary to what is drawn in MMU_1 @C-1:E4-9, the CLK signal of the LS175 should be
     -- (inverted DEV0_N): DEV0_N goes LOW when C08X*PHI_0 is accessed. Since the LS175 stores
-    -- D on the rising edge of CLK it's clear that DEV_0 is to be inverted. Confirmed by
+    -- D on the rising edge of CLK it's clear that DEV_0_N is to be inverted. Confirmed by
     -- looking at the DET.T that handles RDROM in the ASIC schematic
     CLK <= not DEV0_N;
 
