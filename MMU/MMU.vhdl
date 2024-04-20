@@ -345,6 +345,7 @@ architecture RTL of MMU is
     signal UNGATED_MD7, MD7_ENABLE_N                                                             : std_logic;
     signal UNGATED_RA                                                                            : std_logic_vector(7 downto 0);
     signal RA_ENABLE_N                                                                           : std_logic;
+    signal EN80_N_INT                                                                            : std_logic;
 
 begin
     PHI_1 <= not PHI_0;
@@ -586,7 +587,7 @@ begin
         INH_N    => INH_N,
         PHI_0    => PHI_0,
         PCASEN_N => PCASEN_N,
-        EN80_N   => EN80_N
+        EN80_N   => EN80_N_INT
     );
 
     U_MMU_KBD : MMU_KBD port map(
@@ -608,5 +609,15 @@ begin
         RA_ENABLE_N => RA_ENABLE_N
     );
     ORA <= UNGATED_RA when RA_ENABLE_N = '0' else "ZZZZZZZZ";
+
+    -- Note: Not in the schematics. Some games like "The Black Cauldron" are more sensitive to the exact timing of /EN80 and "R/W' 80".
+    -- To be like the ASIC MMU, we force /EN80 to change only after the falling edge of /PRAS
+    -- See github issue: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/issues/43
+    process (PRAS_N)
+	 begin
+		if(falling_edge(PRAS_N)) then
+			EN80_N <= EN80_N_INT;
+		end if;
+	 end process;
 
 end RTL;
