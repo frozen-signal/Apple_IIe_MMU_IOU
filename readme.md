@@ -3,10 +3,10 @@
 This is a VHDL implementation of the Apple IIe's MMU and IOU custom ICs, based on the actual schematics that were used during the development of the Apple IIe.
 
 ## Project status
-The prototype of the IOU has been tested and is functionnal. There is still some issues with the MMU. <br/>
+The prototype of the IOU has been tested and is functionnal. There currently no known issue with the MMU or the IOU. More testing is needed, as well as code cleaning and more commenting. Also maybe an effort to bring the signals timings closer to the ASICs<br/>
 <br/>
 ![IOU](https://img.shields.io/badge/IOU-Fully_Functionnal-green)<br/>
-![MMU](https://img.shields.io/badge/MMU-1_known_issue-yellow)<br/>
+![MMU](https://img.shields.io/badge/MMU-Fully_Functionnal-green)<br/>
 ![Tested](https://img.shields.io/badge/Tested-Tested_but_not_thoroughly-yellow)<br/>
 ![Documentation](https://img.shields.io/badge/Documentation-Mininal-red)<br/>
 
