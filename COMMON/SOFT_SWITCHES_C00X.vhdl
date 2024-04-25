@@ -57,7 +57,7 @@ begin
         Q4   => ALTSTKZP, -- Also called ALTZP     RESET: WC008, SET: WC009, READ: RC016
         Q5   => Q5_VALUE, -- Also called SLOTC3ROM RESET: WC00A, SET: WC00B, READ: RC017
         Q6   => S_80COL,  --                       RESET: WC00C, SET: WC00D, READ: RC01F
-        Q7   => PAYMAR    -- Also called ALTCHRSET RESET: WC00E, SET: WC00F, READ: RC01E
+        Q7   => PAYMAR    -- Also called ALTCHRSET RESET: WC00E, SET: WC00F, READ: RC01E (Probably refers to the "Paymar Chip", a popular lowercase adapter for the original Apple II and II+ computers)
     );
 
     INTC300_N <= Q5_VALUE;

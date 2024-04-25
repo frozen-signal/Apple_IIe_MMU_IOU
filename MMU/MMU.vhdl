@@ -25,15 +25,17 @@ entity MMU is
 end MMU;
 
 architecture RTL of MMU is
-    component RAS_HOLD_TIME is
+    component DRAM_HOLD_TIME is
         port (
             PRAS_N : in std_logic;
+            Q3     : in std_logic;
 
-            RAS_N : out std_logic
+            RAS_N      : out std_logic;
+            DELAYED_Q3 : out std_logic
         );
     end component;
 
-    component ROMEN_HOLD_TIME is
+    component MMU_HOLD_TIME is
         port (
             PHI_0 : in std_logic;
 
@@ -324,8 +326,7 @@ architecture RTL of MMU is
         );
     end component;
 
-    signal DELAYED_PHI_0 : std_logic;
-    signal RAS_N         : std_logic;
+    signal DELAYED_PHI_0, DELAYED_Q3, RAS_N                                                      : std_logic;
     signal PHI_1, INH                                                                            : std_logic;
     signal CXXX_FXXX, FXXX_N, EXXX_N, DXXX_N, CXXX, C8_FXX, C8_FXX_N, C0_7XX_N, E_FXXX_N, D_FXXX : std_logic;
     signal MC0XX_N, MC3XX, MC00X_N, MC01X_N, MC04X_N, MC05X_N, MC06X_N, MC07X_N, MCFFF_N         : std_logic;
@@ -345,18 +346,19 @@ architecture RTL of MMU is
     signal UNGATED_MD7, MD7_ENABLE_N                                                             : std_logic;
     signal UNGATED_RA                                                                            : std_logic_vector(7 downto 0);
     signal RA_ENABLE_N                                                                           : std_logic;
-    signal EN80_N_INT                                                                            : std_logic;
 
 begin
     PHI_1 <= not PHI_0;
     INH   <= not INH_N;
 
-    U_RAS_HOLD_TIME : RAS_HOLD_TIME port map(
-        PRAS_N => PRAS_N,
-        RAS_N => RAS_N
+    U_DRAM_HOLD_TIME : DRAM_HOLD_TIME port map(
+        PRAS_N     => PRAS_N,
+        Q3         => Q3,
+        RAS_N      => RAS_N,
+        DELAYED_Q3 => DELAYED_Q3
     );
 
-    U_ROMEN_HOLD_TIME : ROMEN_HOLD_TIME port map(
+    U_MMU_HOLD_TIME : MMU_HOLD_TIME port map(
         PHI_0 => PHI_0,
         DELAYED_PHI_0 => DELAYED_PHI_0
     );
@@ -585,9 +587,9 @@ begin
     U_MMU_EN80 : MMU_EN80 port map(
         SELMB_N  => SELMB_N,
         INH_N    => INH_N,
-        PHI_0    => PHI_0,
+        PHI_0    => DELAYED_PHI_0,
         PCASEN_N => PCASEN_N,
-        EN80_N   => EN80_N_INT
+        EN80_N   => EN80_N
     );
 
     U_MMU_KBD : MMU_KBD port map(
@@ -601,23 +603,14 @@ begin
         A         => A,
         RAS_N     => RAS_N,
         PHI_0     => PHI_0,
-        Q3        => Q3,
+        Q3        => DELAYED_Q3,
         DXXX_N    => DXXX_N,
         BANK1     => BANK1,
 
         RA       => UNGATED_RA,
         RA_ENABLE_N => RA_ENABLE_N
     );
-    ORA <= UNGATED_RA when RA_ENABLE_N = '0' else "ZZZZZZZZ";
+    ORA <= UNGATED_RA when RA_ENABLE_N = '0' else (others => 'Z');
 
-    -- Note: Not in the schematics. Some games like "The Black Cauldron" are more sensitive to the exact timing of /EN80 and "R/W' 80".
-    -- To be like the ASIC MMU, we force /EN80 to change only after the falling edge of /PRAS
-    -- See github issue: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/issues/43
-    process (PRAS_N)
-	 begin
-		if(falling_edge(PRAS_N)) then
-			EN80_N <= EN80_N_INT;
-		end if;
-	 end process;
 
 end RTL;

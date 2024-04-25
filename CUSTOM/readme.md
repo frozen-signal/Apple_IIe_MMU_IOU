@@ -6,10 +6,11 @@ A component that drives a signal HIGH when power-on event is detected, keep it h
 <br/>
 **Need to be modified if** your FPGA/CPLD do not initialize flip-flops and other memory elements at '0' on power-on.
 
-#### RAS_HOLD_TIME
-A component that adds a 60ns delay to PRAS_N. Required by the Apple IIe's multiplexed DRAM.
-<br/>
+#### DRAM_HOLD_TIME
+A component that adds the delays required by the Apple IIe's multiplexed DRAM.
+
+#### MMU_HOLD_TIME
+A component that adds the delays specific to the MMU.
+
 ##### Devices supported
 - ALTERA devices that support the LCELL primitive.
-- LATTICE devices that support the SB_HFOSC primitive (iCE40 devices)
-- LATTICE devices that support the OSCJ primitive (MachXO3D)
