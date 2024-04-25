@@ -42,11 +42,13 @@ end IOU;
 architecture RTL of IOU is
     constant NTSC : std_logic := NTSC_CONSTANT;
 
-    component RAS_HOLD_TIME is
+    component DRAM_HOLD_TIME is
         port (
             PRAS_N : in std_logic;
+            Q3     : in std_logic;
 
-            RAS_N : out std_logic
+            RAS_N      : out std_logic;
+            DELAYED_Q3 : out std_logic
         );
     end component;
 
@@ -335,7 +337,7 @@ architecture RTL of IOU is
         );
     end component;
 
-    signal RAS_N : std_logic;
+    signal RAS_N, DELAYED_Q3                                                                      : std_logic;
     signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                                   : std_logic;
     signal P_PHI_2, PHI_1, CTC14S                                                                 : std_logic;
     signal FORCE_RESET_N_LOW                                                                      : std_logic;
@@ -356,9 +358,11 @@ architecture RTL of IOU is
 
     signal H0_INT, LGR_TXT_N_INT, ORA7_INT : std_logic;
 begin
-    U_RAS_HOLD_TIME : RAS_HOLD_TIME port map(
-        PRAS_N => PRAS_N,
-        RAS_N => RAS_N
+    U_DRAM_HOLD_TIME : DRAM_HOLD_TIME port map(
+        PRAS_N     => PRAS_N,
+        Q3         => Q3,
+        RAS_N      => RAS_N,
+        DELAYED_Q3 => DELAYED_Q3
     );
 
     U_POWER_ON_DETECTION : POWER_ON_DETECTION port map(
@@ -580,7 +584,7 @@ begin
     PG2_N <= not PG2;
     U_VIDEO_ADDR_MUX : VIDEO_ADDR_MUX port map(
         PHI_1       => PHI_1,
-        Q3          => Q3,
+        Q3          => DELAYED_Q3,
         PG2_N       => PG2_N,
         EN80VID     => EN80VID,
         HIRESEN_N   => HIRESEN_N,

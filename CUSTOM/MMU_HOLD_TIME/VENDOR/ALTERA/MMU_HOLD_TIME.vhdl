@@ -2,17 +2,17 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- NOTE: This implementation of ROMEN_HOLD_TIME can only be used with Altera devices that support the LCELL primitive.
-entity ROMEN_HOLD_TIME is
+-- NOTE: This implementation of MMU_HOLD_TIME can only be used with Altera devices that support the LCELL primitive.
+entity MMU_HOLD_TIME is
     port (
         PHI_0 : in std_logic;
 
         DELAYED_PHI_0 : out std_logic
     );
-end ROMEN_HOLD_TIME;
+end MMU_HOLD_TIME;
 
-architecture RTL of ROMEN_HOLD_TIME is
-    constant NUM_LCELLS : positive := 7;
+architecture RTL of MMU_HOLD_TIME is
+    constant NUM_LCELLS : positive := 9; -- ~45 ns delay
 
     component LCELL
         port (
