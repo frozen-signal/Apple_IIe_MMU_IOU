@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{tikz-timing}
+\usepackage{lmodern}
+\pagestyle{empty}
+\def\degr{${}^\circ$}
+
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength{\PreviewBorder}{1mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\def\degr{${}^\circ$}
+\begin{tikztimingtable}
+  PHI 0                    & L 7C N(TT1) 0.5C N(TT2) 6.5L C\\
+  \\
+  $\overline{\mbox{ROMEN2}}$  & 1.5H 6.5C 0.5L 7C \\
+  $\overline{\mbox{ROMEN1}}$  & 1.5H 6.5C N(TB1) 0.5L N(TB2) 7C \\
+\extracode
+  \tablerules
+  \begin{pgfonlayer}{background}
+      \draw [help lines] (TT1) -- (TB1);
+      \draw [help lines] (TT2) -- (TB2);
+      \node [anchor=south east,inner sep=0pt] at (10.2, -1.5) {\fontsize{3.5}{4}\selectfont $t_{RH}$};
+  \end{pgfonlayer}
+\end{tikztimingtable}
+\end{document}
