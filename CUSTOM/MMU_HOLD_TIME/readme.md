@@ -17,6 +17,7 @@ To add the delay, we add a delay to PHI_0 and use this delayed signal in the com
 The required timings are as follow:<br/>
 ##### /EN80
 <img src="/resources/EN80_HOLD_TIME.png" width="720">
+
 ##### /ROMEN2 and /ROMEN1
 <img src="/resources/ROMEN_HOLD_TIME.png" width="720">
 
