@@ -23,7 +23,7 @@ The required timings are as follow:<br/>
 
 ##### Timings
 | Parameter | Min | ASIC<sup>1</sup> | Ours<sup>2</sup> | Max | Unit |
-| - | - | - | - | - | - |
+| - | -: | -: | -: | -: | - |
 | t<sub>EH</sub> |  | 45 | 45 |  | ns |
 | t<sub>RH</sub> | 0 | 45 | 45 |  | ns |
 

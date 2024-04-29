@@ -14,7 +14,7 @@ The required timings are as follow:<br/>
 <img src="/resources/DRAM_HOLD_TIME.png" width="720">
 
 | Parameter | Min | ASIC<sup>1</sup> | Ours<sup>2</sup> | Max | Unit |
-| - | - | - | - | - | - |
+| - | -: | -: | -: | -: | - |
 | t<sub>RAH</sub> | 32 | 40 | 60 | 80 | ns |
 | t<sub>CAH</sub> | 20 | 172 | 48 |  | ns |
 
