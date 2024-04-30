@@ -16,8 +16,9 @@ The implementation has been tested with these hardware components:
 - Motherboards:
   - Rev.B motherboard.
 - CPU:
-  - Synertek 6502 with unenhanced ROMs
-  - 65C02 with enhanced ROMS
+  - Synertek 6502 (unenhanced ROMs)
+  - Rockwell 6502 (unenhanced ROMs)
+  - 65C02 (enhanced ROMs)
   - A recent WDC65C02 (with pins mod) with enhanced ROMS
 - AUX Cards:
   - RAMWORKS III aux card
