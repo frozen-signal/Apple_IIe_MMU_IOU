@@ -9,7 +9,7 @@ architecture RA_MUX_TEST of RA_MUX_TB is
     component RA_MUX is
         port (
             PHI     : in std_logic;
-            RAS_N   : in std_logic;
+            PRAS_N  : in std_logic;
             Q3      : in std_logic;
             ROW_RA0, ROW_RA1, ROW_RA2, ROW_RA3,
             ROW_RA4, ROW_RA5, ROW_RA6, ROW_RA7 : in std_logic;
@@ -22,7 +22,7 @@ architecture RA_MUX_TEST of RA_MUX_TB is
         );
     end component;
 
-    signal PHI, RAS_N, Q3 : std_logic;
+    signal PHI, PRAS_N, Q3 : std_logic;
     signal ROW_RA0, ROW_RA1, ROW_RA2, ROW_RA3,
     ROW_RA4, ROW_RA5, ROW_RA6, ROW_RA7 : std_logic;
     signal COL_RA0, COL_RA1, COL_RA2, COL_RA3,
@@ -34,7 +34,7 @@ architecture RA_MUX_TEST of RA_MUX_TB is
 begin
     dut : RA_MUX port map(
         PHI   => PHI,
-        RAS_N => RAS_N,
+        PRAS_N => PRAS_N,
         Q3    => Q3,
 
         ROW_RA0 => ROW_RA0,
@@ -70,61 +70,55 @@ begin
         -- RA_ENABLE_N TESTS
         PHI <= '0';
         Q3 <= '0';
-        RAS_N <= '0';
-        wait for 1 ns;
-        assert(RA_ENABLE_N = '1') report "Expected RA_ENABLE_N HIGH" severity error;
-
-        PHI <= '0';
-        Q3 <= '0';
-        RAS_N <= '1';
+        PRAS_N <= '1';
         wait for 1 ns;
         assert(RA_ENABLE_N = '0') report "Expected RA_ENABLE_N LOW" severity error;
 
         PHI <= '1';
         Q3 <= '1';
-        RAS_N <= '1';
+        PRAS_N <= '1';
         wait for 1 ns;
         assert(RA_ENABLE_N = '0') report "Expected RA_ENABLE_N LOW" severity error;
 
         PHI <= '1';
         Q3 <= '1';
-        RAS_N <= '0';
+        PRAS_N <= '0';
         wait for 1 ns;
         assert(RA_ENABLE_N = '0') report "Expected RA_ENABLE_N LOW" severity error;
 
         PHI <= '1';
         Q3 <= '0';
-        RAS_N <= '0';
+        PRAS_N <= '0';
         wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "Expected RA_ENABLE_N HIGH" severity error;
 
         PHI <= '1';
         Q3 <= '0';
-        RAS_N <= '1';
+        PRAS_N <= '1';
         wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "Expected RA_ENABLE_N HIGH" severity error;
 
         PHI <= '1';
         Q3 <= '0';
-        RAS_N <= '1';
+        PRAS_N <= '1';
         wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "Expected RA_ENABLE_N HIGH" severity error;
 
         PHI <= '0';
         Q3 <= '1';
-        RAS_N <= '1';
+        PRAS_N <= '1';
         wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "Expected RA_ENABLE_N HIGH" severity error;
 
         PHI <= '0';
         Q3 <= '1';
-        RAS_N <= '0';
+        PRAS_N <= '0';
         wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "Expected RA_ENABLE_N HIGH" severity error;
 
         PHI <= '0';
         Q3 <= '0';
-        RAS_N <= '0';
+        PRAS_N <= '0';
         wait for 1 ns;
         assert(RA_ENABLE_N = '1') report "Expected RA_ENABLE_N HIGH" severity error;
 
@@ -146,16 +140,16 @@ begin
         COL_RA6 <= 'U';
         COL_RA7 <= 'U';
 
-        RAS_N <= '1';
+        PRAS_N <= '1';
         wait for 1 ns;
-        assert(RA0 = '0') report "When PRAS_N is LOW and RAS_N is HIGH, RA should be ROW addresses" severity error;
-        assert(RA1 = '1') report "When PRAS_N is LOW and RAS_N is HIGH, RA should be ROW addresses" severity error;
-        assert(RA2 = '0') report "When PRAS_N is LOW and RAS_N is HIGH, RA should be ROW addresses" severity error;
-        assert(RA3 = '1') report "When PRAS_N is LOW and RAS_N is HIGH, RA should be ROW addresses" severity error;
-        assert(RA4 = '0') report "When PRAS_N is LOW and RAS_N is HIGH, RA should be ROW addresses" severity error;
-        assert(RA5 = '1') report "When PRAS_N is LOW and RAS_N is HIGH, RA should be ROW addresses" severity error;
-        assert(RA6 = '0') report "When PRAS_N is LOW and RAS_N is HIGH, RA should be ROW addresses" severity error;
-        assert(RA7 = '1') report "When PRAS_N is LOW and RAS_N is HIGH, RA should be ROW addresses" severity error;
+        assert(RA0 = '0') report "When PRAS_N is LOW and PRAS_N is HIGH, RA should be ROW addresses" severity error;
+        assert(RA1 = '1') report "When PRAS_N is LOW and PRAS_N is HIGH, RA should be ROW addresses" severity error;
+        assert(RA2 = '0') report "When PRAS_N is LOW and PRAS_N is HIGH, RA should be ROW addresses" severity error;
+        assert(RA3 = '1') report "When PRAS_N is LOW and PRAS_N is HIGH, RA should be ROW addresses" severity error;
+        assert(RA4 = '0') report "When PRAS_N is LOW and PRAS_N is HIGH, RA should be ROW addresses" severity error;
+        assert(RA5 = '1') report "When PRAS_N is LOW and PRAS_N is HIGH, RA should be ROW addresses" severity error;
+        assert(RA6 = '0') report "When PRAS_N is LOW and PRAS_N is HIGH, RA should be ROW addresses" severity error;
+        assert(RA7 = '1') report "When PRAS_N is LOW and PRAS_N is HIGH, RA should be ROW addresses" severity error;
 
         ROW_RA0 <= 'U';
         ROW_RA1 <= 'U';
@@ -174,16 +168,16 @@ begin
         COL_RA6 <= '0';
         COL_RA7 <= '1';
 
-        RAS_N <= '0';
+        PRAS_N <= '0';
         wait for 1 ns;
-        assert(RA0 = '0') report "When RAS_N is LOW, RA should be COL addresses" severity error;
-        assert(RA1 = '1') report "When RAS_N is LOW, RA should be COL addresses" severity error;
-        assert(RA2 = '0') report "When RAS_N is LOW, RA should be COL addresses" severity error;
-        assert(RA3 = '1') report "When RAS_N is LOW, RA should be COL addresses" severity error;
-        assert(RA4 = '0') report "When RAS_N is LOW, RA should be COL addresses" severity error;
-        assert(RA5 = '1') report "When RAS_N is LOW, RA should be COL addresses" severity error;
-        assert(RA6 = '0') report "When RAS_N is LOW, RA should be COL addresses" severity error;
-        assert(RA7 = '1') report "When RAS_N is LOW, RA should be COL addresses" severity error;
+        assert(RA0 = '0') report "When PRAS_N is LOW, RA should be COL addresses" severity error;
+        assert(RA1 = '1') report "When PRAS_N is LOW, RA should be COL addresses" severity error;
+        assert(RA2 = '0') report "When PRAS_N is LOW, RA should be COL addresses" severity error;
+        assert(RA3 = '1') report "When PRAS_N is LOW, RA should be COL addresses" severity error;
+        assert(RA4 = '0') report "When PRAS_N is LOW, RA should be COL addresses" severity error;
+        assert(RA5 = '1') report "When PRAS_N is LOW, RA should be COL addresses" severity error;
+        assert(RA6 = '0') report "When PRAS_N is LOW, RA should be COL addresses" severity error;
+        assert(RA7 = '1') report "When PRAS_N is LOW, RA should be COL addresses" severity error;
 
         assert false report "Test done." severity note;
         wait;

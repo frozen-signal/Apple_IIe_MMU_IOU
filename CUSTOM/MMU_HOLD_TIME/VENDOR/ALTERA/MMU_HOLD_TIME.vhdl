@@ -7,7 +7,7 @@ entity MMU_HOLD_TIME is
     port (
         PHI_0 : in std_logic;
 
-        DELAYED_PHI_0 : out std_logic
+        D_PHI_0 : out std_logic
     );
 end MMU_HOLD_TIME;
 
@@ -35,5 +35,5 @@ begin
         );
     end generate g_GENERATE_DELAY;
 
-    DELAYED_PHI_0 <= PHI_0_DELAY(NUM_LCELLS-1);
+    D_PHI_0 <= PHI_0_DELAY(NUM_LCELLS-1);
 end RTL;

@@ -30,9 +30,9 @@ architecture MOCK of CPU_MMU_MOCK is
     component MMU_RA is
         port (
             A      : in std_logic_vector(15 downto 0);
-            RAS_N  : in std_logic;
             PHI_0  : in std_logic;
             Q3     : in std_logic;
+            PRAS_N  : in std_logic;
             DXXX_N : in std_logic;
             BANK1  : in std_logic;
 
@@ -72,8 +72,8 @@ begin
 
     U_MMU_RA : MMU_RA port map(
         A           => "0000000000000000",
-        RAS_N       => PRAS_N,
-        PHI_0     => PHI_0,
+        PRAS_N      => PRAS_N,
+        PHI_0       => PHI_0,
         Q3          => Q3,
         DXXX_N      => '0',
         BANK1       => '0',

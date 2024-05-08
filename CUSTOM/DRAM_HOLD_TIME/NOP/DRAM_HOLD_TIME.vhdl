@@ -7,13 +7,13 @@ entity DRAM_HOLD_TIME is
         PRAS_N : in std_logic;
         Q3     : in std_logic;
 
-        RAS_N      : out std_logic;
-        DELAYED_Q3 : out std_logic
+        D_RAS_N : out std_logic;
+        D_Q3    : out std_logic
     );
 end DRAM_HOLD_TIME;
 
 architecture RTL of DRAM_HOLD_TIME is
 begin
-    RAS_N      <= PRAS_N;
-    DELAYED_Q3 <= Q3;
+    D_RAS_N <= PRAS_N;
+    D_Q3 <= Q3;
 end RTL;

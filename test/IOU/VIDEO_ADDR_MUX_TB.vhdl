@@ -9,12 +9,12 @@ architecture VIDEO_ADDR_MUX_TEST of VIDEO_ADDR_MUX_TB is
     component VIDEO_ADDR_MUX is
         port (
             PHI_1          : in std_logic;
+            PRAS_N         : in std_logic;
             Q3             : in std_logic;
             PG2_N          : in std_logic;
             EN80VID        : in std_logic;
             HIRESEN_N      : in std_logic;
             VA, VB, VC     : in std_logic;
-            RAS_N          : in std_logic;
             V0, V1, V2     : in std_logic;
             H0, H1, H2     : in std_logic;
             E0, E1, E2, E3 : in std_logic;
@@ -31,7 +31,7 @@ architecture VIDEO_ADDR_MUX_TEST of VIDEO_ADDR_MUX_TB is
     signal EN80VID        : std_logic;
     signal HIRESEN_N      : std_logic;
     signal VA, VB, VC     : std_logic;
-    signal RAS_N          : std_logic;
+    signal PRAS_N         : std_logic;
     signal V0, V1, V2     : std_logic;
     signal H0, H1, H2     : std_logic;
     signal E0, E1, E2, E3 : std_logic;
@@ -50,7 +50,7 @@ begin
         VA          => VA,
         VB          => VB,
         VC          => VC,
-        RAS_N       => RAS_N,
+        PRAS_N      => PRAS_N,
         V0          => V0,
         V1          => V1,
         V2          => V2,
@@ -74,7 +74,7 @@ begin
 
     process begin
         -- ZA-ZE tests
-        RAS_N <= '0';
+        PRAS_N <= '0';
 
         PG2_N     <= '0';
         EN80VID   <= '0';
@@ -135,7 +135,7 @@ begin
         assert(RA6 = '0') report "expect ZE LOW" severity error;
 
         -- RA0-RA7 tests
-        RAS_N    <= '0';
+        PRAS_N    <= '0';
         V1        <= '1';
         V2        <= '1';
         E3        <= '1';
@@ -155,7 +155,7 @@ begin
         assert(RA6 = '1') report "expect RA6 HIGH" severity error;
         assert(RA7 = '0') report "expect RA7 LOW" severity error;
 
-        RAS_N    <= '1';
+        PRAS_N    <= '1';
         VA        <= 'U';
         VB        <= 'U';
         VC        <= 'U';

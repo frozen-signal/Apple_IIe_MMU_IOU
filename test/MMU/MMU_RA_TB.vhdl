@@ -7,12 +7,12 @@ end MMU_RA_TB;
 architecture MMU_RA_TEST of MMU_RA_TB is
     component MMU_RA is
         port (
-            A      : in std_logic_vector(15 downto 0);
-            RAS_N  : in std_logic;
-            PHI_0  : in std_logic;
-            Q3     : in std_logic;
-            DXXX_N : in std_logic;
-            BANK1  : in std_logic;
+            A       : in std_logic_vector(15 downto 0);
+            PHI_0   : in std_logic;
+            PRAS_N  : in std_logic;
+            Q3      : in std_logic;
+            DXXX_N  : in std_logic;
+            BANK1   : in std_logic;
 
             RA          : out std_logic_vector(7 downto 0);
             RA_ENABLE_N : out std_logic
@@ -20,7 +20,7 @@ architecture MMU_RA_TEST of MMU_RA_TB is
     end component;
 
     signal A         : std_logic_vector(15 downto 0);
-    signal RAS_N    : std_logic;
+    signal PRAS_N    : std_logic;
     signal PHI_0     : std_logic;
     signal Q3        : std_logic;
     signal DXXX_N    : std_logic;
@@ -31,7 +31,7 @@ architecture MMU_RA_TEST of MMU_RA_TB is
 begin
     dut : MMU_RA port map(
         A         => A,
-        RAS_N     => RAS_N,
+        PRAS_N    => PRAS_N,
         PHI_0     => PHI_0,
         Q3        => Q3,
         DXXX_N    => DXXX_N,
@@ -42,12 +42,12 @@ begin
 
     process begin
         A     <= "XXXXXXX00X000000";
-        RAS_N <= '1';
+        PRAS_N <= '1';
         wait for 1 ns;
         assert(RA = "00000000") report "When PRAS_N HIGH; expect B branch of the LS257 to be selected" severity error;
 
         A      <= "010X000XX1XXXXXX";
-        RAS_N  <= '0';
+        PRAS_N  <= '0';
         DXXX_N <= '0';
         BANK1  <= '0';
         A(12)  <= '0';
@@ -55,7 +55,7 @@ begin
         assert(RA = "01000010") report "When PRAS_N LOW; expect A branch of the LS257 to be selected" severity error;
 
         A      <= "XXXXXXXXXXXXXXXX";
-        RAS_N  <= '0';
+        PRAS_N  <= '0';
         DXXX_N <= '1';
         BANK1  <= '0';
         A(12)  <= '0';
@@ -63,7 +63,7 @@ begin
         assert(RA(4) = '0') report "When DXXX_N HIGH, BANK1 and A(12) LOW; expect MA12 LOW" severity error;
 
         A      <= "XXXXXXXXXXXXXXXX";
-        RAS_N  <= '0';
+        PRAS_N  <= '0';
         DXXX_N <= '0';
         BANK1  <= '1';
         A(12)  <= '0';
@@ -71,7 +71,7 @@ begin
         assert(RA(4) = '1') report "When DXXX_N LOW, BANK1 HIGH, and A(12) LOW; expect MA12 HIGH" severity error;
 
         A      <= "XXXXXXXXXXXXXXXX";
-        RAS_N  <= '0';
+        PRAS_N  <= '0';
         DXXX_N <= '0';
         BANK1  <= '0';
         A(12)  <= '1';
@@ -81,7 +81,7 @@ begin
         A      <= x"D123";
         BANK1  <= '0';
         DXXX_N <= '0';
-        RAS_N  <= '1';
+        PRAS_N  <= '1';
         wait for 1 ns;
         assert(RA(0) = A(0)) report "expect RA(0) equals A(0)" severity error;
         assert(RA(1) = A(1)) report "expect RA(1) equals A(1)" severity error;
@@ -95,7 +95,7 @@ begin
         A      <= x"D123";
         BANK1  <= '0';
         DXXX_N <= '0';
-        RAS_N  <= '0';
+        PRAS_N  <= '0';
         wait for 1 ns;
         assert(RA(0) = A(9)) report "expect RA(0) equals A(9)" severity error;
         assert(RA(1) = A(6)) report "expect RA(1) equals A(6)" severity error;
