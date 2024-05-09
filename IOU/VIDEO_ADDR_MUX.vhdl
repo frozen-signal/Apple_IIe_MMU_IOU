@@ -4,12 +4,12 @@ use IEEE.std_logic_1164.all;
 entity VIDEO_ADDR_MUX is
     port (
         PHI_1          : in std_logic;
+        PRAS_N         : in std_logic;
         Q3             : in std_logic;
         PG2_N          : in std_logic;
         EN80VID        : in std_logic;
         HIRESEN_N      : in std_logic;
         VA, VB, VC     : in std_logic;
-        RAS_N          : in std_logic;
         V0, V1, V2     : in std_logic;
         H0, H1, H2     : in std_logic;
         E0, E1, E2, E3 : in std_logic;
@@ -24,7 +24,7 @@ architecture RTL of VIDEO_ADDR_MUX is
     component RA_MUX is
         port (
             PHI     : in std_logic;
-            RAS_N   : in std_logic;
+            PRAS_N  : in std_logic;
             Q3      : in std_logic;
             ROW_RA0, ROW_RA1, ROW_RA2, ROW_RA3,
             ROW_RA4, ROW_RA5, ROW_RA6, ROW_RA7 : in std_logic;
@@ -49,9 +49,9 @@ begin
     ZE    <= HIRESEN_N nor VID_PG2_N; -- IOU_2 @A-4:L9-4
 
     IOU_RA_MUX : RA_MUX port map(
-        PHI   => PHI_1,
-        RAS_N => RAS_N,
-        Q3    => Q3,
+        PHI    => PHI_1,
+        PRAS_N => PRAS_N,
+        Q3     => Q3,
 
         -- IOU_1 @C-D-3:A9 & B9
         ROW_RA0 => H0,

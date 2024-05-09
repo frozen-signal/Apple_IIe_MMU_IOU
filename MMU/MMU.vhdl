@@ -25,21 +25,11 @@ entity MMU is
 end MMU;
 
 architecture RTL of MMU is
-    component DRAM_HOLD_TIME is
-        port (
-            PRAS_N : in std_logic;
-            Q3     : in std_logic;
-
-            RAS_N      : out std_logic;
-            DELAYED_Q3 : out std_logic
-        );
-    end component;
-
     component MMU_HOLD_TIME is
         port (
             PHI_0 : in std_logic;
 
-            DELAYED_PHI_0 : out std_logic
+            D_PHI_0 : out std_logic
         );
     end component;
 
@@ -254,16 +244,16 @@ architecture RTL of MMU is
 
     component MMU_ROMEN is
         port (
-            DELAYED_PHI_0 : in std_logic;
-            INTC8ACC      : in std_logic;
-            INTC3ACC_N    : in std_logic;
-            CXXX          : in std_logic;
-            DXXX_N        : in std_logic;
-            E_FXXX_N      : in std_logic;
-            INH           : in std_logic;
-            RDROM         : in std_logic;
-            CENROM1       : in std_logic;
-            R_W_N         : in std_logic;
+            D_PHI_0    : in std_logic;
+            INTC8ACC   : in std_logic;
+            INTC3ACC_N : in std_logic;
+            CXXX       : in std_logic;
+            DXXX_N     : in std_logic;
+            E_FXXX_N   : in std_logic;
+            INH        : in std_logic;
+            RDROM      : in std_logic;
+            CENROM1    : in std_logic;
+            R_W_N      : in std_logic;
 
             ROMEN2_N : out std_logic;
             ROMEN1_N : out std_logic
@@ -314,19 +304,19 @@ architecture RTL of MMU is
 
     component MMU_RA is
         port (
-            A      : in std_logic_vector(15 downto 0);
-            RAS_N  : in std_logic;
-            PHI_0  : in std_logic;
-            Q3     : in std_logic;
-            DXXX_N : in std_logic;
-            BANK1  : in std_logic;
+            A       : in std_logic_vector(15 downto 0);
+            PHI_0   : in std_logic;
+            PRAS_N  : in std_logic;
+            Q3      : in std_logic;
+            DXXX_N  : in std_logic;
+            BANK1   : in std_logic;
 
             RA          : out std_logic_vector(7 downto 0);
             RA_ENABLE_N : out std_logic
         );
     end component;
 
-    signal DELAYED_PHI_0, DELAYED_Q3, RAS_N                                                      : std_logic;
+    signal D_PHI_0 : std_logic;  -- Delayed PHI_0
     signal PHI_1, INH                                                                            : std_logic;
     signal CXXX_FXXX, FXXX_N, EXXX_N, DXXX_N, CXXX, C8_FXX, C8_FXX_N, C0_7XX_N, E_FXXX_N, D_FXXX : std_logic;
     signal MC0XX_N, MC3XX, MC00X_N, MC01X_N, MC04X_N, MC05X_N, MC06X_N, MC07X_N, MCFFF_N         : std_logic;
@@ -351,16 +341,9 @@ begin
     PHI_1 <= not PHI_0;
     INH   <= not INH_N;
 
-    U_DRAM_HOLD_TIME : DRAM_HOLD_TIME port map(
-        PRAS_N     => PRAS_N,
-        Q3         => Q3,
-        RAS_N      => RAS_N,
-        DELAYED_Q3 => DELAYED_Q3
-    );
-
     U_MMU_HOLD_TIME : MMU_HOLD_TIME port map(
-        PHI_0 => PHI_0,
-        DELAYED_PHI_0 => DELAYED_PHI_0
+        PHI_0   => PHI_0,
+        D_PHI_0 => D_PHI_0
     );
 
     U_ADDR_DECODER : MMU_ADDR_DECODER port map(
@@ -550,16 +533,16 @@ begin
     );
 
     U_MMU_ROMEN : MMU_ROMEN port map(
-        DELAYED_PHI_0 => DELAYED_PHI_0,
-        INTC8ACC      => INTC8ACC,
-        INTC3ACC_N    => INTC3ACC_N,
-        CXXX          => CXXX,
-        DXXX_N        => DXXX_N,
-        E_FXXX_N      => E_FXXX_N,
-        INH           => INH,
-        RDROM         => RDROM,
-        CENROM1       => CENROM1,
-        R_W_N         => R_W_N,
+        D_PHI_0     => D_PHI_0,
+        INTC8ACC    => INTC8ACC,
+        INTC3ACC_N  => INTC3ACC_N,
+        CXXX        => CXXX,
+        DXXX_N      => DXXX_N,
+        E_FXXX_N    => E_FXXX_N,
+        INH         => INH,
+        RDROM       => RDROM,
+        CENROM1     => CENROM1,
+        R_W_N       => R_W_N,
 
         ROMEN2_N => ROMEN2_N,
         ROMEN1_N => ROMEN1_N
@@ -587,7 +570,7 @@ begin
     U_MMU_EN80 : MMU_EN80 port map(
         SELMB_N  => SELMB_N,
         INH_N    => INH_N,
-        PHI_0    => DELAYED_PHI_0,
+        PHI_0    => D_PHI_0,
         PCASEN_N => PCASEN_N,
         EN80_N   => EN80_N
     );
@@ -600,17 +583,16 @@ begin
     );
 
     U_MMU_RA : MMU_RA port map(
-        A         => A,
-        RAS_N     => RAS_N,
-        PHI_0     => PHI_0,
-        Q3        => DELAYED_Q3,
-        DXXX_N    => DXXX_N,
-        BANK1     => BANK1,
+        A       => A,
+        PHI_0   => PHI_0,
+        Q3      => Q3,
+        PRAS_N  => PRAS_N,
+        DXXX_N  => DXXX_N,
+        BANK1   => BANK1,
 
-        RA       => UNGATED_RA,
+        RA          => UNGATED_RA,
         RA_ENABLE_N => RA_ENABLE_N
     );
     ORA <= UNGATED_RA when RA_ENABLE_N = '0' else (others => 'Z');
-
 
 end RTL;

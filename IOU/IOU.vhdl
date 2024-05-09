@@ -42,16 +42,6 @@ end IOU;
 architecture RTL of IOU is
     constant NTSC : std_logic := NTSC_CONSTANT;
 
-    component DRAM_HOLD_TIME is
-        port (
-            PRAS_N : in std_logic;
-            Q3     : in std_logic;
-
-            RAS_N      : out std_logic;
-            DELAYED_Q3 : out std_logic
-        );
-    end component;
-
     component POWER_ON_DETECTION is
         port (
             PHI_0 : in std_logic;
@@ -249,12 +239,12 @@ architecture RTL of IOU is
     component VIDEO_ADDR_MUX is
         port (
             PHI_1          : in std_logic;
+            PRAS_N         : in std_logic;
             Q3             : in std_logic;
             PG2_N          : in std_logic;
             EN80VID        : in std_logic;
             HIRESEN_N      : in std_logic;
             VA, VB, VC     : in std_logic;
-            RAS_N          : in std_logic;
             V0, V1, V2     : in std_logic;
             H0, H1, H2     : in std_logic;
             E0, E1, E2, E3 : in std_logic;
@@ -337,7 +327,6 @@ architecture RTL of IOU is
         );
     end component;
 
-    signal RAS_N, DELAYED_Q3                                                                      : std_logic;
     signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                                   : std_logic;
     signal P_PHI_2, PHI_1, CTC14S                                                                 : std_logic;
     signal FORCE_RESET_N_LOW                                                                      : std_logic;
@@ -358,13 +347,6 @@ architecture RTL of IOU is
 
     signal H0_INT, LGR_TXT_N_INT, ORA7_INT : std_logic;
 begin
-    U_DRAM_HOLD_TIME : DRAM_HOLD_TIME port map(
-        PRAS_N     => PRAS_N,
-        Q3         => Q3,
-        RAS_N      => RAS_N,
-        DELAYED_Q3 => DELAYED_Q3
-    );
-
     U_POWER_ON_DETECTION : POWER_ON_DETECTION port map(
         PHI_0 => PHI_0,
         POC_N => POC_N
@@ -584,14 +566,14 @@ begin
     PG2_N <= not PG2;
     U_VIDEO_ADDR_MUX : VIDEO_ADDR_MUX port map(
         PHI_1       => PHI_1,
-        Q3          => DELAYED_Q3,
+        PRAS_N      => PRAS_N,
+        Q3          => Q3,
         PG2_N       => PG2_N,
         EN80VID     => EN80VID,
         HIRESEN_N   => HIRESEN_N,
         VA          => VA,
         VB          => VB,
         VC          => VC,
-        RAS_N       => RAS_N,
         V0          => V0,
         V1          => V1,
         V2          => V2,

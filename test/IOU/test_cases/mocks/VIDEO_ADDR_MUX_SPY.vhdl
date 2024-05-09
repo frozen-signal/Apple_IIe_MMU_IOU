@@ -5,12 +5,12 @@ use work.IOU_TESTBENCH_PACKAGE.all;
 entity VIDEO_ADDR_MUX_SPY is
     port (
         PHI_1          : in std_logic;
+        PRAS_N          : in std_logic;
         Q3             : in std_logic;
         PG2_N          : in std_logic;
         EN80VID        : in std_logic;
         HIRESEN_N      : in std_logic;
         VA, VB, VC     : in std_logic;
-        RAS_N          : in std_logic;
         V0, V1, V2     : in std_logic;
         H0, H1, H2     : in std_logic;
         E0, E1, E2, E3 : in std_logic;
@@ -30,7 +30,7 @@ architecture SPY of VIDEO_ADDR_MUX_SPY is
             EN80VID        : in std_logic;
             HIRESEN_N      : in std_logic;
             VA, VB, VC     : in std_logic;
-            RAS_N          : in std_logic;
+            PRAS_N         : in std_logic;
             V0, V1, V2     : in std_logic;
             H0, H1, H2     : in std_logic;
             E0, E1, E2, E3 : in std_logic;
@@ -53,7 +53,7 @@ begin
         VA          => VA,
         VB          => VB,
         VC          => VC,
-        RAS_N       => RAS_N,
+        PRAS_N      => PRAS_N,
         V0          => V0,
         V1          => V1,
         V2          => V2,

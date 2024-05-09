@@ -6,11 +6,11 @@ entity MMU_HOLD_TIME is
     port (
         PHI_0 : in std_logic;
 
-        DELAYED_PHI_0 : out std_logic
+        D_PHI_0 : out std_logic
     );
 end MMU_HOLD_TIME;
 
 architecture RTL of MMU_HOLD_TIME is
 begin
-    DELAYED_PHI_0 <= PHI_0;
+    D_PHI_0 <= PHI_0;
 end RTL;
