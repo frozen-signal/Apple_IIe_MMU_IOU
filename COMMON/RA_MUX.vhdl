@@ -19,7 +19,8 @@ entity RA_MUX is
 end RA_MUX;
 
 architecture RTL of RA_MUX is
-    -- We must add the hold times required by the RAM used by the Apple II series. See https://github.com/frozen-signal/Apple_IIe_MMU_IOU/tree/master/CUSTOM/DRAM_HOLD_TIME
+    -- This is used to add the hold times required by the RAM used by the Apple II series.
+    -- See https://github.com/frozen-signal/Apple_IIe_MMU_IOU/tree/master/CUSTOM/DRAM_HOLD_TIME
     component DRAM_HOLD_TIME is
         port (
             PRAS_N : in std_logic;
