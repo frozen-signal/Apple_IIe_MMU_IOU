@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage{tikz-timing}
+\usepackage{lmodern}
+\pagestyle{empty}
+\def\degr{${}^\circ$}
+
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength{\PreviewBorder}{1mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\def\degr{${}^\circ$}
+\begin{tikztimingtable}
+  PHI 0                    & H 7C 7C C\\
+  $\overline{\mbox{RAS}}$  & 2H N(TRH_T1) .5C N(TRH_T2) 4.5L 2C N(TRH_T3) .5C N(TRH_T4) 4.5L 2C G\\
+  Q3                       & L 4C N(TRC_T1) 0.5C N(TRC_T2) 2.5L 4C N(TRC_T3) 0.5C N(TRC_T4) 2.5L C\\
+  \\
+  RA7-0                    & 2D N(TRH_B1) 0.5D{ROW} N(TRH_B2) 2.5D N(TRC_B1) 0.5D{COL} N(TRC_B2) 1.5Z 2D N(TRH_B3) 0.5D{ROW} N(TRH_B4) 2.5D  N(TRC_B3) 0.5D{COL} N(TRC_B4) 1.5Z 2D{ROW}\\
+\extracode
+  \tablerules
+  \begin{pgfonlayer}{background}
+      \draw [help lines] (TRH_T1) -- (TRH_B1);
+      \draw [help lines] (TRH_T2) -- (TRH_B2);
+      \draw [help lines] (TRH_T3) -- (TRH_B3);
+      \draw [help lines] (TRH_T4) -- (TRH_B4);
+      \node [anchor=south east,inner sep=0pt] at (4.1, -5.25) {\fontsize{3.5}{4}\selectfont $t_{RAH}$};
+      \node [anchor=south east,inner sep=0pt] at (11.1, -5.25) {\fontsize{3.5}{4}\selectfont $t_{RAH}$};
+      \draw [help lines] (TRC_T1) -- (TRC_B1);
+      \draw [help lines] (TRC_T2) -- (TRC_B2);
+      \draw [help lines] (TRC_T3) -- (TRC_B3);
+      \draw [help lines] (TRC_T4) -- (TRC_B4);
+      \node [anchor=south east,inner sep=0pt] at (7.1, -6.25) {\fontsize{3.5}{4}\selectfont $t_{CAH}$};
+      \node [anchor=south east,inner sep=0pt] at (14.1, -6.25) {\fontsize{3.5}{4}\selectfont $t_{CAH}$};
+  \end{pgfonlayer}
+\end{tikztimingtable}
+\end{document}
