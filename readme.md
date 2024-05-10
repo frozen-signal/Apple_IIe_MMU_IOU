@@ -5,21 +5,24 @@ This is a VHDL implementation of the Apple IIe's MMU and IOU custom ICs, based o
 ## Project status
 The prototype of the IOU has been tested and is functionnal. There currently no known issue with the MMU or the IOU. More testing is needed, as well as code cleaning and more commenting. Also maybe an effort to bring the signals timings closer to the ASICs<br/>
 <br/>
-![IOU](https://img.shields.io/badge/IOU-Fully_Functionnal-green)<br/>
-![MMU](https://img.shields.io/badge/MMU-Fully_Functionnal-green)<br/>
+![IOU](https://img.shields.io/github/issues-search?query=repo%3Afrozen-signal%2FApple_IIe_MMU_IOU%20is%3Aopen%20label%3Abug%20label%3AIOU&label=IOU%20Issues
+)<br/>
+![MMU](https://img.shields.io/github/issues-search?query=repo%3Afrozen-signal%2FApple_IIe_MMU_IOU%20is%3Aopen%20label%3Abug%20label%3AMMU&label=MMU%20Issues
+)<br/>
 ![Tested](https://img.shields.io/badge/Tested-Tested_but_not_thoroughly-yellow)<br/>
-![Documentation](https://img.shields.io/badge/Documentation-Mininal-red)<br/>
+![Documentation](https://img.shields.io/badge/Documentation-Some_but_no_pretty_pics-yellow)<br/>
 
 ## Tested Hardware
 The implementation has been tested with these hardware components:
 
 - Motherboards:
-  - Rev.B motherboard.
+  - Rev.B motherboard
+  - ReActiveMicro motherboard
 - CPU:
   - Synertek 6502 (unenhanced ROMs)
   - Rockwell 6502 (unenhanced ROMs)
   - 65C02 (enhanced ROMs)
-  - A recent WDC65C02 (with pins mod) with enhanced ROMS
+  - A recent WDC65C02 (with pins mod) (enhanced ROMs)
 - AUX Cards:
   - RAMWORKS III aux card
   - 80-Col Expansion card (820-0067-B)

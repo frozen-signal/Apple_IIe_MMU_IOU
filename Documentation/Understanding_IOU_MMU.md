@@ -8,7 +8,7 @@ For example this:
     -- MMU_1 @B-1:L2-8
     CASEN_N <= OCASEN_N and PHI_0;
 ```
-refers to the schematic named `MMU_1.jpg`, at a location near `B-1` and is the output pin `8` of the component `L2`.
+refers to the schematic named `MMU_1.jpg`, at a location inside square `B-1` and is the output pin `8` of the component `L2`.
 
 # Prerequisites
 A VHDL compiler such as GHDL is required. Optionnally, you also need the `make` command to automate the build. And also optionnaly, a wave analyser such as GTKWave can be used to view the tests outputs.

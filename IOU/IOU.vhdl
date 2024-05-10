@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity IOU is
     generic(
-        NTSC_CONSTANT : std_logic := '1'
+        NTSC_CONSTANT : std_logic := '1'  -- Note: A value of '0' will generate the PAL version of the IOU, and a '1' will generate the NTSC version.
     );
     port (
         -- IN only
