@@ -3,20 +3,20 @@ Use a 5v CPLD. In doubt, use the Altera EPM7128STC. The MMU don't need anything 
 
 # CPLD / FPGA Selection
 ## Device voltage
-The Apple IIe being a 5v computer, using a 5v CPLD/FPGA will obviously be easiest. Unfortunately, almost all 5v CPLDs/FPGAs aren't produced anymore. Modern CPLDs/FPGAs are all 3.3v and will need the Apple's 5v to be level-shifted down to 3.3v. This is of course more complex, and some details about this can be found [below](# Using 3.3v)
+The Apple IIe being a 5v computer, using a 5v CPLD/FPGA will obviously be easiest. Unfortunately, almost all 5v CPLDs/FPGAs have gone out of production. Modern CPLDs/FPGAs are all 3.3v and will need the Apple's 5v to be level-shifted down to 3.3v. This is of course more complex, and some details about this can be found [below](# Using 3.3v)
 
 # Number of GPIOs
 The device needs to have a minimum number of GPIOs depending on the ASIC:
 | ASIC | Num<br/>GPIOs |
-| - | - |
+| - | -: |
 | IOU | 37 |
 | MMU | 38  |
 
 # Hold Times
-Some signal need to hold their value for a certain amount of time. For example, see [DRAM hold times](/CUSTOM/DRAM_HOLD_TIME/readme.md). This implementation currently only offers the delays through Altera's LCELL buffers.<br/>
+Some signals need to hold their value for a certain amount of time. For example, see [DRAM hold times](/CUSTOM/DRAM_HOLD_TIME/readme.md). This implementation currently only offers the delays through Altera's LCELL buffers.<br/>
 Essentially, you have these choices
 - Select a CPLD/FPGA that has the LCELL primitive.
-- Implement an alternate solution, through an oscillator primitive, a ring oscillator, or another way using the selected device. You will need to write a [DRAM_HOLD_TIME](/CUSTOM/DRAM_HOLD_TIME/readme.md) entity. And if you build a MMU adapter, you will also need to write a [MMU_HOLD_TIME](/CUSTOM/MMU_HOLD_TIME/readme.md) entity.
+- Implement an alternate solution, through an oscillator primitive, a ring oscillator, using the Apple's 14M signal, or another way using the selected device. You will need to write a [DRAM_HOLD_TIME](/CUSTOM/DRAM_HOLD_TIME/readme.md) entity. And if you build a MMU adapter, you will also need to write a [MMU_HOLD_TIME](/CUSTOM/MMU_HOLD_TIME/readme.md) entity.
 - Add the hold times externally, for example through RC delay or through a serie of logic gates.
 
 # Power-on initialization
@@ -83,7 +83,10 @@ Note that all parts of the schematics associated with unselected values of these
 These are the VHDL files needed to build the IOU:
 - All the files in COMMON
 - /COMMON/POWER_ON_DETECTION.vhdl
-- DRAM_HOLD_TIME (NOP if the hold time will be done externally, VENDOR/ALTERA if the device supports LCELLs, or a user-defined implementation)
+- DRAM_HOLD_TIME
+  - The hold time will be done externally: use the NOP version
+  - The device supports LCELLs: use the VENDOR/ALTERA version
+  - Otherwise, a user-defined implementation.
 - All the files in IOU
 - All the files in TTL
 
@@ -144,8 +147,14 @@ The /RESET (pin 15) on the IOU need to be pulled-up. The schematics calls for a 
 ### Files needed
 These are the VHDL files needed to build the MMU:
 - All the files in COMMON
-- DRAM_HOLD_TIME (NOP if the hold time will be done externally, VENDOR/ALTERA if the device supports LCELLs, or a user-defined implementation)
-- MMU_HOLD_TIME (NOP if the hold time will be done externally, VENDOR/ALTERA if the device supports LCELLs, or a user-defined implementation)
+- DRAM_HOLD_TIME
+  - The hold time will be done externally: use the NOP version
+  - The device supports LCELLs: use the VENDOR/ALTERA version
+  - Otherwise, a user-defined implementation.
+- MMU_HOLD_TIME
+  - The hold time will be done externally: use the NOP version
+  - The device supports LCELLs: use the VENDOR/ALTERA version
+  - Otherwise, a user-defined implementation.
 - All the files in MMU
 - The file LATCH_9334 in TTL
 
@@ -157,7 +166,9 @@ There is nothing special that needs to be done for the MMU.
 # 5v Recommendation
 
 The Altera EPM7128STC have been used in the development of this repository.
-
+<br/>
+<br/>
+<br/>
 # Using 3.3v
 
 Using a 3.3v FPGA needs a much more complex design. These are some of the aspects you will have to find a solution. Only the MMU has been tested with a 3.3v FPGA (a Lattice MachXO3D development board).
@@ -181,6 +192,6 @@ Fortunately, 3.3v can drive 5v TTL logic, so output-only pins can be connected d
 In the case of bi-directional signals, they also need to be level-shifted. But a component such as a 74LVC245 will need the corresponding direction signal and it is not exposed. This means that the sources of the [IOU top-level entity](/IOU/IOU.vhdl) will need to be modified to expose these direction signals:
 
 | Signal | Direction Signal | Notes |
-| - | - |
+| - | - | - |
 | RESET_N | FORCE_RESET_N_LOW | When FORCE_RESET_N_LOW is LOW, RESET_N should be an input; when HIGH it should be an output. Also remember to place the pull-up on the Apple's side of RESET_N |
 | ORA6-0 | RA_ENABLE_N | When RA_ENABLE_N is HIGH, ORA6-0 should be inputs; when LOW they should be outputs. |
