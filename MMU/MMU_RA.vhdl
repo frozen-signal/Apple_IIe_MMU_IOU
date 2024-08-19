@@ -36,7 +36,7 @@ architecture RTL of MMU_RA is
 begin
     -- MMU_2 @C-4:H4-6
     MA12 <= ((not DXXX_N) and BANK1) xor A(12);
-    IOU_RA_MUX : RA_MUX port map(
+    MMU_RA_MUX : RA_MUX port map(
         PHI    => PHI_0,
         PRAS_N => PRAS_N,
         Q3     => Q3,
