@@ -3,4 +3,4 @@
 ## Note: This part of the documentation is under construction
 
 ## IOU
- - [Reset and Power-on][reset-and-power-on.md]
+ - [Power-On event and /RESET Pin](reset-and-power-on.md)

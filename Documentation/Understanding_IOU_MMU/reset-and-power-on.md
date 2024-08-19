@@ -17,7 +17,8 @@ When the Apple IIe is powered on, the IOU manages the `/RESET` signal as follows
 2. After power-on initialization: The `/RESET` pin becomes an input pin.
 
 > **Note:** While the combined Emulator schematics show different timings (about 275 ms), the actual IOU timing is approximately 35 ms. This delay likely allows various components to stabilize to a known state.
-
+[^1]: This 33 ms duration is effectively masked if a disk controller is present, as the controller extends the /RESET low state to 100 ms.
+>
 ### Emulator Implementation
 
 #### Power-On Delay Generation
@@ -28,13 +29,21 @@ In the emulator schematics, the power-on delay is generated using:
 The `POC` (Power-On Clear) signal starts HIGH and transitions to LOW after a specific delay.
 
 #### Voltage Trigger RC Circuit
-![Voltage Trigger RC Circuit](/resources/VTR.png)
+<a align="center" href="/Schematics/MMU_1.jpg">
+    <img src="/resources/VTR.png" style="width: 683px"/>
+</a>
+<p align="center"><i>MMU_1 @B-3</i></p>
+
 - `VTR` likely stands for "Voltage TRigger"
 - Initial state: Capacitor discharged, `VTR` at 0V
 - After ~242 ms: `VTR` reaches 2/3 Vcc (+3.33V), triggering the 555 Timer
 
 #### 555 timer
-![SR Latch](/resources/555%20timer.png)
+<a align="center" href="/Schematics/MMU_1.jpg">
+    <img src="/resources/555%20timer.png" style="width: 683px"/>
+</a>
+<p align="center"><i>MMU_1 @B-2</i></p>
+
 - Output signal: `POC` (Power-On Clear)
 - Initial state: `POC` is HIGH (`VTR` < 1/3 Vcc)
 - Transition: When `VTR` ≥ 2/3 Vcc (~242 ms), output switches to LOW
@@ -43,8 +52,11 @@ The `POC` (Power-On Clear) signal starts HIGH and transitions to LOW after a spe
 ### /RESET Signal Generation
 
 #### SR Latch
-![SR Latch](/resources/RESET_N.png)
-- Location: Circuit made of `T7` and `S5` at `B-4` on page MMU_1
+<a align="center" href="/Schematics/MMU_1.jpg">
+    <img src="/resources/RESET_N.png" style="width: 683px"/>
+</a>
+<p align="center"><i>MMU_1 @B-4</i></p>
+
 - Inputs:
   - `S`: Connected to `POC`
   - `R`: Logical AND of:
@@ -67,5 +79,3 @@ Sequence of events:
 3. Video scanner overflow: `TC` goes HIGH for one PHI_0 cycle.
 4. Within that cycle, when `P_PHI_0` goes HIGH, the SR Latch resets.
 5. SR Latch output LOW: Path from `/RESET` to ground is cut. And `/RESET` is now pulled up by the weak pull-up (3.3K resistor A4). The IOU will not drive the `/RESET` pin again for as long as it has power.
-
-[^1]: This 33 ms duration is effectively masked if a disk controller is present, as the controller extends the /RESET low state to 100 ms.
