@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <text x="10" y="25" fill="#FFFF00" font-family="Arial" font-size="20">PHI_0</text>
+  <text x="10" y="50" fill="#00FFFF" font-family="Arial" font-size="20">/PRAS</text>
+  <text x="10" y="75" fill="#FF00FF" font-family="Arial" font-size="20">Q3</text>
+  <text x="10" y="100" fill="#007FFF" font-family="Arial" font-size="20">H0</text>
+</svg>

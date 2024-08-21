@@ -79,17 +79,17 @@ These are the load values for the other Vertical Scanner signals:
 
 #### `TC`
 
-When the Vertical Scanner overflows, it will pulse HIGH `TC` for a single `P_PHI_2` cycle. This signal indicates when to load the values for the Vertical Counters, and also in the Power-On Initialization (See [Power-On event and /RESET Pin](reset-and-power-on.md))
+When the Vertical Scanner overflows, it will pulse HIGH `TC` for a single `P_PHI_2` cycle. This signal indicates when to load the values for the Vertical Counters. It is also used in the Power-On Initialization (See [Power-On event and /RESET Pin](reset-and-power-on.md))
 
-#### `PAKST` and `TC<sup>1</sup>/<sub>4</sub>S`
+#### `PAKST` and `TC1/4S`
 
-`PAKST` is probably an acronym for _Period Any Key STrobe_. `TC<sup>1</sup>/<sub>4</sub>S` is a 1/4 second signal. Both are only used in the keyboard subsystem (See FIXME)
+`PAKST` is probably an acronym for _Period Any Key STrobe_. `TC1/4S` is a 1/4 second signal. Both are only used in the keyboard subsystem (See FIXME)
 
 #### `FLASH`
 
 `FLASH` is only used to make the text flash in the display subsystem. (See FIXME)
 
-## Differences in this implementation
+## Differences with this implementation
 
 ### Clock
 
@@ -98,6 +98,8 @@ The Emulator uses `P_PHI_2` as a clock for the Video Scanner. The implementation
 <div align="center">
     <img src="/resources/ScopeH0.png" style="width: 1024px"/>
 </div>
+<img src="/resources/ScopeH0Probes.svg" style="width: 320px"/>
+
 
 ## Experimenting with GHDL / GtkWave
 
