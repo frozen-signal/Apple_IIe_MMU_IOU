@@ -47,7 +47,13 @@ First the Horizontal Counter will count up from 0 to 63. During this time, `/HPE
 
 ##### Trace of the Horizontal Scanner
 
-*** FIXME
+<div align="center">
+    <img src="/resources/HorizontalScannerTrace.png" style="width: 2597px"/>
+</div>
+
+> **Note:** Note that `PHI_0` is used instead of `P_PHI_2`. See [Differences in this implementation > Clock](#Clock)
+>
+
 
 #### Vertical Scanner
 
@@ -58,14 +64,18 @@ Just like the Horizontal Counter, the counters `VA`-`VB`-`VC` and `V0`-`V5` will
 <br/>
 `VA` is connected to its corresponding DATA pin on `D9`. This have the effect of loading its own value when `/HPE` transitions LOW. The resulting signal is a regular square wave that changes at the falling edge of `/HPE`.<br/>
 <br/>
-These are the load values of the other Vertical Scanner signals:
+These are the load values for the other Vertical Scanner signals:
+
 | IOU | `VB`-`VC` | `V0`-`V5` |
+| --- | --- | --- |
 | NTSC | 10 | 011111 |
 | PAL | 00 | 011001 |
 
 ##### Trace of the Vertical Scanner
 
-*** FIXME
+<div align="center">
+    <img src="/resources/VerticalScannerTrace.png" style="width: 2632px"/>
+</div>
 
 #### `TC`
 
@@ -85,7 +95,9 @@ When the Vertical Scanner overflows, it will pulse HIGH `TC` for a single `P_PHI
 
 The Emulator uses `P_PHI_2` as a clock for the Video Scanner. The implementation in this repository however, uses directly `PHI_0`. A oscilloscope probing the signals `PHI_0`, `/PRAS`, `Q3`, and `H0` of an ASIC IOU confirms that the official IOU uses `PHI_0`:
 
-*** FIXME
+<div align="center">
+    <img src="/resources/ScopeH0.png" style="width: 1024px"/>
+</div>
 
 ## Experimenting with GHDL / GtkWave
 
