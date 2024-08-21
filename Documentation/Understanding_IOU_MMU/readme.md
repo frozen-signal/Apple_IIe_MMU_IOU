@@ -4,3 +4,4 @@
 
 ## IOU
  - [Power-On event and /RESET Pin](reset-and-power-on.md)
+ - [Video Scanner](video-scanner.md)

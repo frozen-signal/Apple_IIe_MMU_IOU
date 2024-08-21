@@ -39,14 +39,14 @@ begin
             end if;
 
             if (TC_INT = '1') then
-                counters(8)  <= NTSC;
-                counters(9)  <= '0';
-                counters(10) <= '1';
-                counters(11) <= NTSC;
-                counters(12) <= NTSC;
-                counters(13) <= '1';
-                counters(14) <= '1';
-                counters(15) <= '0';
+                counters(8)  <= NTSC;  -- VB
+                counters(9)  <= '0';   -- VC
+                counters(10) <= '1';   -- V0
+                counters(11) <= NTSC;  -- V1
+                counters(12) <= NTSC;  -- V2
+                counters(13) <= '1';   -- V3
+                counters(14) <= '1';   -- V4
+                counters(15) <= '0';   -- V5
             end if;
         end if;
 
