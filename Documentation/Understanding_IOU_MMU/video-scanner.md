@@ -1,6 +1,10 @@
 # The Video Scanner
 
 ## Overview
+<a align="center" href="/Schematics/IOU_1.jpg">
+    <img src="/resources/VideoScanner.png" style="width: 438px"/>
+</a>
+<p align="center"><i>IOU_1, Column 4</i></p>
 
 The Video Scanner is a counter that generate the horizontal and vertical position for the display, as well as a few other signals. It is more closely related to the video display signals that generate the pixels on screen and has no direct relation to the current graphics mode. This scanner has three parts; the Horizontal Scanner, the Vertical Scanner, and a few other timing signals. The horizontal part counts from 0 to 65. The vertical counts from 0 to 262 for NTSC, and from 0 to 312 for PAL.
 
@@ -9,7 +13,7 @@ The Video Scanner is a counter that generate the horizontal and vertical positio
 
 ### Power-On Initialization
 
-During Power-On Initialization, `/POC` will be held low, and `H0`-`H5`, `VA`-`VC`, `/HPE`, and `V0`-`V5` (the video counters) are reset to 0. Once `/POC` transitions to HIGH, the counters are allowed to count up. Once these counters overflows, `TC` will pulse HIGH for one `P_PHI_2` cycle. `TC` is used in the generation of `/RESET` (See [Power-On event and /RESET Pin](reset-and-power-on.md)).
+During Power-On Initialization, `/POC` will be held LOW, and `H0`-`H5`, `VA`-`VC`, `/HPE`, and `V0`-`V5` (the video counters) are reset to 0. Once `/POC` transitions to HIGH, the counters are allowed to count up. Once these counters overflows, `TC` will pulse HIGH for one `P_PHI_2` cycle. `TC` is used in the generation of `/RESET` (See [Power-On event and /RESET Pin](reset-and-power-on.md)).
 > **Note:** The counters above the video counters (`H9` and `J9`) are never initialized, and their initial value is undefined. This repository initialize these counters to 1.
 >
 
