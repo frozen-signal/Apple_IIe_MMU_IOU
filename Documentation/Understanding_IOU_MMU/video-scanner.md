@@ -98,8 +98,6 @@ The Emulator uses `P_PHI_2` as a clock for the Video Scanner. The implementation
 <div align="center">
     <img src="/resources/ScopeH0.png" style="width: 1024px"/>
 </div>
-<img src="/resources/ScopeH0Probes.svg" style="width: 320px"/>
-
 
 ## Experimenting with GHDL / GtkWave
 
