@@ -1,0 +1,11 @@
+{reg: [
+        {bits: 1, name: 'H0'},
+        {bits: 1, name: 'H1'},
+        {bits: 1, name: 'H2'},
+        {bits: 1, name: 'Σ0'},
+        {bits: 1, name: 'Σ1'},
+        {bits: 1, name: 'Σ2'},
+        {bits: 1, name: 'V0'},
+        {bits: 1, name: 'V1'}
+    ]
+}
