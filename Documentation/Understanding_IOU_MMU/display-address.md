@@ -10,7 +10,7 @@ The address depends on two things: the [Video Scanner](video-scanner.md)'s outpu
 
 FIXME schematics image
 
-The computation of &Sigma;3-0 in the schematics is unnecessarily complex, probably due to them being constrained to logic gates only. It is also possibly incorrect. Instead, it is better to use the computation described in "Understanding the Apple IIe" by Jim Sather, P.5-9:
+The computation of &Sigma;3-0 in the schematics is unnecessarily complex, probably due to them being constrained to logic gates only. It is also possibly incorrect. Instead, it is better to use the computation described in "Understanding the Apple IIe" by Jim Sather, P.5-9. We do a regular addition and ignore whatever overflows 4 bits:
  <pre>
      0   0   0   1
    /H5 /H5  H4  H3
