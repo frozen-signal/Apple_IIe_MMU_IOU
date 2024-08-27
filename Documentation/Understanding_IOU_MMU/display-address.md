@@ -8,7 +8,8 @@ The address depends on two things: the [Video Scanner](video-scanner.md)'s outpu
 
 ## Generation of &Sigma;3-0
 
-FIXME schematics image
+<img src="/resources/display-address-gen-1.png" style="width: 480px"/>
+<img src="/resources/display-address-gen-2.png" style="width: 480px"/>
 
 The computation of &Sigma;3-0 in the schematics is unnecessarily complex, probably due to them being constrained to logic gates only. It is also possibly incorrect. Instead, it is better to use the computation described in "Understanding the Apple IIe" by Jim Sather, P.5-9. We do a regular addition and ignore whatever overflows 4 bits:
  <pre>
@@ -69,3 +70,11 @@ The IOU drives the RAM address bus from the rising edge of /RAS in the preceding
 
 ### Computation of COLUMN address
 <img src="/resources/IOU_column.png" style="width: 480px"/>
+
+### In the schematics
+<a align="center" href="/Schematics/IOU_1.jpg">
+    <img src="/resources/IOU_RA_GEN.png" style="width: 320px"/>
+</a>
+<p align="center"><i>IOU_1, @C-3:A9 and B9</i></p>
+
+Two LS257s are used to generate the RA data. They drive the RA bus when pin 15 is LOW, that is from the rising edge of /RAS in the preceding PHI_0 phase up to the falling edge of Q3. Note that the CAS Hold Time is added implicitely as the TTL is slow enough not to require any additional delay circuit.
