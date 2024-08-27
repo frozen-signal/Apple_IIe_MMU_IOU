@@ -8,10 +8,13 @@ The IOU generates several signals that helps in generating the TV Video Signal. 
 
 ### P_PHI_0, P_PHI_1, P_PHI_2
 
-*** FIXME P_PHI_0_1_2_Trace.png
+<img src="/resources/P_PHI_0_1_2_Trace.png" style="width: 1325px"/>
 
 #### Generation of P_PHI_0 and P_PHI_1
-*** FIXME: P_PHI_0_1
+<a align="center" href="/Schematics/IOU_1.jpg">
+    <img src="/resources/P_PHI_0_1.png" style="width: 320px"/>
+</a>
+<p><i>IOU_1, @B-3:H5</i></p>
 
 The value of PHI_0 is latched when both PRAS_N and Q3 are LOW. The end effect is that P_PHI_0 has the same shape as PHI_0, but rises 3 14M clocks cycles before PHI_0. As for P_PHI_1, it is the inverse of P_PHI_0.
 
@@ -21,7 +24,11 @@ P_PHI_0 is only used in the generation of P_PHI_2. In schematics, P_PHI_1 is use
 
 #### Generation of P_PHI_2
 
-FIXME: P_PHI_2
+<a align="center" href="/Schematics/IOU_1.jpg">
+    <img src="/resources/P_PHI_2.png" style="width: 230px"/>
+</a>
+<p><i>IOU_1, @C-3:B9</i></p>
+
 
 P_PHI_2 follows PRAS_N, but skip the HIGH when PRAS_N rises during PHASE 0.
 
@@ -44,5 +51,3 @@ These three signals are inputs of the Video ROM in the Apple IIe. For a detaille
 
 ### RA9_N, RA10_N
 
-
-FIXME: P_PHI_0, P_PHI_1

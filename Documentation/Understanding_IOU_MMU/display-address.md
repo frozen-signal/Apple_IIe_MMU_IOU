@@ -53,7 +53,7 @@ The computation of &Sigma;3-0 in the schematics is unnecessarily complex, probab
 | ZD | 0 |
 
 #### In all cases
-<a align="center" href="/Schematics/IOU_1.jpg">
+<a align="center" href="/Schematics/IOU_2.jpg">
     <img src="/resources/ZE.png" style="width: 480px"/>
 </a>
 <p align="center"><i>IOU_2, @A-4:L9</i></p>
