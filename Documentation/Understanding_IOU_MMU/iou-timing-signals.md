@@ -62,7 +62,6 @@ Just like LGR_TXT_N, PHI_0 is used to clock these signals instead of P_PHI_2.
 HBL_N is the Horizontal BLanking period, and VBL_N is the Vertical BLanking period. The value of these two signals define the visible part of the display:
 
 <img src="/resources/HBL_N__VBL_N.png" style="width: 520px"/>
-<p><i>HBL_N</i> and <i>VBL_N</i> values during display</p>
 
 BL_N is a combination of HBL_N and VBL_N: it is LOW whenever the Video Scanner is in a blanking area, and HIGH when in the displayed area.<br/>
 WNDW_N is the signal BL_N, but delayed one PHI_0 cycle as seen below:
@@ -71,6 +70,18 @@ WNDW_N is the signal BL_N, but delayed one PHI_0 cycle as seen below:
 <p><i>WNDW_N</i> is <i>BL_N</i> delayed by one PHI_0 cycle</p>
 
 ### V1_N_V5_N, V2_V2_N, PSYNC_N, SYNC_N
+
+SYNC_N is the display synchronization signal that is used in the Video signal generation. This signal will be a bit different whether NTSC or PAL video signal is being generated. That difference is generated with V1_N_V5_N and V2_V2_N:
+
+<img src="/resources/PAL_Signals.png" style="width: 520px"/>
+
+These are in turn used to generate PSYNC_N:
+
+<img src="/resources/PSYNC_N.png" style="width: 520px"/>
+
+Finally, the value of SYNC_N is latched from PSYNC_N at the end of PHI_0, on the rising edge of PRAS_N:
+
+<img src="/resources/SYNC_N.png" style="width: 520px"/>
 
 ### RA9_N, RA10_N
 
