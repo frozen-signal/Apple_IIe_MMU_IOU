@@ -81,7 +81,10 @@ These are in turn used to generate PSYNC_N:
 
 Finally, the value of SYNC_N is latched from PSYNC_N at the end of PHI_0, on the rising edge of PRAS_N:
 
-<img src="/resources/SYNC_N.png" style="width: 520px"/>
+<img src="/resources/SYNC_N_Trace.png" style="width: 520px"/>
 
 ### RA9_N, RA10_N
 
+<img src="/resources/RA_9__RA_10.png" style="width: 520px"/>
+
+These two signals are Rom Address 9 and 10. For a description of these, see "Understanding the Apple IIe" by Jim Sather, P.8-12 last paragraph of the page.
