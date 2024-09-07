@@ -22,8 +22,8 @@ The LS138 above is used as a decoder that converts a 3-bit binary input into eig
 
  - C0XX_N is LOW (an address in the range of C0XX is on the address bus)
  - Q3 is LOW
- - LA7 is LOW (indicating the address on the bus is in the range of XX[7-0]X)
+ - LA7 is LOW (inverted by the LS04, as pin 6 of the LS138 is active-high) This indicates the address on the bus is in the range of XX[7-0]X.
 
-Combined, this enables the LS138 when Q3 drops and an address in the range of C000 to C07F is on the address bus.<br />
+Combined, these conditions will activate (enable) the LS138 when Q3 drops and an address in the range of C000 to C07F is on the address bus.<br />
 
 <img src="/resources/IOUAddressDecodeTable.png"/>
