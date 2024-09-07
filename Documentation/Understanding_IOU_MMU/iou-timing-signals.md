@@ -52,6 +52,14 @@ In this repository, LGR_TXT_N and PGR_TXT_N are clocked on PHI_0 instead of P_PH
 <img src="/resources/LGR_TXT_N_SCOPE.png" style="width: 520px"/>
 <p><i>LGR_TXT_N</i> is clocked on PHI_0</p>
 
+#### CLRGAT_N
+
+CLRGAT_N, when LOW, enables the color burst on the video signal. And make the video signal monochrome when HIGH. See the paragraph "COLOR BURST" in "Understanding the Apple IIe" by Jim Sather, P.8-16.<br/>
+
+<img src="/resources/CLRGAT_N.png" style="width: 520px"/>
+
+The value of CLRGAT_N is latched from the inverted value of PCLRGAT at the end of PHI_0, on the rising edge of PRAS_N.
+
 ### SEGA, SEGB, SEGC
 
 These three signals are inputs to the Video ROM in the Apple IIe. When characters are displayed, these identifies which row of the character is currently rendered. For a detailled explanation of these signals, see "Understanding the Apple IIe" by Jim Sather, P.8-12.<br/>
