@@ -1,10 +1,10 @@
 # Address decoding inside the IOU
 
-The IOU need to monitor for when special addresses in the range of C0XX is on the address bus. These special address are used by the soft-switches, the cassette output, the speaker, and the keyboard subsystem. The IOU however do not have the address bus as an input, so it relies on the MMU and uses the ORA7-ORA0 pins, A6, and C0XX_N.
+The IOU needs to monitor when special addresses in the range of C0XX are on the address bus. These special addresses are used by the soft-switches, the cassette output, the speaker, and the keyboard subsystem. However, the IOU does not have the address bus as an input, so it relies on the MMU and uses the ORA7-ORA0 pins, A6, and C0XX_N.
 
 ## Overview
 
-The IOU need to identify whether a special address is invoked and if, so it need to identify which one (C00X, C01X, C02X, C03X, C04X, C05X, and C07X). To do so, the IOU will first latch the ORA bus when MMU drives the ROW address. Then the IOU will  drive LOW the appropriate signal in a vector that identifies which C0XX is targeted.
+The IOU needs to identify whether a special address is invoked and, if so, it needs to identify which one (C00X, C01X, C02X, C03X, C04X, C05X, and C07X). To do this, the IOU will first latch the ORA bus when the MMU drives the ROW address. Then the IOU will drive LOW the appropriate signal in a vector that identifies which C0XX is targeted.
 
 ## The Address Latch
 
