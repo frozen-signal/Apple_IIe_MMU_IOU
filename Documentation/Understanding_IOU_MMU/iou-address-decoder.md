@@ -8,15 +8,15 @@ The IOU need to identify whether a special address is invoked and if, so it need
 
 ## The Address Latch
 
-<img src="/resources/IOUAddressLatch.png"/>
+<img src="/resources/IOUAddressLatch.png" style="width: 280px"/>
 
-To get the lower part or the address, the IOU will latch the ORA bus when the MMU drives the ORA with the ROW part of the address (on the falling edge of P_PHI_2, that is on the falling edge of PRAS_N during PHASE 0).
+To get the lower part or the address, the IOU will latch the ORA bus when the MMU drives the ORA with the ROW part of the address (on the falling edge of P_PHI_2, that is on the falling edge of PRAS_N during PHASE 0). See [P_PHI_2 in "IOU Timing Signals"](iou-timing-signals.md#generation-of-p_phi_2)
 
 > **Note:** LA7 is latched from RA6, this is not an error.
 
 ## The Address Decode
 
-<img src="/resources/IOUAddressDecoder.png"/>
+<img src="/resources/IOUAddressDecoder.png" style="width: 320px"/>
 
 The LS138 above is used as a decoder that converts a 3-bit binary input into eight mutually exclusive active-low outputs. This circuit will select (drive LOW) the corresponding special address signal (C00X_N, C01X_N, C02X_N, C03X_N, C04X_N, C05X_N, C07X_N) from the address bits A6-LA5-LA4. When not enabled, it will instead force all these special address signal HIGH (unselected). It is enabled when all these conditions are met:
  - C0XX_N is LOW (an address in the range of C0XX is on the address bus)
