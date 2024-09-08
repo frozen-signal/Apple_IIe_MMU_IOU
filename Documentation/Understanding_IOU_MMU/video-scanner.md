@@ -81,9 +81,9 @@ These are the load values for the other Vertical Scanner signals:
 
 When the Vertical Scanner overflows, it will pulse HIGH `TC` for a single `P_PHI_2` cycle. This signal indicates when to load the values for the Vertical Counters. It is also used in the Power-On Initialization (See [Power-On event and /RESET Pin](reset-and-power-on.md))
 
-#### `PAKST` and `TC1/4S`
+#### `PAKST` and `TC¼S`
 
-`PAKST` is probably an acronym for _Period Any Key STrobe_. `TC1/4S` is a 1/4 second signal. Both are only used in the keyboard subsystem (See FIXME)
+`PAKST` is probably an acronym for _Period Any Key STrobe_. `TC¼S` is a 1/4 second signal. Both are only used in the keyboard subsystem (See FIXME)
 
 #### `FLASH`
 

@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
+-- FIXME: Should be renamed; these latched adresses are not related the video signals. IOU_ADDR_LATCH maybe?
 entity VIDEO_ADDR_LATCH is
     port (
         P_PHI_2 : in std_logic;
@@ -24,7 +25,7 @@ begin
             LA3 <= RA3;
             LA4 <= RA4;
             LA5 <= RA5;
-            LA7 <= RA6; -- Note: this is not a mistake; There is no LA6 and LA7 is latched from RA6.
+            LA7 <= RA6; -- Note: this is not a mistake; There is no LA6 and LA7 is latched from RA6. RA7-0 are driven by the MMU which sets A7 (from the CPU address bus) on the ORA6 line.
         end if;
     end process;
 end RTL;

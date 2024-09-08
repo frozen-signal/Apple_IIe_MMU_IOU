@@ -57,6 +57,8 @@ The logic-gates schematics contains an error in the above image: The soft switch
 
 > **Note:** The MMU do not have a RESET pin. Instead it monitors a triple Page 1 access followed by a 0xFFFC on the address bus. This means that it is possible to create a situation where only the MMU will reset the value of PG2 and HIRES.
 
+*** FIXME: RC01X_N is missing
+
 ## Reading the IOU Soft Switches
 
 <a align="center" href="/Schematics/IOU_2.jpg">
