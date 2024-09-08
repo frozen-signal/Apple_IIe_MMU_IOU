@@ -34,7 +34,12 @@ AKSTB is the Autorepeat Key STroBe. Components M8 and B2 above acts like a risin
 
 ### CTC¼S
 
-FIXME
+<a align="center" href="/Schematics/MMU_2.jpg">
+    <img src="/resources/CTC14S.png" style="width: 240px"/>
+</a>
+<p><i>MMU_2, @C-3</i></p>
+
+CTC¼S is generated from TC¼S (See [TC¼S](video-scanner.md#`PAKST`-and-`TC¼S`)); TC¼S is delayed one P_PHI_2 cycle.
 
 ## Keyboard Signals
 
@@ -55,7 +60,7 @@ The end effect is that STRBLE_N will pulse LOW (or HIGH in the case STRBLE) for 
 
 ### Clear Delay (purple part)
 
-Clear Delay will reset the AutoRepeat Delay (The delay after a key is pressed and held down before the AutoRepeat activates, 534 ms to 801 ms) whenever it drops LOW. It happens whenver no key is pressed (AKD is LOW), or when a key is held down and another key is pressed (For example, holding down 'A' and pressing 'B' while 'A' is repeating will write a single 'B' and stop).
+Clear Delay will reset the AutoRepeat Delay (The delay after a key is pressed and held down before the AutoRepeat activates, 534 ms to 801 ms) whenever it drops LOW. It happens when no key is pressed (AKD is LOW), or when a key is held down and another key is pressed (For example, holding down 'A' and pressing 'B' while 'A' is repeating will write a single 'B' and stop).
 
 ### Set Delay (yellow part)
 
@@ -91,7 +96,22 @@ KEYLE will be:
  - Pulsed HIGH when a key is pressed.
  - Cycled at 15 hertz (the auto-repeat frequency) if AutoRepeat Active is HIGH
 
-### CLRKEY_N and KEY
+### CLRKEY_N
 
-*** FIXME image
+<a align="center" href="/Schematics/IOU_2.jpg">
+    <img src="/resources/CLRKEY_N.png" style="width: 320px"/>
+</a>
+<p><i>IOU_2, @D-3</i></p>
 
+CLRKEY_N is used to clear the KEY soft switch (See below). It will be LOW on an access to $C010 or a write access to $C01X.
+
+### KEY
+<a align="center" href="/Schematics/IOU_1.jpg">
+    <img src="/resources/KEY.png" style="width: 320px"/>
+</a>
+<p><i>IOU_1, @A-3</i></p>
+
+POC_N is a signal that becomes HIGH and remain HIGH once the power-on has completed. See [Power-On event and /RESET Pin](reset-and-power-on.md).
+With this circuit, KEY is held LOW during power-on (POC_N LOW). It's set HIGH when KEYLE is HIGH (Pulsed HIGH when a key is pressed, and pulse at a 15 hertz frequency when a key is held down). And KEY is reset LOW when CLRKEY_N is used.<br />
+
+See "Understanding the Apple IIe" by Jim Sather, page 2-16 paragraph "Keyboard Input"
