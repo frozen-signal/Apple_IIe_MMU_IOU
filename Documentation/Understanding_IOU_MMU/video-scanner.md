@@ -26,7 +26,7 @@ During Power-On Initialization, `/POC` will be held LOW, and `H0`-`H5`, `VA`-`VC
 
 ### Operation
 
-After `/POC` has reset the video counters to 0, and after the first overflow, the Video Scanner begins its normal operations. The counter is incremented at every rising edge of `P_PHI_2` (See FIXME Timings doc).
+After `/POC` has reset the video counters to 0, and after the first overflow, the Video Scanner begins its normal operations. The counter is incremented at every rising edge of `P_PHI_2` (See [P_PHI_2 in "IOU Timing Signals"](iou-timing-signals.md#p_phi_0-p_phi_1-p_phi_2)).
 
 #### Horizontal Scanner
 
@@ -83,11 +83,11 @@ When the Vertical Scanner overflows, it will pulse HIGH `TC` for a single `P_PHI
 
 #### `PAKST` and `TC¼S`
 
-`PAKST` is probably an acronym for _Period Any Key STrobe_. `TC¼S` is a 1/4 second signal. Both are only used in the keyboard subsystem (See FIXME)
+`PAKST` is probably an acronym for _Period Any Key STrobe_. `TC¼S` is a 1/4 second signal. Both are only used in the keyboard subsystem (See [The Keyboard Subsystem](iou_keyboard_subsystem.md))
 
 #### `FLASH`
 
-`FLASH` is only used to make the text flash in the display subsystem. (See FIXME)
+`FLASH` is only used to make the text flash in the display subsystem. (See [RA_9 and RA_10](iou-timing-signals.md#ra9_n-ra10_n))
 
 ## Differences with this implementation
 

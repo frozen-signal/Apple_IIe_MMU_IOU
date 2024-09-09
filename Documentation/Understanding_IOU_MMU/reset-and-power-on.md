@@ -59,8 +59,8 @@ The `POC` (Power-On Clear) signal starts HIGH and transitions to LOW after a spe
 - Inputs:
   - `S`: Connected to `POC`
   - `R`: Logical AND of:
-    - `TC`: HIGH for one PHI_0 cycle when video scanner overflows (See *FIXME*)
-    - `P_PHI_1`: Delayed PHI_0 signal (See *FIXME*, can be considered equivalent to PHI_0 for this explanation)
+    - `TC`: HIGH for one PHI_0 cycle when video scanner overflows (See [Video Scanner](video-scanner.md#tc))
+    - `P_PHI_1`: Delayed PHI_0 signal (See [The Generation of the multiplexed addresses](iou-timing-signals.md#generation-of-p_phi_0-and-p_phi_1), can be considered equivalent to PHI_0 for this explanation)
 
 ### /RESET Behavior During Power-On
 

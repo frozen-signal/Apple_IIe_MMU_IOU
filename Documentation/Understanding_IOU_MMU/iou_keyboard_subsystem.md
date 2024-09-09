@@ -39,7 +39,7 @@ AKSTB is the Autorepeat Key STroBe. Components M8 and B2 above acts like a risin
 </a>
 <p><i>MMU_2, @C-3</i></p>
 
-CTC¼S is generated from TC¼S (See [TC¼S](video-scanner.md#`PAKST`-and-`TC¼S`)); TC¼S is delayed one P_PHI_2 cycle.
+CTC¼S is generated from TC¼S (See [TC¼S](video-scanner.md#pakst-and-tcs)); TC¼S is delayed one P_PHI_2 cycle.
 
 ## Keyboard Signals
 
@@ -99,7 +99,7 @@ KEYLE will be:
 ### CLRKEY_N
 
 <a align="center" href="/Schematics/IOU_2.jpg">
-    <img src="/resources/CLRKEY_N.png" style="width: 320px"/>
+    <img src="/resources/CLRKEY_N.png" style="width: 520px"/>
 </a>
 <p><i>IOU_2, @D-3</i></p>
 

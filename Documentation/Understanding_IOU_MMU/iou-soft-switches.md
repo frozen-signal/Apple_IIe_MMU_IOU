@@ -57,8 +57,6 @@ The logic-gates schematics contains an error in the above image: The soft switch
 
 > **Note:** The MMU do not have a RESET pin. Instead it monitors a triple Page 1 access followed by a 0xFFFC on the address bus. This means that it is possible to create a situation where only the MMU will reset the value of PG2 and HIRES.
 
-*** FIXME: RC01X_N is missing
-
 ## Reading the IOU Soft Switches
 
 <a align="center" href="/Schematics/IOU_2.jpg">
@@ -68,7 +66,7 @@ The logic-gates schematics contains an error in the above image: The soft switch
 
 Again, the logic-gates schematics contains the design for an emulator which combines the IOU and the MMU. This means that the IOU will only drive MD7 when one of the soft switch in orange above is read.<br/>
 <br/>
-The B4 and H3 part of the circuit above will drive MD7 when a read access is made to C00X. MD7 will be the value of the signal KEY which is managed by the Keyboard Subsystem (See FIXME)<br/>
+The B4 and H3 part of the circuit above will drive MD7 when a read access is made to C00X. MD7 will be the value of the signal KEY which is managed by the Keyboard Subsystem (See [The Keyboard Subsystem](iou_keyboard_subsystem.md))<br/>
 <br/>
 The L7 and M7 components will drive MD7 when a read access is made to C01X. The value of MD7 will depend on LA2-LA1-LA0:
 

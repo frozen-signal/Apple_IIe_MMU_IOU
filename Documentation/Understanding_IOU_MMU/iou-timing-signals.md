@@ -2,7 +2,7 @@
 
 ## Overview
 
-The IOU generates several signals that helps in generating the TV Video Signal. FIXME
+The IOU generates several signals that helps in generating the TV Video Signal.
 
 ## Phase Signals
 
@@ -20,7 +20,7 @@ The value of PHI_0 is latched when both PRAS_N and Q3 are LOW. Note above that t
 
 #### Uses of P_PHI_0 and P_PHI_1
 
-P_PHI_0 is only used in the generation of P_PHI_2. In schematics, P_PHI_1 is used in the IOU RA Mux (IOU_1 @D3:K8, See FIXME) as the output enable signal. It is not used in this implementation: Since the code for the RA Mux is shared between the IOU and the MMU, we generate the output enable directly in that component.
+P_PHI_0 is only used in the generation of P_PHI_2. In schematics, P_PHI_1 is used in the IOU RA Mux (IOU_1 @D3:K8, See [The Generation of the multiplexed addresses](display-address.md#generation-of-the-multiplexed-addresses)) as the output enable signal. It is not used in this implementation: Since the code for the RA Mux is shared between the IOU and the MMU, we generate the output enable directly in that component.
 
 #### Generation of P_PHI_2
 
@@ -33,7 +33,7 @@ P_PHI_2 follows PRAS_N, but skip the HIGH when PRAS_N rises during PHASE 0.
 
 #### Uses of P_PHI_2
 
-P_PHI_2 is used in the Keyboard Subsystem (See FIXME), in the generation of some video signals (See [Video Signals](#video-signals) below), and the IOU Address Latch (See FIXME).
+P_PHI_2 is used in the Keyboard Subsystem (See [The Keyboard Subsystem](iou_keyboard_subsystem.md)), in the generation of some video signals (See [Video Signals](#video-signals) below), and the IOU Address Latch (See [The Address Latch](iou-address-decoder.md#the-address-latch)).
 
 ## Video Signals
 
