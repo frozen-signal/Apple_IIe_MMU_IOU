@@ -13,11 +13,14 @@ Only features related to the Apple IIe were implemented. These are the bonding o
 | DIANA | HIGH |
 
 In red, the part of the schematics that were not implemented:
-<br/>
-(everything was implemented in IOU_1)<br/>
-<br/>
+## IOU 1
+Everything was implemented in IOU_1
+
+## IOU 2
 <img src="/resources/NotImplemented_IOU_2.jpg" style="width: 1920px"/>
-<br/>
+
+## MMU 1
 <img src="/resources/NotImplemented_MMU_1.jpg" style="width: 1920px"/>
-<br/>
+
+## IOU 2
 <img src="/resources/NotImplemented_MMU_2.jpg" style="width: 1920px"/>
