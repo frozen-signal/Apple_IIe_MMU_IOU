@@ -1,4 +1,4 @@
-# The Keyboard Sybsystem
+# The Keyboard Subsystem
 
 ## Overview
 The keyboard subsystem's task is to generate the value of the KEY soft switch (read access to $C000 - $C00F). This soft switch indicates whether a key as been pressed since the last time it has been reset. The keyboard subsystem also handles the auto-repeat feature that will set KEY at a frequency of 15 hertz while a key is pressed (Note that KEY still need to be reset with $C010 between each auto-repeat cycle).
