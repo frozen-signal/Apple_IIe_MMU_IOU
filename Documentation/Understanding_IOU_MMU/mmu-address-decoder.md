@@ -20,13 +20,13 @@ The decoding is straightforward, however there are some things to note.
 | F3 | 11 | There seems to be a typo in the schematics: It's labeled /D-FXXX (active low) but should be D-FXXX (active high) |
 | J5 | 10 | /MC05X should be present;  Used for the soft switches HIRES (C056/7) and PG2 (C054/5). See the ASIC schematics. |
 
-## PHI_0_1XX_N and PHI_0_7XX
+## Φ0/1XX and Φ0/7XX
 
 <a align="center" href="/Schematics/MMU_2.jpg">
     <img src="/resources/mmu-address-decode-2.png" style="width: 400px"/>
 </a>
 <p><i>MMU_2, @D-2</i></p>
 
-These signals are only used in the computation of /SELMB (See MMU_2 @B-1). These are not used in this implementation because the computation of /SELMB may contain an error. Instead, this implementation uses the computation from the transistor-level schematics which are both correct and simpler. See ** FIXME **
+These signals are only used in the computation of /SELMB (See MMU_2 @B-1). These are not used in this implementation because the computation of /SELMB in the logical gate schematics may contain an error. Instead, this implementation uses the computation from the transistor-level schematics which are both correct and much simpler. See ** FIXME **
 
 

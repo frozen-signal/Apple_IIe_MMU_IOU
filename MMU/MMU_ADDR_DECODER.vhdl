@@ -96,7 +96,7 @@ begin
         and A(5) and A(4) and A(3) and A(2) and A(1) and A(0));
 
     -- MMU_2 @D-2
-    -- PHI_0_1XX_N and PHI_0_7XX are only used in the computation of SELMB_N (See MMU_2 @B-1). The computation of SELMB_N in the logical gate schematics seems to have an error.
+    -- Φ0/1XX and Φ0/7XX are only used in the computation of SELMB_N (See MMU_2 @B-1). The computation of SELMB_N in the logical gate schematics seems to have an error.
     -- Using "Apple IIe Diagnostic, v2.1" reports an error while testing AUX RAM. Also, the game "Aliens" will hang while loading. Comparing a logic analyzer trace of the logical schematics vs the official MMU
     -- will reveal a difference on /EN80 and /CASEN.
     -- Instead this implementation will use the ASIC computation of SELMB_N
