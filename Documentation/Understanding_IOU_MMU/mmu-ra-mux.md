@@ -13,7 +13,7 @@ The MMU drives the RAM address bus from the rising edge of /RAS in the preceding
 <img src="/resources/MMU_column.png" style="width: 480px"/>
 <img src="/resources/MA12.png" style="width: 480px"/>
 
-> **Note:** A6 is in the COL address and the pin 11 of D5 is connected to A14 in this implementation because only the circuits with the bonding option 64K HIGH has been implemented (The MMU do not support 16K RAM chips; only 64K chips).
+> **Note:** A6 is in the COL address.
 
 ### In the schematics
 <a align="center" href="/Schematics/MMU_1.jpg">
@@ -23,3 +23,4 @@ The MMU drives the RAM address bus from the rising edge of /RAS in the preceding
 
 Two LS257s are used to generate the RA data. They drive the RA bus when pin 15 is LOW, that is from the rising edge of /RAS in the preceding PHI_1 phase up to the falling edge of Q3. Note that the CAS Hold Time is added implicitely as the TTL is slow enough not to require any additional delay circuit. See "Understanding the Apple IIe" by Jim Sather, P.5-6
 
+> **Note:** A6 is in the COL address and the pin 11 of D5 is connected to A14 in this implementation because only the circuits with the bonding option 64K HIGH has been implemented (The MMU do not support 16K RAM chips; only 64K chips).
