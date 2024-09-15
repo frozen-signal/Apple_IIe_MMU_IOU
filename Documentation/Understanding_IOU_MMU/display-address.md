@@ -82,4 +82,4 @@ The IOU drives the RAM address bus from the rising edge of /RAS in the preceding
 </a>
 <p><i>IOU_1, @C-3:A9 and B9</i></p>
 
-Two LS257s are used to generate the RA data. They drive the RA bus when pin 15 is LOW, that is from the rising edge of /RAS in the preceding PHI_0 phase up to the falling edge of Q3. Note that the CAS Hold Time is added implicitely as the TTL is slow enough not to require any additional delay circuit.
+Two LS257s are used to generate the RA data. They drive the RA bus when pin 15 is LOW, that is from the rising edge of /RAS in the preceding PHI_0 phase up to the falling edge of Q3. Note that the CAS Hold Time is added implicitely as the TTL is slow enough not to require any additional delay circuit. See "Understanding the Apple IIe" by Jim Sather, P.5-6

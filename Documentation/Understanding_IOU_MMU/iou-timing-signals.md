@@ -20,7 +20,7 @@ The value of PHI_0 is latched when both PRAS_N and Q3 are LOW. Note above that t
 
 #### Uses of P_PHI_0 and P_PHI_1
 
-P_PHI_0 is only used in the generation of P_PHI_2. In schematics, P_PHI_1 is used in the IOU RA Mux (IOU_1 @D3:K8, See [The Generation of the multiplexed addresses](display-address.md#generation-of-the-multiplexed-addresses)) as the output enable signal. It is not used in this implementation: Since the code for the RA Mux is shared between the IOU and the MMU, we generate the output enable directly in that component.
+P_PHI_0 is used in the generation of P_PHI_2, and the MMU RA Mux (See [The Generation of the multiplexed addresses in the MMU](mmu_ra_mux.md#FIXME)). In schematics, P_PHI_1 is used in the IOU RA Mux (IOU_1 @D3:K8, See [The Generation of the multiplexed addresses in the IOU](display-address.md#FIXME)) as the output enable signal. It is not used in this implementation: Since the code for the RA Mux is shared between the IOU and the MMU, we generate the output enable directly in that component.
 
 #### Generation of P_PHI_2
 
