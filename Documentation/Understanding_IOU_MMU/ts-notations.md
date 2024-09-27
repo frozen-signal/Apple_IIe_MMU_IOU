@@ -6,7 +6,7 @@ To help readers who are unfamiliar with the notations in this schematics, we pre
 
 <img src="/resources/ts-nmos.png"/>
 
-In the absence of any charge on the gate, transistor will be in a non-conducting state and no current will flow from the drain to the source. If sufficient positive charge is placed on the gate, the transistor will be in a conducting state and current will flow from the drain to the source. <br/>
+In the absence of any charge on the gate, the transistor will be in a non-conducting state and no current will flow from the drain to the source. If sufficient positive charge is placed on the gate, the transistor will be in a conducting state and current will flow from the drain to the source. <br/>
 See "Introduction to VLSI Systems" by Mead and Conway, page 2.
 
 
@@ -81,5 +81,5 @@ Finally, the orange-blue transistor disconnect the stored value from the ouptut 
 
 <img src="/resources/ts-det-u.png" style="width: 220px"/>
 
-The DET.U component is a bi-directional pin driver. But since the "TS" input is always HIGH in the MMU (64K and DIANA bonding options are fixed HIGH), DET.U can be interpreted as a wire connecting "IA" to "OA" to form an input pin.
+The DET.U component is a bi-directional pin driver. But since the "TS" input is always HIGH in the MMU (64K and DIANA bonding options are constant HIGH), DET.U can be interpreted as a wire connecting "IA" to "OA" to form an input pin.
 For the sake of understanding this schematics, these can be read as a simple connection between "I" and "O".
