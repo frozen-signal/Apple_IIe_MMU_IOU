@@ -1,3 +1,16 @@
+--------------------------------------------------------------------------------
+-- File: MMU_RW245.vhdl
+-- Description: Generate the R_W_245 signal which controls the direction of
+--              the bidirectional peripheral data bus driver (a LS245).
+-- Author: frozen-signal
+-- Project: Apple_IIe_MMU_IOU
+-- Project location: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/
+--
+-- This work is licensed under the Creative Commons CC0 1.0 Universal license.
+-- To view a copy of this license, visit:
+-- https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/LICENSE
+--------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 

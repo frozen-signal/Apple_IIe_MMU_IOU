@@ -1,8 +1,22 @@
+--------------------------------------------------------------------------------
+-- File: MMU_HOLD_TIME.vhdl
+-- Description: An entity that uses ALTERA LCELL IP to add the hold times. Only to be used with ALTERA devices that support the LCELL primitive.
+-- Author: frozen-signal
+-- Project: Apple_IIe_MMU_IOU
+-- Project location: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/
+--
+-- This work is licensed under the Creative Commons CC0 1.0 Universal license.
+-- To view a copy of this license, visit:
+-- https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/LICENSE
+--------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- NOTE: This implementation of MMU_HOLD_TIME can only be used with Altera devices that support the LCELL primitive.
+-- NOTE 1: This implementation of MMU_HOLD_TIME can only be used with Altera devices that support the LCELL primitive.
+-- NOTE 2: The timings have been tuned to be used with the EPM7128STC100-10N. Using another device may require
+--         changing NUM_LCELLS below. See https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/CUSTOM/MMU_HOLD_TIME/readme.md
 entity MMU_HOLD_TIME is
     port (
         PHI_0 : in std_logic;
