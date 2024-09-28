@@ -10,7 +10,6 @@
 ### INTIO_N
 INTIO_N will be LOW when the address on the bus is in the range $C000-$C01F.<br/>
 > **Note:** In the emulator schematic, the output of J3-11 is labeled INTIO; it should be INTIO_N.
-<br/>
 
 ### KBD
 Used in the transfert of the keystroke to MD6-MD0. See "Understanding the Apple IIe" by Jim Sather, page 2-16 paragraph "Keyboard Input"
@@ -34,12 +33,23 @@ A few active-low signals that indicates that some specific addresses are on the 
 
 ## CXXXOUT
 
-<a align="center" href="/Schematics/MMU_1.jpg">
-    <img src="/resources/MMU_DEV.png" style="width: 320px"/>
+<a align="center" href="/Schematics/MMU_2.jpg">
+    <img src="/resources/CXXXOUT.png" style="width: 520px"/>
 </a>
-<p><i>MMU_1, @C-3</i></p>
+<p><i>MMU_2, @C-3</i></p>
 
-Active-high signal that indicate when a $CXXX address is on the bus; used by the IOU.
+Hand-written notes above CXXOUT_N:
+<pre>
+If INTC800ACC = '1'
+If C0XX       = '0'
+</pre>
+
+<a align="center" href="/Schematics/MMU_1.jpg">
+    <img src="/resources/CXXX_PIN.png" style="width: 320px"/>
+</a>
+<p><i>MMU_1, @B-3</i></p>
+
+Active-high signal that indicate to the IOU that an address it handles is on the bus. Note that VLC is a bonding option that is a constant LOW in this repository. Therefore, pin 24 (marked CXXX / SELIO_N) is always the inverse of CXXXOUT_N.
 
 ## MPON_N
 
@@ -57,4 +67,4 @@ The MMU do not have a RESET_N pin. Instead it must be clever and detect a RESET 
 </a>
 <p><i>MMU_1, @C-4</i></p>
 
-INTC8EN is a signal the is used in the computation of ROMEN1_N. See "Understanding the Apple IIe" by Jim Sather, p.5-28
+INTC8EN is a signal that is used in the computation of ROMEN1_N. See "Understanding the Apple IIe" by Jim Sather, p.5-28
