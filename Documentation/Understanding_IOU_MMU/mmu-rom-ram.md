@@ -74,11 +74,13 @@ When HIGH turns off CAS
 <br/>
 This signal indicates whether the motherboard RAM (SELMB_N LOW) or the AUX RAM (SELMB_N HIGH) is used
 The generation of SELMB_N is very complex in the logic-level schematics (and possibly incorrect). The transistor-level schematics, on the other hand, is much simpler. This repository uses this latter version.
+<br/>
 <a align="center" href="/Schematics/MMU_ASIC.jpg">
     <img src="/resources/SELMB_N_TRANSISTOR.png" style="width: 720px"/>
 </a>
+<br/>
+SELMB_N is generated through a 'wired-or' chain with the following components:
 
-SELMB_N is generated through a 'wired-or' chain.
 | Location<br/>in schematic | Description |
 | --- | --- |
 | A | The transistor will conduct FLG2 (also called RAMWRT) if it's a write operation. It switches between motherboard RAM (FLG2 = '0') and AUX RAM (FLG2 = '1') |
