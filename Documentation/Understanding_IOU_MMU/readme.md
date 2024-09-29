@@ -1,5 +1,14 @@
 # Understanding the MMU and IOU
 
+## About the sources
+Throughout the code, there are comments that refers to the emulator schematics. The format is `[Schematics] @[Coords]:[Component]-[OutPin]`
+For example this:
+```
+    -- MMU_1 @B-1:L2-8
+    CASEN_N <= OCASEN_N and PHI_0;
+```
+refers to the schematic named `MMU_1.jpg`, at a location inside square `B-1` and is the output pin `8` of the component `L2`.
+
 ## What are the schematics
 
 These schematics were obtained by Henry S. Courbis, founder of ReActiveMicro, at KansasFest 2016. They seem to be the logic schematics for an emulator that combines both the IOU and the MMU. The exact purpose of this emulator is unknown, but they seem to cover everything the IOU and MMU does. It's possible that it was used to develop what would become the Apple //c. The transistor level schematic seem to be closer to the actual MMU, but it is unknown exactly how similar it is to the official MMU.
