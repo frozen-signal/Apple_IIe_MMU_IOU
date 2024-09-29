@@ -30,3 +30,8 @@ The MMU also have a transistor-level schematics. Some important details are disc
 - [Miscellaneous MMU signals](mmu-misc.md)
 - [IOU Power-On event and /RESET Pin](reset-and-power-on.md)
 
+## Books
+
+Two books are useful in understanding the schematics.<br/>
+First, [_Introduction to VLSI systems_ by Carver Mead and Lynn Conway](https://www.google.com/search?q=pdf+Introduction+to+VLSI+Systems+Mead+and+Conway) is useful in understanding the transistor-level schematics.<br/>
+And absolutely vital is [_Understanding the Apple IIe_ by Jim Sather](https://archive.org/details/Understanding_the_Apple_IIe)
