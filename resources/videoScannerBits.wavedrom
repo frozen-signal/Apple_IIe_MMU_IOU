@@ -1,0 +1,13 @@
+{reg: [
+        {bits: 6, name: 'Horizontal Counter', type: 3},
+        {bits: 1, name: '/HPE', type: 3},
+        {bits: 1, name: 'VA', type: 4},
+        {bits: 1, name: 'VB', type: 4},
+        {bits: 1, name: 'VC', type: 4},
+        {bits: 6, name: 'Vertical Counter', type: 4},
+        {bits: 1},
+        {bits: 1, name: 'PAKST'},
+        {bits: 2},
+        {bits: 1, name: 'FLASH'},
+    ], config: {hspace: 1280}
+}

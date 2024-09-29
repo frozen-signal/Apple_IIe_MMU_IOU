@@ -1,3 +1,15 @@
+--------------------------------------------------------------------------------
+-- File: VIDEO_SCANNER.vhdl
+-- Description: The counter that keeps track of the current display location, and some other misc signals.
+-- Author: frozen-signal
+-- Project: Apple_IIe_MMU_IOU
+-- Project location: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/
+--
+-- This work is licensed under the Creative Commons CC0 1.0 Universal license.
+-- To view a copy of this license, visit:
+-- https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/LICENSE
+--------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -39,14 +51,14 @@ begin
             end if;
 
             if (TC_INT = '1') then
-                counters(8)  <= NTSC;
-                counters(9)  <= '0';
-                counters(10) <= '1';
-                counters(11) <= NTSC;
-                counters(12) <= NTSC;
-                counters(13) <= '1';
-                counters(14) <= '1';
-                counters(15) <= '0';
+                counters(8)  <= NTSC;  -- VB
+                counters(9)  <= '0';   -- VC
+                counters(10) <= '1';   -- V0
+                counters(11) <= NTSC;  -- V1
+                counters(12) <= NTSC;  -- V2
+                counters(13) <= '1';   -- V3
+                counters(14) <= '1';   -- V4
+                counters(15) <= '0';   -- V5
             end if;
         end if;
 

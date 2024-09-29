@@ -3,7 +3,7 @@ Use a 5v CPLD. In doubt, use the Altera EPM7128STC. The MMU don't need anything 
 
 # CPLD / FPGA Selection
 ## Device voltage
-The Apple IIe being a 5v computer, using a 5v CPLD/FPGA will obviously be easiest. Unfortunately, almost all 5v CPLDs/FPGAs have gone out of production. Modern CPLDs/FPGAs are all 3.3v and will need the Apple's 5v to be level-shifted down to 3.3v. This is of course more complex, and some details about this can be found [below](# Using 3.3v)
+The Apple IIe being a 5v computer, using a 5v CPLD/FPGA will obviously be easiest. Unfortunately, almost all 5v CPLDs/FPGAs have gone out of production. Modern CPLDs/FPGAs are all 3.3v and will need the Apple's 5v to be level-shifted down to 3.3v. This is of course more complex, and some details about this can be found [below](#using-3.3v)
 
 # Number of GPIOs
 The device needs to have a minimum number of GPIOs depending on the ASIC:

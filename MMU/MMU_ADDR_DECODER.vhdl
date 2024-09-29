@@ -1,3 +1,15 @@
+--------------------------------------------------------------------------------
+-- File: MMU_ADDR_DECODER.vhdl
+-- Description: The address decoder for the MMU.
+-- Author: frozen-signal
+-- Project: Apple_IIe_MMU_IOU
+-- Project location: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/
+--
+-- This work is licensed under the Creative Commons CC0 1.0 Universal license.
+-- To view a copy of this license, visit:
+-- https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/LICENSE
+--------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -66,7 +78,7 @@ begin
 
     -- MMU1 @B-34:D4-11 & F3-11
     E_FXXX_N_INT <= FXXX_N_INT and EXXX_N_INT;    -- There seems to be a typo in the schematics: It's labeled E-FXX' but should be E_FXXX'
-    D_FXXX       <= E_FXXX_N_INT nand DXXX_N_INT; -- There seems to be a typo in the schematics: It's labeled D-FXXX' but should be D-FXXX (see also MMU2 @C-2:D3-9)
+    D_FXXX       <= E_FXXX_N_INT nand DXXX_N_INT; -- There seems to be a typo in the schematics: It's labeled D-FXXX' (active low) but should be D-FXXX (active high) (see also MMU2 @C-2:D3-9)
 
     -- MMU1 @C-3:J4
     MC0XX_N_INT <= (not CXXX_INT) or A(11) or (A(10) or A(9) or A(8));
@@ -96,7 +108,7 @@ begin
         and A(5) and A(4) and A(3) and A(2) and A(1) and A(0));
 
     -- MMU_2 @D-2
-    -- PHI_0_1XX_N and PHI_0_7XX are only used in the computation of SELMB_N (See MMU_2 @B-1). The computation of SELMB_N in the logical schematics seems to have an error.
+    -- Φ0/1XX and Φ0/7XX are only used in the computation of SELMB_N (See MMU_2 @B-1). The computation of SELMB_N in the logical gate schematics seems to have an error.
     -- Using "Apple IIe Diagnostic, v2.1" reports an error while testing AUX RAM. Also, the game "Aliens" will hang while loading. Comparing a logic analyzer trace of the logical schematics vs the official MMU
     -- will reveal a difference on /EN80 and /CASEN.
     -- Instead this implementation will use the ASIC computation of SELMB_N

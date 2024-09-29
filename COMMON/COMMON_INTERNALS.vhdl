@@ -1,3 +1,15 @@
+--------------------------------------------------------------------------------
+-- File: COMMON_INTERNALS.vhdl
+-- Description: Signals that are common to the IOU and the MMU
+-- Author: frozen-signal
+-- Project: Apple_IIe_MMU_IOU
+-- Project location: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/
+--
+-- This work is licensed under the Creative Commons CC0 1.0 Universal license.
+-- To view a copy of this license, visit:
+-- https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/LICENSE
+--------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -12,7 +24,7 @@ entity COMMON_INTERNALS is
 
         RC01X_N   : out std_logic;
         P_PHI_0   : out std_logic; -- Phase-shifted PHI_0; this is the same length as PHI_0, but rises on the falling edge of Q3 during PHI_1
-        P_PHI_1   : out std_logic; -- Same as P_PHI_0 but PHI_0 and PHI_1 reversed
+        P_PHI_1   : out std_logic; -- Same as P_PHI_0 but PHI_0 and PHI_1 reversed (FIXME: Seems unused)
         Q3_PRAS_N : out std_logic
     );
 end COMMON_INTERNALS;

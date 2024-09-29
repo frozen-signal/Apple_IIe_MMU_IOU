@@ -1,3 +1,16 @@
+--------------------------------------------------------------------------------
+-- File: LS138.vhdl
+-- Description: Implementation of a 74LS138 3-Line To 8-Line Decoders/Demultiplexers
+--              Note: only features used by this project has been implemented.
+-- Author: frozen-signal
+-- Project: Apple_IIe_MMU_IOU
+-- Project location: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/
+--
+-- This work is licensed under the Creative Commons CC0 1.0 Universal license.
+-- To view a copy of this license, visit:
+-- https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/LICENSE
+--------------------------------------------------------------------------------
+
 -- LS138
 library IEEE;
 use IEEE.std_logic_1164.all;
