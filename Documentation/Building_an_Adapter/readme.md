@@ -104,7 +104,7 @@ The pinout of the MMU:
 
 ### 5V or 3.3V device
 
-The Apple IIe is a 5V computer, so using a 5V FPGA or CPLD would be easiest. However, if you choose to use a 3.3V device, you'll need additional circuits for voltage level translation. More information on 3.3V device design can be found [here](/Documentation/Building_an_Adapter/Building_a_3v3_adapter.md).
+The Apple IIe is a 5V computer, so using a 5V FPGA or CPLD would be easiest. However, if you choose to use a 3.3V device, you'll need additional circuits for voltage level translation. More information on 3.3V device design can be found in [Building a 3.3V adapter](/Documentation/Building_an_Adapter/readme.md#building-a-33v-adapter).
 
 ### Number of GPIOs
 
@@ -194,3 +194,32 @@ Depending on the device you're using, you'll need to customize the hold time in 
 - Ensure the settings will initialize flip-flops and other memory elements to '0'. (For example, in Quartus II, 'Power-Up Don't Care' should not be checked.)
 - You can improve signal integrity by setting a slow slew rate.
 
+## Building a 3.3V adapter
+
+When using a 3.3V adapter, voltage level translation is necessary. Refer to the [_Voltage Level Translation Guide_](https://www.ti.com/lit/ml/scyb018h/scyb018h.pdf) for more information.
+
+
+### Output Pins
+
+Fortunately, 3.3V can drive 5V TTL logic, so output-only pins can be connected directly without the need for level shifting.
+
+### Input Pins
+
+All input-only pins must be level-shifted to protect the 3.3V device from damage.
+
+### Bidirectional pins
+
+Bidirectional pins must also be level-shifted to protect the 3.3V device from damage.
+
+#### Direction Signal
+
+If you choose a solution that requires a direction signal, you'll need to add these direction signals as outputs. This will involve modifying the file /IOU/IOU.vhdl:
+
+| Signal | Direction Signal | Notes |
+| - | - | - |
+| RESET_N | FORCE_RESET_N_LOW | When FORCE_RESET_N_LOW is LOW, RESET_N acts as an input; when HIGH, it functions as an output. |
+| ORA6-0 | RA_ENABLE_N | When RA_ENABLE_N is HIGH, ORA6-0 are inputs; when LOW, they act as outputs. |
+
+#### RESET_N
+
+RESET_N is both a bidirectional and open-drain pin. Ensure that your level-shifting circuit preserves these properties, and make sure to place the pull-up resistor on the 5V side of RESET_N.
