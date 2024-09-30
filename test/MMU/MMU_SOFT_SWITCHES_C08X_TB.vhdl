@@ -5,7 +5,7 @@ entity MMU_SOFT_SWITCHES_C08X_TB is
     -- empty
 end MMU_SOFT_SWITCHES_C08X_TB;
 
-architecture MMU_SOFT_SWITCHES_C08X_TEST of MMU_SOFT_SWITCHES_C08X_TB is
+architecture TESTBENCH of MMU_SOFT_SWITCHES_C08X_TB is
     component MMU_SOFT_SWITCHES_C08X is
         port (
             MPON_N     : in std_logic;
@@ -277,4 +277,4 @@ begin
         wait;
 
     end process;
-end MMU_SOFT_SWITCHES_C08X_TEST;
+end TESTBENCH;

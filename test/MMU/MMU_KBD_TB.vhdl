@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_KBD_TB is
     -- empty
 end MMU_KBD_TB;
-architecture MMU_KBD_TEST of MMU_KBD_TB is
+architecture TESTBENCH of MMU_KBD_TB is
     component MMU_KBD is
         port (
             INTIO_N : in std_logic;
@@ -57,4 +57,4 @@ begin
         wait;
 
     end process;
-end MMU_KBD_TEST;
+end TESTBENCH;

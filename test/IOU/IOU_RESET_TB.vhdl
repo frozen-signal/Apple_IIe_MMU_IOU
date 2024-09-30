@@ -5,7 +5,7 @@ entity IOU_RESET_TB is
     -- empty
 end IOU_RESET_TB;
 
-architecture IOU_RESET_TEST of IOU_RESET_TB is
+architecture TESTBENCH of IOU_RESET_TB is
     component IOU_RESET is
         port (
             PHI_1 : in std_logic;
@@ -59,4 +59,4 @@ begin
         wait;
 
     end process;
-end IOU_RESET_TEST;
+end TESTBENCH;

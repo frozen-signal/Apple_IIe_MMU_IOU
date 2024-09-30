@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_RA_TB is
     -- empty
 end MMU_RA_TB;
-architecture MMU_RA_TEST of MMU_RA_TB is
+architecture TESTBENCH of MMU_RA_TB is
     component MMU_RA is
         port (
             A       : in std_logic_vector(15 downto 0);
@@ -110,4 +110,4 @@ begin
         wait;
 
     end process;
-end MMU_RA_TEST;
+end TESTBENCH;

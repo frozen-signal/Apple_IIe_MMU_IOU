@@ -7,7 +7,7 @@ entity MMU_TB_RA_STATE is
     -- empty
 end MMU_TB_RA_STATE;
 
-architecture MMU_TEST_RA_STATE of MMU_TB_RA_STATE is
+architecture TESTBENCH of MMU_TB_RA_STATE is
     component HAL_TIMING_MOCK is
         port (
             FINISHED : in std_logic;
@@ -116,4 +116,4 @@ begin
         wait;
 
     end process;
-end MMU_TEST_RA_STATE;
+end TESTBENCH;

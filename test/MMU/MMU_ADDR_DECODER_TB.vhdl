@@ -5,7 +5,7 @@ entity MMU_ADDR_DECODER_TB is
     -- empty
 end MMU_ADDR_DECODER_TB;
 
-architecture MMU_ADDR_DECODER_TEST of MMU_ADDR_DECODER_TB is
+architecture TESTBENCH of MMU_ADDR_DECODER_TB is
     component MMU_ADDR_DECODER is
         port (
             A     : in std_logic_vector(15 downto 0);
@@ -353,4 +353,4 @@ begin
         wait;
 
     end process;
-end MMU_ADDR_DECODER_TEST;
+end TESTBENCH;

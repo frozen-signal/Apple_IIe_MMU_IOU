@@ -8,7 +8,7 @@ entity MMU_TB_RA_ADDR is
     -- empty
 end MMU_TB_RA_ADDR;
 
-architecture MMU_TEST_RA_ADDR of MMU_TB_RA_ADDR is
+architecture TESTBENCH of MMU_TB_RA_ADDR is
     component HAL_TIMING_MOCK is
         port (
             FINISHED : in std_logic;
@@ -281,4 +281,4 @@ begin
         wait;
 
     end process;
-end MMU_TEST_RA_ADDR;
+end TESTBENCH;

@@ -5,7 +5,7 @@ entity MMU_CXXXOUT_TB is
     -- empty
 end MMU_CXXXOUT_TB;
 
-architecture MMU_CXXXOUT_TEST of MMU_CXXXOUT_TB is
+architecture TESTBENCH of MMU_CXXXOUT_TB is
     component MMU_CXXXOUT is
         port (
             CENROM1    : in std_logic;
@@ -72,4 +72,4 @@ begin
         wait;
 
     end process;
-end MMU_CXXXOUT_TEST;
+end TESTBENCH;

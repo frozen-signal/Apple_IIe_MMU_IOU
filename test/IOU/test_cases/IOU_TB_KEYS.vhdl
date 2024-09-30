@@ -3,7 +3,7 @@ library work;
 use work.all;
 
 configuration IOU_TB_KEYS of IOU_KEYS_ENTITY is
-    for IOU_KEYS
+    for TESTBENCH
         for c_iou : IOU
             use entity work.IOU(RTL);
             for RTL
@@ -38,7 +38,7 @@ entity IOU_KEYS_ENTITY is
     -- empty
 end IOU_KEYS_ENTITY;
 
-architecture IOU_KEYS of IOU_KEYS_ENTITY is
+architecture TESTBENCH of IOU_KEYS_ENTITY is
 
     component HAL_TIMING_MOCK is
         port (
@@ -204,6 +204,8 @@ begin
         wait until falling_edge(TB_FORCE_RESET_N_LOW);
         wait until falling_edge(TB_TC);
 
+        -- FIXME: do a proper test
+
         -- wait until falling_edge(PHI_0);
         -- wait until falling_edge(PHI_0);
 
@@ -215,27 +217,11 @@ begin
         -- IAKD <= '1';
         -- wait until falling_edge(PHI_0);
 
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
-
-        wait for 1000 ms;
+        -- wait for 1000 ms;
 
         FINISHED <= '1';
         assert false report "Test done." severity note;
         wait;
 
     end process;
-end IOU_KEYS;
+end TESTBENCH;

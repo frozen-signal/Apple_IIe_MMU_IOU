@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_SELMB_TB is
     -- empty
 end MMU_SELMB_TB;
-architecture MMU_SELMB_TEST of MMU_SELMB_TB is
+architecture TESTBENCH of MMU_SELMB_TB is
     component MMU_SELMB is
         port (
             S_00_1XX    : in std_logic;  -- HIGH when the ADDRESS at the MMU's input is between $0000 - $01FF ($0[0-1]XX)
@@ -174,4 +174,4 @@ begin
         wait;
 
     end process;
-end MMU_SELMB_TEST;
+end TESTBENCH;

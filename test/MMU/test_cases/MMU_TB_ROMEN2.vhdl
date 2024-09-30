@@ -10,7 +10,7 @@ entity MMU_TB_ROMEN2 is
     -- empty
 end MMU_TB_ROMEN2;
 
-architecture MMU_TEST_ROMEN2 of MMU_TB_ROMEN2 is
+architecture TESTBENCH of MMU_TB_ROMEN2 is
     component HAL_TIMING_MOCK is
         port (
             FINISHED : in std_logic;
@@ -239,4 +239,4 @@ begin
         wait;
 
     end process;
-end MMU_TEST_ROMEN2;
+end TESTBENCH;

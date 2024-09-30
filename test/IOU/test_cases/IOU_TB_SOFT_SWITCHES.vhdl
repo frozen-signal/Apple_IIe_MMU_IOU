@@ -3,7 +3,7 @@ library work;
 use work.all;
 
 configuration IOU_TB_SOFT_SWITCHES of IOU_TEST_SOFT_SWITCHES_ENTITY is
-    for IOU_TEST_SOFT_SWITCHES
+    for TESTBENCH
         for c_iou : IOU
             use entity work.IOU(RTL);
             for RTL
@@ -26,7 +26,7 @@ entity IOU_TEST_SOFT_SWITCHES_ENTITY is
     -- empty
 end IOU_TEST_SOFT_SWITCHES_ENTITY;
 
-architecture IOU_TEST_SOFT_SWITCHES of IOU_TEST_SOFT_SWITCHES_ENTITY is
+architecture TESTBENCH of IOU_TEST_SOFT_SWITCHES_ENTITY is
 
     component HAL_TIMING_MOCK is
         port (
@@ -483,4 +483,4 @@ begin
         wait;
 
     end process;
-end IOU_TEST_SOFT_SWITCHES;
+end TESTBENCH;

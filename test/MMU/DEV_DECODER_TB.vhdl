@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity DEV_DECODER_TB is
     -- empty
 end DEV_DECODER_TB;
-architecture DEV_DECODER_TEST of DEV_DECODER_TB is
+architecture TESTBENCH of DEV_DECODER_TB is
     component DEV_DECODER is
         port (
             A       : in std_logic_vector(15 downto 0);
@@ -182,4 +182,4 @@ begin
         wait;
 
     end process;
-end DEV_DECODER_TEST;
+end TESTBENCH;

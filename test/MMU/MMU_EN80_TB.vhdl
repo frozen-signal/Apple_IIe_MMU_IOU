@@ -5,7 +5,7 @@ entity MMU_EN80_TB is
     -- empty
 end MMU_EN80_TB;
 
-architecture MMU_EN80_TEST of MMU_EN80_TB is
+architecture TESTBENCH of MMU_EN80_TB is
     component MMU_EN80 is
         port (
             SELMB_N  : in std_logic;
@@ -69,4 +69,4 @@ begin
         wait;
 
     end process;
-end MMU_EN80_TEST;
+end TESTBENCH;

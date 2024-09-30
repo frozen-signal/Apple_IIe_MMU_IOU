@@ -3,7 +3,7 @@ library work;
 use work.all;
 
 configuration IOU_TB_SCANNER_MUX_TEXT of IOU_TB_SCANNER_MUX_TEXT_ENTITY is
-    for IOU_TB_SCANNER_MUX_TEXT
+    for TESTBENCH
         for c_iou : IOU
             use entity work.IOU(RTL);
             for RTL
@@ -39,7 +39,7 @@ entity IOU_TB_SCANNER_MUX_TEXT_ENTITY is
     -- empty
 end IOU_TB_SCANNER_MUX_TEXT_ENTITY;
 
-architecture IOU_TB_SCANNER_MUX_TEXT of IOU_TB_SCANNER_MUX_TEXT_ENTITY is
+architecture TESTBENCH of IOU_TB_SCANNER_MUX_TEXT_ENTITY is
 
     component HAL_TIMING_MOCK is
         port (
@@ -358,4 +358,4 @@ architecture IOU_TB_SCANNER_MUX_TEXT of IOU_TB_SCANNER_MUX_TEXT_ENTITY is
         wait;
 
     end process;
-end IOU_TB_SCANNER_MUX_TEXT;
+end TESTBENCH;

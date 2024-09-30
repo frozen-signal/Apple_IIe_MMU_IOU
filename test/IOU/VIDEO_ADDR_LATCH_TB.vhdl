@@ -1,12 +1,12 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity VIDEO_ADDR_LATCH_TB is
+entity IOU_ADDR_LATCH_TB is
     -- empty
-end VIDEO_ADDR_LATCH_TB;
+end IOU_ADDR_LATCH_TB;
 
-architecture VIDEO_ADDR_LATCH_TEST of VIDEO_ADDR_LATCH_TB is
-    component VIDEO_ADDR_LATCH is
+architecture TESTBENCH of IOU_ADDR_LATCH_TB is
+    component IOU_ADDR_LATCH is
         port (
             P_PHI_2 : in std_logic;
             RA0, RA1, RA2, RA3,
@@ -25,7 +25,7 @@ architecture VIDEO_ADDR_LATCH_TEST of VIDEO_ADDR_LATCH_TB is
     LA4, LA5, LA7 : std_logic;
 
 begin
-    dut : VIDEO_ADDR_LATCH port map(
+    dut : IOU_ADDR_LATCH port map(
         P_PHI_2 => P_PHI_2,
         RA0     => RA0,
         RA1     => RA1,
@@ -82,4 +82,4 @@ begin
         wait;
 
     end process;
-end VIDEO_ADDR_LATCH_TEST;
+end TESTBENCH;

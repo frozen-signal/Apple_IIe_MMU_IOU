@@ -5,7 +5,7 @@ entity LS138_TB is
     -- empty
 end LS138_TB;
 
-architecture LS138_TEST of LS138_TB is
+architecture TESTBENCH of LS138_TB is
     component LS138 is
         port (
             A, B, C          : in std_logic;
@@ -218,4 +218,4 @@ begin
         wait;
 
     end process;
-end LS138_TEST;
+end TESTBENCH;

@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity SOFT_SWITCHES_C00X_TB is
     -- empty
 end SOFT_SWITCHES_C00X_TB;
-architecture SOFT_SWITCHES_C00X_TEST of SOFT_SWITCHES_C00X_TB is
+architecture TESTBENCH of SOFT_SWITCHES_C00X_TB is
     component SOFT_SWITCHES_C00X is
         port (
             D           : in std_logic;
@@ -207,4 +207,4 @@ begin
         wait;
 
     end process;
-end SOFT_SWITCHES_C00X_TEST;
+end TESTBENCH;

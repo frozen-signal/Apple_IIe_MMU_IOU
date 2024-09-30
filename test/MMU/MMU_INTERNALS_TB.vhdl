@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_INTERNALS_TB is
     -- empty
 end MMU_INTERNALS_TB;
-architecture MMU_INTERNALS_TEST of MMU_INTERNALS_TB is
+architecture TESTBENCH of MMU_INTERNALS_TB is
     component MMU_INTERNALS is
         port (
             C8_FXX  : in std_logic;
@@ -185,4 +185,4 @@ begin
         wait;
 
     end process;
-end MMU_INTERNALS_TEST;
+end TESTBENCH;

@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_CASEN_TB is
     -- empty
 end MMU_CASEN_TB;
-architecture MMU_CASEN_TEST of MMU_CASEN_TB is
+architecture TESTBENCH of MMU_CASEN_TB is
     component MMU_CASEN is
         port (
             RDROM   : in std_logic;
@@ -189,4 +189,4 @@ begin
         wait;
 
     end process;
-end MMU_CASEN_TEST;
+end TESTBENCH;

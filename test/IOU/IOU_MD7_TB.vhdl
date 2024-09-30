@@ -5,7 +5,7 @@ entity IOU_MD7_TB is
     -- empty
 end IOU_MD7_TB;
 
-architecture IOU_MD7_TEST of IOU_MD7_TB is
+architecture TESTBENCH of IOU_MD7_TB is
     component IOU_MD7 is
         port (
             Q3       : in std_logic;
@@ -284,4 +284,4 @@ begin
         wait;
 
     end process;
-end IOU_MD7_TEST;
+end TESTBENCH;

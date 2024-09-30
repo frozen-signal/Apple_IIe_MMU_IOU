@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_MPON_TB is
     -- empty
 end MMU_MPON_TB;
-architecture MMU_MPON_TEST of MMU_MPON_TB is
+architecture TESTBENCH of MMU_MPON_TB is
     component MMU_MPON is
         port (
             A        : in std_logic_vector(15 downto 0);
@@ -96,4 +96,4 @@ begin
         wait;
 
     end process;
-end MMU_MPON_TEST;
+end TESTBENCH;

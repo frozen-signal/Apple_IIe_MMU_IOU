@@ -5,7 +5,7 @@ entity IOU_INTERNALS_TB is
     -- empty
 end IOU_INTERNALS_TB;
 
-architecture IOU_INTERNALS_TEST of IOU_INTERNALS_TB is
+architecture TESTBENCH of IOU_INTERNALS_TB is
     component IOU_INTERNALS is
         port (
             V0, V1, V2, V3, V4, V5 : in std_logic;
@@ -429,4 +429,4 @@ begin
         wait;
 
     end process;
-end IOU_INTERNALS_TEST;
+end TESTBENCH;

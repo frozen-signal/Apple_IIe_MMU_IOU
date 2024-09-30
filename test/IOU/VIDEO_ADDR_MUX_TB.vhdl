@@ -5,7 +5,7 @@ entity VIDEO_ADDR_MUX_TB is
     -- empty
 end VIDEO_ADDR_MUX_TB;
 
-architecture VIDEO_ADDR_MUX_TEST of VIDEO_ADDR_MUX_TB is
+architecture TESTBENCH of VIDEO_ADDR_MUX_TB is
     component VIDEO_ADDR_MUX is
         port (
             PHI_1          : in std_logic;
@@ -186,4 +186,4 @@ begin
         wait;
 
     end process;
-end VIDEO_ADDR_MUX_TEST;
+end TESTBENCH;

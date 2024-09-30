@@ -5,7 +5,7 @@ entity IOU_TIMINGS_TB is
     -- empty
 end IOU_TIMINGS_TB;
 
-architecture IOU_TIMINGS_TEST of IOU_TIMINGS_TB is
+architecture TESTBENCH of IOU_TIMINGS_TB is
     component IOU_TIMINGS is
         port (
             PHI_0   : in std_logic;
@@ -85,4 +85,4 @@ begin
         wait;
 
     end process;
-end IOU_TIMINGS_TEST;
+end TESTBENCH;

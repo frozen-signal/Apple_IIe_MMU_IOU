@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity COMMON_INTERNALS_TB is
     -- empty
 end COMMON_INTERNALS_TB;
-architecture COMMON_INTERNALS_TEST of COMMON_INTERNALS_TB is
+architecture TESTBENCH of COMMON_INTERNALS_TB is
     component COMMON_INTERNALS is
         port (
             R_W_N  : in std_logic;
@@ -114,4 +114,4 @@ begin
         wait;
 
     end process;
-end COMMON_INTERNALS_TEST;
+end TESTBENCH;

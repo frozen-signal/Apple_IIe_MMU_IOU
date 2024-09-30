@@ -5,7 +5,7 @@ entity VIDEO_SCANNER_TB is
     -- empty
 end VIDEO_SCANNER_TB;
 
-architecture VIDEO_SCANNER_TEST of VIDEO_SCANNER_TB is
+architecture TESTBENCH of VIDEO_SCANNER_TB is
     component VIDEO_SCANNER is
         port (
             POC_N   : in std_logic;
@@ -498,4 +498,4 @@ begin
         wait;
 
     end process;
-end VIDEO_SCANNER_TEST;
+end TESTBENCH;

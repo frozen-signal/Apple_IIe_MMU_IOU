@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use work.IOU_TESTBENCH_PACKAGE.all;
 
-entity VIDEO_ADDR_LATCH_SPY is
+entity IOU_ADDR_LATCH_SPY is
     port (
         P_PHI_2 : in std_logic;
         RA0, RA1, RA2, RA3,
@@ -11,10 +11,10 @@ entity VIDEO_ADDR_LATCH_SPY is
         LA0, LA1, LA2, LA3,
         LA4, LA5, LA7 : out std_logic
     );
-end VIDEO_ADDR_LATCH_SPY;
+end IOU_ADDR_LATCH_SPY;
 
-architecture SPY of VIDEO_ADDR_LATCH_SPY is
-    component VIDEO_ADDR_LATCH is
+architecture SPY of IOU_ADDR_LATCH_SPY is
+    component IOU_ADDR_LATCH is
         port (
             P_PHI_2 : in std_logic;
             RA0, RA1, RA2, RA3,
@@ -27,7 +27,7 @@ architecture SPY of VIDEO_ADDR_LATCH_SPY is
 
     signal LA0_INT, LA1_INT, LA2_INT, LA3_INT, LA4_INT, LA5_INT, LA7_INT : std_logic;
 begin
-    U_VIDEO_ADDR_LATCH : VIDEO_ADDR_LATCH port map(
+    U_IOU_ADDR_LATCH : IOU_ADDR_LATCH port map(
         P_PHI_2 => P_PHI_2,
         RA0     => RA0,
         RA1     => RA1,

@@ -5,7 +5,7 @@ entity RA_MUX_TB is
     -- empty
 end RA_MUX_TB;
 
-architecture RA_MUX_TEST of RA_MUX_TB is
+architecture TESTBENCH of RA_MUX_TB is
     component RA_MUX is
         port (
             PHI     : in std_logic;
@@ -183,4 +183,4 @@ begin
         wait;
 
     end process;
-end RA_MUX_TEST;
+end TESTBENCH;
