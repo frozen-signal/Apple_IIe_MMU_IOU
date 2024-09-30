@@ -1,6 +1,16 @@
 # Apple IIe MMU and IOU custom ICs
 
-This is a VHDL implementation of the Apple IIe's MMU and IOU custom ICs, based on the actual schematics that were used during the development of the Apple IIe.
+## Project Overview
+
+The Apple IIe’s IOU (Input/Output Unit) and MMU (Memory Management Unit) are two custom integrated circuits (ICs) that played a crucial role in the computer’s design. Developed by Apple in the early 1980s, these chips consolidated much of the system’s complex circuitry into single components. However, once Apple ceased production of the Apple IIe, the manufacture of these chips also stopped. For decades, the only way to replace a faulty IOU or MMU has been to scavenge them from other Apple IIe units—a diminishing resource.
+<br/>
+This project offers a modern solution: a VHDL-based reimplementation of the Apple IIe's IOU and MMU, faithfully based on original Apple schematics. The goal is to preserve the technology behind these essential ICs and provide the means to create replacement adapters, ensuring that damaged chips no longer spell the end for an Apple IIe.
+
+## Important Notice
+
+This project is code-only and does not include any hardware designs such as Gerber files or a Bill of Materials (BOM) for building physical adapters. If you're looking to integrate this into an Apple IIe, you'll need to design your own hardware or find third-party solutions that suit your needs.
+<br/>
+On the other hand, [ReActiveMicro](https://www.reactivemicro.com/) is currently designing and manufacturing a replacement adapter based on this project, and should be available relatively soon.
 
 ## Project status
 The prototype of the IOU has been tested and is functionnal. There currently no known issue with the MMU or the IOU. More testing is needed, as well as code cleaning and more commenting. Also maybe an effort to bring the signals timings closer to the ASICs<br/>
@@ -9,8 +19,7 @@ The prototype of the IOU has been tested and is functionnal. There currently no 
 )<br/>
 ![MMU](https://img.shields.io/github/issues-search?query=repo%3Afrozen-signal%2FApple_IIe_MMU_IOU%20is%3Aopen%20label%3Abug%20label%3AMMU&label=MMU%20Issues
 )<br/>
-![Tested](https://img.shields.io/badge/Tested-Tested_but_not_thoroughly-yellow)<br/>
-![Documentation](https://img.shields.io/badge/Documentation-Some_but_no_pretty_pics-yellow)<br/>
+![Tests](https://img.shields.io/badge/Tests-Thoroughly_tested-green)<br/>
 
 ## Tested Hardware
 The implementation has been tested with these hardware components:
