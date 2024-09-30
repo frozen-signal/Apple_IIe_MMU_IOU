@@ -24,7 +24,7 @@ entity COMMON_INTERNALS is
 
         RC01X_N   : out std_logic;
         P_PHI_0   : out std_logic; -- Phase-shifted PHI_0; this is the same length as PHI_0, but rises on the falling edge of Q3 during PHI_1
-        P_PHI_1   : out std_logic; -- Same as P_PHI_0 but PHI_0 and PHI_1 reversed (FIXME: Seems unused)
+        P_PHI_1   : out std_logic; -- Note: Unused but kept this signal to stay close to the schematics.
         Q3_PRAS_N : out std_logic
     );
 end COMMON_INTERNALS;

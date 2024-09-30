@@ -20,6 +20,7 @@ entity MMU_EN80 is
         INH_N    : in std_logic;
         PHI_0    : in std_logic;
         PCASEN_N : in std_logic;
+        MPON_N   : in std_logic;
 
         EN80_N : out std_logic
     );
@@ -28,9 +29,12 @@ end MMU_EN80;
 architecture RTL of MMU_EN80 is
 begin
     -- MMU_2 @C1:C2-11
-    -- NOTE: According to the ASIC schematic, EN80_N should be held low during MPON_N. Not done because I don't know how this can make sense.
-    -- FIXME: Check what the ASIC does and do the same here.
-    EN80_N <= PHI_0                            -- C2-11
-        nand (INH_N                            -- J3-6
-            and (PCASEN_N nor (not SELMB_N))); -- L3-10
+    -- NOTE: According to the ASIC schematic, EN80_N should be held HIGH during MPON_N.
+    -- FIXME: Test with MPON_N
+    EN80_N <= (not MPON_N)                      -- From the ASIC schematic
+        or (PHI_0                               -- C2-11
+        nand (INH_N                             -- J3-6
+            and (PCASEN_N nor (not SELMB_N)))); -- L3-10
+
+
 end RTL;

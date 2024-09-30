@@ -22,6 +22,9 @@ configuration IOU_TB_KEYS of IOU_KEYS_ENTITY is
                 for U_IOU_RESET : IOU_RESET
                     use entity IOU_RESET_SPY(SPY);
                 end for;
+                for U_IOU_KEYBOARD : IOU_KEYBOARD
+                    use entity IOU_KEYBOARD_SPY(SPY);
+                end for;
             end for;
         end for;
     end for;
@@ -117,10 +120,11 @@ architecture TESTBENCH of IOU_KEYS_ENTITY is
     signal DEBUG    : std_logic;
 
     signal R_W_N, C0XX_N, VID6, VID7, A6, IKSTRB, IAKD, RESET_N,
-    ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, ORA7, H0, SEGA, SEGB, SEGC, LGR_TXT_N,
-    MD7, SPKR, CASSO, AN0, AN1, AN2, AN3, S_80COL_N, RA9_N, RA10_N, CLRGAT_N, SYNC_N, WNDW_N : std_logic;
+        ORA6, ORA5, ORA4, ORA3, ORA2, ORA1, ORA0, ORA7, H0, SEGA, SEGB, SEGC, LGR_TXT_N,
+        MD7, SPKR, CASSO, AN0, AN1, AN2, AN3, S_80COL_N, RA9_N, RA10_N, CLRGAT_N, SYNC_N, WNDW_N : std_logic;
     signal TEST_ORA0, TEST_ORA1, TEST_ORA2, TEST_ORA3, TEST_ORA4,
-    TEST_ORA5, TEST_ORA6, TEST_ORA7 : std_logic;
+        TEST_ORA5, TEST_ORA6, TEST_ORA7 : std_logic;
+
 begin
     hal_mock : HAL_TIMING_MOCK port map(
         FINISHED => FINISHED,
@@ -192,7 +196,9 @@ begin
         WNDW_N      => WNDW_N
     );
 
-    process begin
+    process
+        variable v_TIME_BEGIN : time;
+    begin
         IKSTRB <= '0';
         IAKD <= '0';
 
@@ -204,20 +210,27 @@ begin
         wait until falling_edge(TB_FORCE_RESET_N_LOW);
         wait until falling_edge(TB_TC);
 
-        -- FIXME: do a proper test
+        wait until falling_edge(PHI_0);
+        wait until falling_edge(PHI_0);
 
-        -- wait until falling_edge(PHI_0);
-        -- wait until falling_edge(PHI_0);
+        IKSTRB <= '1';
+        IAKD <= '1';
+        wait until falling_edge(PHI_0);
 
-        -- IKSTRB <= '1';
-        -- IAKD <= '1';
-        -- wait until falling_edge(PHI_0);
+        IKSTRB <= '0';
+        IAKD <= '1';
+        wait until rising_edge(PRAS_N);
+        assert(TB_KEYLE = '0') report "TB_KEYLE should be LOW" severity error;
+        wait for 1 ns;
+        assert(TB_KEYLE = '1') report "TB_KEYLE should be HIGH" severity error;
+        v_TIME_BEGIN := now;
 
-        -- IKSTRB <= '0';
-        -- IAKD <= '1';
-        -- wait until falling_edge(PHI_0);
+        wait until rising_edge(TB_KEYLE);
+        assert((now - v_TIME_BEGIN) >= 500 us and (now - v_TIME_BEGIN) >= 833 us) report "The delay before autorepeat turns on seems incorrect, please check." severity error;
+        v_TIME_BEGIN := now;
 
-        -- wait for 1000 ms;
+        wait until rising_edge(TB_KEYLE);
+        assert((now - v_TIME_BEGIN) >= 66.6 us and (now - v_TIME_BEGIN) >= 66.7 us) report "The autorepeat frequency seems incorrect, please check." severity error;
 
         FINISHED <= '1';
         assert false report "Test done." severity note;

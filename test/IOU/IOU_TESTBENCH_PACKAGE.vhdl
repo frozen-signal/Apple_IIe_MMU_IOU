@@ -18,4 +18,6 @@ package IOU_TESTBENCH_PACKAGE is
        signal TB_VC, TB_VB, TB_VA                                : std_logic;
        signal TB_HPE_N, TB_H5, TB_H4, TB_H3, TB_H2, TB_H1, TB_H0 : std_logic;
 
+       signal TB_KEYLE : std_logic;
+
 end package IOU_TESTBENCH_PACKAGE;

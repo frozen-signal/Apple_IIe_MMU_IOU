@@ -299,6 +299,7 @@ architecture RTL of MMU is
             INH_N    : in std_logic;
             PHI_0    : in std_logic;
             PCASEN_N : in std_logic;
+            MPON_N   : in std_logic;
 
             EN80_N : out std_logic
         );
@@ -584,6 +585,7 @@ begin
         INH_N    => INH_N,
         PHI_0    => D_PHI_0,
         PCASEN_N => PCASEN_N,
+        MPON_N => MPON_N,
         EN80_N   => EN80_N
     );
 

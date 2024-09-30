@@ -15,7 +15,6 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
--- FIXME: Should be renamed; these latched adresses are not related the video signals. IOU_ADDR_LATCH maybe?
 entity IOU_ADDR_LATCH is
     port (
         P_PHI_2 : in std_logic;
