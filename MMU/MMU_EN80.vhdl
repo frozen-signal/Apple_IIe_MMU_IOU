@@ -30,7 +30,6 @@ architecture RTL of MMU_EN80 is
 begin
     -- MMU_2 @C1:C2-11
     -- NOTE: According to the ASIC schematic, EN80_N should be held HIGH during MPON_N.
-    -- FIXME: Test with MPON_N
     EN80_N <= (not MPON_N)                      -- From the ASIC schematic
         or (PHI_0                               -- C2-11
         nand (INH_N                             -- J3-6
