@@ -5,7 +5,7 @@ entity LATCH_9334_TB is
     -- empty
 end LATCH_9334_TB;
 
-architecture LATCH_9334_TEST of LATCH_9334_TB is
+architecture TESTBENCH of LATCH_9334_TB is
     component LATCH_9334 is
         port (
             C_N : in std_logic;
@@ -173,4 +173,4 @@ begin
         wait;
 
     end process;
-end LATCH_9334_TEST;
+end TESTBENCH;

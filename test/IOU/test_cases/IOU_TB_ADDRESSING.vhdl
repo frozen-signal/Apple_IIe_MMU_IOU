@@ -3,12 +3,12 @@ library work;
 use work.all;
 
 configuration IOU_TB_ADDRESSING of IOU_TEST_ADDRESSING_ENTITY is
-    for IOU_TEST_ADDRESSING
+    for TESTBENCH
         for c_iou : IOU
             use entity work.IOU(RTL);
             for RTL
-                for U_VIDEO_ADDR_LATCH : VIDEO_ADDR_LATCH
-                    use entity VIDEO_ADDR_LATCH_SPY(SPY);
+                for U_IOU_ADDR_LATCH : IOU_ADDR_LATCH
+                    use entity IOU_ADDR_LATCH_SPY(SPY);
                 end for;
                 for U_IOU_ADDR_DECODER : IOU_ADDR_DECODER
                     use entity IOU_ADDR_DECODER_SPY(SPY);
@@ -35,7 +35,7 @@ entity IOU_TEST_ADDRESSING_ENTITY is
     -- empty
 end IOU_TEST_ADDRESSING_ENTITY;
 
-architecture IOU_TEST_ADDRESSING of IOU_TEST_ADDRESSING_ENTITY is
+architecture TESTBENCH of IOU_TEST_ADDRESSING_ENTITY is
 
     component HAL_TIMING_MOCK is
         port (
@@ -575,4 +575,4 @@ begin
         wait;
 
     end process;
-end IOU_TEST_ADDRESSING;
+end TESTBENCH;

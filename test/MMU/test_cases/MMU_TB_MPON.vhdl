@@ -7,7 +7,7 @@ entity MMU_TB_MPON is
     -- empty
 end MMU_TB_MPON;
 
-architecture MMU_TEST_MPON of MMU_TB_MPON is
+architecture TESTBENCH of MMU_TB_MPON is
     component HAL_TIMING_MOCK is
         port (
             FINISHED : in std_logic;
@@ -169,4 +169,4 @@ begin
         wait;
 
     end process;
-end MMU_TEST_MPON;
+end TESTBENCH;

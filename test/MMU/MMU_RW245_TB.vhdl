@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_RW245_TB is
     -- empty
 end MMU_RW245_TB;
-architecture MMU_RW245_TEST of MMU_RW245_TB is
+architecture TESTBENCH of MMU_RW245_TB is
     component MMU_RW245 is
         port (
             INTIO_N   : in std_logic;
@@ -108,4 +108,4 @@ begin
         wait;
 
     end process;
-end MMU_RW245_TEST;
+end TESTBENCH;

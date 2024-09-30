@@ -3,7 +3,7 @@ library work;
 use work.all;
 
 configuration IOU_TB_TIMINGS of IOU_TEST_TIMINGS_ENTITY is
-    for IOU_TEST_TIMINGS
+    for TESTBENCH
         for c_iou : IOU
             use entity work.IOU(RTL);
             for RTL
@@ -38,7 +38,7 @@ entity IOU_TEST_TIMINGS_ENTITY is
     -- empty
 end IOU_TEST_TIMINGS_ENTITY;
 
-architecture IOU_TEST_TIMINGS of IOU_TEST_TIMINGS_ENTITY is
+architecture TESTBENCH of IOU_TEST_TIMINGS_ENTITY is
 
     component HAL_TIMING_MOCK is
         port (
@@ -223,4 +223,4 @@ begin
         wait;
 
     end process;
-end IOU_TEST_TIMINGS;
+end TESTBENCH;

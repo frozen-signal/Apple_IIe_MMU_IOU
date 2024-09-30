@@ -5,7 +5,7 @@ entity VIDEO_GENERATOR_TB is
     -- empty
 end VIDEO_GENERATOR_TB;
 
-architecture VIDEO_GENERATOR_TEST of VIDEO_GENERATOR_TB is
+architecture TESTBENCH of VIDEO_GENERATOR_TB is
     component VIDEO_GENERATOR is
         port (
             PHI_0      : in std_logic;
@@ -568,4 +568,4 @@ begin
         wait;
 
     end process;
-end VIDEO_GENERATOR_TEST;
+end TESTBENCH;

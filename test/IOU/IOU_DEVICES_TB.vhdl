@@ -5,7 +5,7 @@ entity IOU_DEVICES_TB is
     -- empty
 end IOU_DEVICES_TB;
 
-architecture IOU_DEVICES_TEST of IOU_DEVICES_TB is
+architecture TESTBENCH of IOU_DEVICES_TB is
     component IOU_DEVICES is
         port (
             POC_N  : in std_logic;
@@ -79,4 +79,4 @@ begin
         wait;
 
     end process;
-end IOU_DEVICES_TEST;
+end TESTBENCH;

@@ -5,7 +5,7 @@ entity IOU_ADDR_DECODER_TB is
     -- empty
 end IOU_ADDR_DECODER_TB;
 
-architecture IOU_ADDR_DECODER_TEST of IOU_ADDR_DECODER_TB is
+architecture TESTBENCH of IOU_ADDR_DECODER_TB is
     component IOU_ADDR_DECODER is
         port (
             C0XX_N : in std_logic;
@@ -222,4 +222,4 @@ begin
         wait;
 
     end process;
-end IOU_ADDR_DECODER_TEST;
+end TESTBENCH;

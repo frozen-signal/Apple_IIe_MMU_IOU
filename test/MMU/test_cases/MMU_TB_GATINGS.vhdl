@@ -8,7 +8,7 @@ entity MMU_TB_GATINGS is
     -- empty
 end MMU_TB_GATINGS;
 
-architecture MMU_TEST_GATINGS of MMU_TB_GATINGS is
+architecture TESTBENCH of MMU_TB_GATINGS is
     component HAL_TIMING_MOCK is
         port (
             FINISHED : in std_logic;
@@ -810,4 +810,4 @@ begin
         wait;
 
     end process;
-end MMU_TEST_GATINGS;
+end TESTBENCH;

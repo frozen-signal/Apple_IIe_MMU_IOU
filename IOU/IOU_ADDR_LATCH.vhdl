@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- File: VIDEO_ADDR_LATCH.vhdl
+-- File: IOU_ADDR_LATCH.vhdl
 -- Description: An entity that latches the address on the RA bus during PHASE 0
 --              and stays unchanged during PHASE 1 (when the RA bus has the
 --              display address)
@@ -15,8 +15,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
--- FIXME: Should be renamed; these latched adresses are not related the video signals. IOU_ADDR_LATCH maybe?
-entity VIDEO_ADDR_LATCH is
+entity IOU_ADDR_LATCH is
     port (
         P_PHI_2 : in std_logic;
         RA0, RA1, RA2, RA3,
@@ -25,9 +24,9 @@ entity VIDEO_ADDR_LATCH is
         LA0, LA1, LA2, LA3,
         LA4, LA5, LA7 : out std_logic
     );
-end VIDEO_ADDR_LATCH;
+end IOU_ADDR_LATCH;
 
-architecture RTL of VIDEO_ADDR_LATCH is
+architecture RTL of IOU_ADDR_LATCH is
 begin
     -- IOU_1 @C-3:F5
     process (P_PHI_2, RA0, RA1, RA2, RA3, RA4, RA5, RA6)

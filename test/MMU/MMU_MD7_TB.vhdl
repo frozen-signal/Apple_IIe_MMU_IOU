@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_MD7_TB is
     -- empty
 end MMU_MD7_TB;
-architecture MMU_MD7_TEST of MMU_MD7_TB is
+architecture TESTBENCH of MMU_MD7_TB is
     component MMU_MD7 is
         port (
             RC01X_N   : in std_logic;
@@ -215,4 +215,4 @@ begin
         wait;
 
     end process;
-end MMU_MD7_TEST;
+end TESTBENCH;

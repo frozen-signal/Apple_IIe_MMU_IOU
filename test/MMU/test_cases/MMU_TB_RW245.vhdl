@@ -7,7 +7,7 @@ entity MMU_TB_RW245 is
     -- empty
 end MMU_TB_RW245;
 
-architecture MMU_TEST_RW245 of MMU_TB_RW245 is
+architecture TESTBENCH of MMU_TB_RW245 is
     component HAL_TIMING_MOCK is
         port (
             FINISHED : in std_logic;
@@ -199,4 +199,4 @@ begin
         wait;
 
     end process;
-end MMU_TEST_RW245;
+end TESTBENCH;

@@ -267,7 +267,7 @@ architecture RTL of IOU is
         );
     end component;
 
-    component VIDEO_ADDR_LATCH is
+    component IOU_ADDR_LATCH is
         port (
             P_PHI_2 : in std_logic;
             RA0, RA1, RA2, RA3,
@@ -525,7 +525,7 @@ begin
         RA10_N    => RA10_N
     );
 
-    U_VIDEO_ADDR_LATCH : VIDEO_ADDR_LATCH port map(
+    U_IOU_ADDR_LATCH : IOU_ADDR_LATCH port map(
         P_PHI_2 => P_PHI_2,
         RA0     => ORA0,
         RA1     => ORA1,

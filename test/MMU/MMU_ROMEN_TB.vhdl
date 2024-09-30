@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity MMU_ROMEN_TB is
     -- empty
 end MMU_ROMEN_TB;
-architecture MMU_ROMEN_TEST of MMU_ROMEN_TB is
+architecture TESTBENCH of MMU_ROMEN_TB is
     component MMU_ROMEN is
         port (
             D_PHI_0    : in std_logic;
@@ -139,4 +139,4 @@ begin
         wait;
 
     end process;
-end MMU_ROMEN_TEST;
+end TESTBENCH;

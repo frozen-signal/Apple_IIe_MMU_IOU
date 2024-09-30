@@ -3,7 +3,7 @@ library work;
 use work.all;
 
 configuration IOU_TB_SCANNER_VERTICAL_NTSC of IOU_TB_SCANNER_VERTICAL_NTSC_ENTITY is
-    for IOU_TB_SCANNER_VERTICAL_NTSC
+    for TESTBENCH
         for c_iou : IOU
             use entity work.IOU(RTL);
             for RTL
@@ -39,7 +39,7 @@ entity IOU_TB_SCANNER_VERTICAL_NTSC_ENTITY is
     -- empty
 end IOU_TB_SCANNER_VERTICAL_NTSC_ENTITY;
 
-architecture IOU_TB_SCANNER_VERTICAL_NTSC of IOU_TB_SCANNER_VERTICAL_NTSC_ENTITY is
+architecture TESTBENCH of IOU_TB_SCANNER_VERTICAL_NTSC_ENTITY is
 
     component HAL_TIMING_MOCK is
         port (
@@ -271,4 +271,4 @@ begin
         wait;
 
     end process;
-end IOU_TB_SCANNER_VERTICAL_NTSC;
+end TESTBENCH;

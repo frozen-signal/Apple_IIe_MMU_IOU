@@ -18,7 +18,7 @@ ALL_ENTITIES = $(shell $(COMPILER) --dir $(GHDL_FLAGS) | grep -e ^entity -e ^con
 TEST_ENTITIES = $(shell $(COMPILER) --dir $(GHDL_FLAGS) | grep -e ^entity -e ^configuration | grep -v _entity | grep _tb | sed -e "s/entity //g"  | sed -e "s/configuration //g")
 
 define make-entity
-	@echo Making $(1)
+	@echo Building $(1)
 	@$(COMPILER) -m $(GHDL_FLAGS) $(1)
 
 endef

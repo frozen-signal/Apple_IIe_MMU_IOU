@@ -3,7 +3,7 @@ library work;
 use work.all;
 
 configuration IOU_MMU_CONTENTION_TB of IOU_MMU_CONTENTION_ENTITY is
-    for IOU_MMU_CONTENTION_TB
+    for TESTBENCH
         for c_iou : IOU
             use entity work.IOU(RTL);
             for RTL
@@ -29,7 +29,7 @@ entity IOU_MMU_CONTENTION_ENTITY is
     -- empty
 end IOU_MMU_CONTENTION_ENTITY;
 
-architecture IOU_MMU_CONTENTION_TB of IOU_MMU_CONTENTION_ENTITY is
+architecture TESTBENCH of IOU_MMU_CONTENTION_ENTITY is
 
     component HAL_TIMING_MOCK is
         port (
@@ -211,4 +211,4 @@ begin
         wait;
 
     end process;
-end IOU_MMU_CONTENTION_TB;
+end TESTBENCH;

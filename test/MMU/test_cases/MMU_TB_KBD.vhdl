@@ -8,7 +8,7 @@ entity MMU_TB_KBD is
     -- empty
 end MMU_TB_KBD;
 
-architecture MMU_TEST_KBD of MMU_TB_KBD is
+architecture TESTBENCH of MMU_TB_KBD is
     component HAL_TIMING_MOCK is
         port (
             FINISHED : in std_logic;
@@ -231,4 +231,4 @@ begin
         wait;
 
     end process;
-end MMU_TEST_KBD;
+end TESTBENCH;

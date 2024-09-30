@@ -5,7 +5,7 @@ entity IOU_KEYBOARD_TB is
     -- empty
 end IOU_KEYBOARD_TB;
 
-architecture IOU_KEYBOARD_TEST of IOU_KEYBOARD_TB is
+architecture TESTBENCH of IOU_KEYBOARD_TB is
     component IOU_KEYBOARD is
         port (
             PHI_0              : in std_logic;
@@ -322,4 +322,4 @@ begin
         wait;
 
     end process;
-end IOU_KEYBOARD_TEST;
+end TESTBENCH;

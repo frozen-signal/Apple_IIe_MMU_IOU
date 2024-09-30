@@ -5,7 +5,7 @@ entity POWER_ON_DETECTION_TB is
     -- empty
 end POWER_ON_DETECTION_TB;
 
-architecture POWER_ON_DETECTION_TEST of POWER_ON_DETECTION_TB is
+architecture TESTBENCH of POWER_ON_DETECTION_TB is
     component POWER_ON_DETECTION is
         port (
             PHI_0 : in std_logic;
@@ -48,4 +48,4 @@ begin
         wait;
 
     end process;
-end POWER_ON_DETECTION_TEST;
+end TESTBENCH;

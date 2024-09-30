@@ -5,7 +5,7 @@ entity VIDEO_GRAPHICS_TB is
     -- empty
 end VIDEO_GRAPHICS_TB;
 
-architecture VIDEO_GRAPHICS_TEST of VIDEO_GRAPHICS_TB is
+architecture TESTBENCH of VIDEO_GRAPHICS_TB is
     component VIDEO_GRAPHICS is
         port (
             PHI_0      : in std_logic;
@@ -184,4 +184,4 @@ begin
         wait;
 
     end process;
-end VIDEO_GRAPHICS_TEST;
+end TESTBENCH;
