@@ -31,7 +31,6 @@ The implementation has been tested with these hardware components:
   - Synertek 6502 (unenhanced ROMs)
   - Rockwell 6502 (unenhanced ROMs)
   - 65C02 (enhanced ROMs)
-  - A recent WDC65C02 (with pins mod) (enhanced ROMs)
 - AUX Cards:
   - RAMWORKS III aux card
   - 80-Col Expansion card (820-0067-B)
