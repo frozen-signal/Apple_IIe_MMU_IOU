@@ -104,7 +104,7 @@ The pinout of the MMU:
 
 ### 5V or 3.3V device
 
-The Apple IIe is a 5V computer, so using a 5V FPGA or CPLD would be easiest. However, if you choose to use a 3.3V device, you'll need additional circuits for voltage level translation. More information on 3.3V device design can be found in [Building a 3.3V adapter](/Documentation/Building_an_Adapter/readme.md#building-a-33v-adapter).
+The Apple IIe is a 5V computer, so using a 5V FPGA or CPLD would be easiest. However, if you choose to use a 3.3V device, you'll need additional circuits for voltage level translation. More information on 3.3V device design can be found in [Building a 3.3V adapter](/Documentation/building-an-adapter.md#building-a-33v-adapter).
 
 ### Number of GPIOs
 
