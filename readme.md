@@ -13,7 +13,7 @@ This project is code-only and does not include any hardware designs such as Gerb
 On the other hand, [ReActiveMicro](https://www.reactivemicro.com/) is currently designing and manufacturing a replacement adapter based on this project, and should be available relatively soon.
 
 ## Project status
-The prototype of the IOU has been tested and is functionnal. There currently no known issue with the MMU or the IOU. More testing is needed, as well as code cleaning and more commenting. Also maybe an effort to bring the signals timings closer to the ASICs<br/>
+The IOU and MMU has been thoroughly tested and is functionnal.
 <br/>
 ![IOU](https://img.shields.io/github/issues-search?query=repo%3Afrozen-signal%2FApple_IIe_MMU_IOU%20is%3Aopen%20label%3Abug%20label%3AIOU&label=IOU%20Issues
 )<br/>
