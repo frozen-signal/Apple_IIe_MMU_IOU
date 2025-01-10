@@ -16,6 +16,7 @@ use IEEE.std_logic_1164.all;
 
 entity MMU_RA is
     port (
+        DELAY_CLK : in std_logic;
         A       : in std_logic_vector(15 downto 0);
         PHI_0   : in std_logic;
         PRAS_N  : in std_logic;
@@ -31,6 +32,7 @@ end MMU_RA;
 architecture RTL of MMU_RA is
     component RA_MUX is
         port (
+            DELAY_CLK : in std_logic;
             PHI     : in std_logic;
             PRAS_N  : in std_logic;
             Q3      : in std_logic;
@@ -50,9 +52,10 @@ begin
     -- MMU_2 @C-4:H4-6
     MA12 <= ((not DXXX_N) and BANK1) xor A(12);
     MMU_RA_MUX : RA_MUX port map(
-        PHI    => PHI_0,
-        PRAS_N => PRAS_N,
-        Q3     => Q3,
+        DELAY_CLK => DELAY_CLK,
+        PHI       => PHI_0,
+        PRAS_N    => PRAS_N,
+        Q3        => Q3,
 
         -- MMU_1 @ @C-4:E5 and D5
         ROW_RA0 => A(0),

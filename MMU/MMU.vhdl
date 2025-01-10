@@ -37,9 +37,16 @@ entity MMU is
 end MMU;
 
 architecture RTL of MMU is
+    component DELAY_OSCILLATOR is
+        port (
+            DELAY_CLK : out std_logic
+        );
+    end component;
+
     component MMU_HOLD_TIME is
         port (
-            PHI_0 : in std_logic;
+            DELAY_CLK : in std_logic;
+            PHI_0     : in std_logic;
 
             D_PHI_0 : out std_logic
         );
@@ -317,18 +324,20 @@ architecture RTL of MMU is
 
     component MMU_RA is
         port (
-            A       : in std_logic_vector(15 downto 0);
-            PHI_0   : in std_logic;
-            PRAS_N  : in std_logic;
-            Q3      : in std_logic;
-            DXXX_N  : in std_logic;
-            BANK1   : in std_logic;
+            DELAY_CLK : in std_logic;
+            A         : in std_logic_vector(15 downto 0);
+            PHI_0     : in std_logic;
+            PRAS_N    : in std_logic;
+            Q3        : in std_logic;
+            DXXX_N    : in std_logic;
+            BANK1     : in std_logic;
 
             RA          : out std_logic_vector(7 downto 0);
             RA_ENABLE_N : out std_logic
         );
     end component;
 
+    signal DELAY_CLK  : std_logic;
     signal D_PHI_0 : std_logic;  -- Delayed PHI_0
     signal PHI_1, INH                                                                            : std_logic;
     signal CXXX_FXXX, FXXX_N, EXXX_N, DXXX_N, CXXX, C8_FXX, C8_FXX_N, C0_7XX_N, E_FXXX_N, D_FXXX : std_logic;
@@ -354,9 +363,14 @@ begin
     PHI_1 <= not PHI_0;
     INH   <= not INH_N;
 
+    U_DELAY_OSCILLATOR : DELAY_OSCILLATOR port map (
+        DELAY_CLK => DELAY_CLK
+    );
+
     U_MMU_HOLD_TIME : MMU_HOLD_TIME port map(
-        PHI_0   => PHI_0,
-        D_PHI_0 => D_PHI_0
+        DELAY_CLK => DELAY_CLK,
+        PHI_0     => PHI_0,
+        D_PHI_0   => D_PHI_0
     );
 
     U_ADDR_DECODER : MMU_ADDR_DECODER port map(
@@ -597,12 +611,13 @@ begin
     );
 
     U_MMU_RA : MMU_RA port map(
-        A       => A,
-        PHI_0   => PHI_0,
-        Q3      => Q3,
-        PRAS_N  => PRAS_N,
-        DXXX_N  => DXXX_N,
-        BANK1   => BANK1,
+        DELAY_CLK => DELAY_CLK,
+        A         => A,
+        PHI_0     => PHI_0,
+        Q3        => Q3,
+        PRAS_N    => PRAS_N,
+        DXXX_N    => DXXX_N,
+        BANK1     => BANK1,
 
         RA          => UNGATED_RA,
         RA_ENABLE_N => RA_ENABLE_N

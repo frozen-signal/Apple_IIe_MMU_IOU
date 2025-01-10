@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- File: MMU_HOLD_TIME.vhdl
+-- File: LATTICE_iCE40/MMU_HOLD_TIME.vhdl
 -- Description: An entity that uses Lattice's SB_HFOSC IP to add the hold times. Only to be used with Lattice iCE40 FPGAs that supports the SB_HFOSC primitive.
 -- Author: frozen-signal
 -- Project: Apple_IIe_MMU_IOU
@@ -20,7 +20,8 @@ use ieee.numeric_std.all;
 --         See https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/CUSTOM/MMU_HOLD_TIME/readme.md
 entity MMU_HOLD_TIME is
     port (
-        PHI_0 : in std_logic;
+        DELAY_CLK : in std_logic;
+        PHI_0     : in std_logic;
 
         D_PHI_0 : out std_logic
     );
@@ -29,26 +30,8 @@ end MMU_HOLD_TIME;
 architecture RTL of MMU_HOLD_TIME is
     constant DELAY_NUM_CLK_TICKS : positive := 2; -- FIXME: Adjust so that the delay is no less that 40ns, and ideally close to 50ns
 
-    component SB_HFOSC
-        generic (CLKHF_DIV : string := "0b00");
-        port (
-                CLKHFEN : in std_logic ;
-                CLKHFPU : in std_logic;
-                CLKHF : out std_logic
-            );
-    end component;
-
-    signal DELAY_CLK : std_logic;
     signal SHIFT_REGISTER : unsigned((DELAY_NUM_CLK_TICKS-1) downto 0) := (others => '0');
 begin
-    U_SB_HFOSC : SB_HFOSC
-    generic map (CLKHF_DIV => "0b00")
-    port map (
-        CLKHFEN  => '1',
-        CLKHFPU  => '1',
-        CLKHF    => DELAY_CLK
-    );
-
     process (PHI_0, DELAY_CLK)
     begin
         if (rising_edge(DELAY_CLK)) then

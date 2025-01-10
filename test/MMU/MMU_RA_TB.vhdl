@@ -7,6 +7,7 @@ end MMU_RA_TB;
 architecture TESTBENCH of MMU_RA_TB is
     component MMU_RA is
         port (
+            DELAY_CLK : in std_logic;
             A       : in std_logic_vector(15 downto 0);
             PHI_0   : in std_logic;
             PRAS_N  : in std_logic;
@@ -30,6 +31,7 @@ architecture TESTBENCH of MMU_RA_TB is
 
 begin
     dut : MMU_RA port map(
+        DELAY_CLK => '0',
         A         => A,
         PRAS_N    => PRAS_N,
         PHI_0     => PHI_0,

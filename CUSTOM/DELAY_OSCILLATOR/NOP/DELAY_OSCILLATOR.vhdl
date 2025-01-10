@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
--- File: NOP/MMU_HOLD_TIME.vhdl
--- Description: An entity that do not add the hold times. To be used with testbenches and when the delays are added externally.
+-- File: NOP/DELAY_OSCILLATOR.vhdl
+-- Description: An entity that do generate the DELAY_CLK signal using . To be used with testbenches and when the delays are not added through a clock signal.
 -- Author: frozen-signal
 -- Project: Apple_IIe_MMU_IOU
 -- Project location: https://github.com/frozen-signal/Apple_IIe_MMU_IOU/
@@ -13,17 +13,14 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
--- NOTE: This implementation of MMU_HOLD_TIME should only be used when the delays are added externally, and with the testbenches.
-entity MMU_HOLD_TIME is
+-- NOTE: This implementation of DELAY_OSCILLATOR should only be used with testbenches and when the delays are not added through a clock signal.
+entity DELAY_OSCILLATOR is
     port (
-        DELAY_CLK : in std_logic; -- Ignored in this implementation
-        PHI_0     : in std_logic;
-
-        D_PHI_0 : out std_logic
+        DELAY_CLK : out std_logic
     );
-end MMU_HOLD_TIME;
+end DELAY_OSCILLATOR;
 
-architecture RTL of MMU_HOLD_TIME is
+architecture RTL of DELAY_OSCILLATOR is
 begin
-    D_PHI_0 <= PHI_0;
+    DELAY_CLK <= '0';
 end RTL;

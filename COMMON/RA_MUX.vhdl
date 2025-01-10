@@ -15,9 +15,10 @@ use IEEE.std_logic_1164.all;
 
 entity RA_MUX is
     port (
-        PHI     : in std_logic;  -- Should be PHI_0 in the case of the MMU, and PHI_1 in the case of the IOU
-        PRAS_N  : in std_logic;
-        Q3      : in std_logic;
+        DELAY_CLK : in std_logic;
+        PHI       : in std_logic;  -- Should be PHI_0 in the case of the MMU, and PHI_1 in the case of the IOU
+        PRAS_N    : in std_logic;
+        Q3        : in std_logic;
 
         ROW_RA0, ROW_RA1, ROW_RA2, ROW_RA3,
         ROW_RA4, ROW_RA5, ROW_RA6, ROW_RA7 : in std_logic;
@@ -35,8 +36,9 @@ architecture RTL of RA_MUX is
     -- See https://github.com/frozen-signal/Apple_IIe_MMU_IOU/tree/master/CUSTOM/DRAM_HOLD_TIME
     component DRAM_HOLD_TIME is
         port (
-            PRAS_N : in std_logic;
-            Q3     : in std_logic;
+            DELAY_CLK : in std_logic;
+            PRAS_N    : in std_logic;
+            Q3        : in std_logic;
 
             D_RAS_N : out std_logic;
             D_Q3    : out std_logic
@@ -47,10 +49,11 @@ architecture RTL of RA_MUX is
     signal COMBINED_RAS_N : std_logic;  -- A RAS_N signal that falls with PRAS_N, but rises with the delayed D_RAS_N
 begin
     U_DRAM_HOLD_TIME : DRAM_HOLD_TIME port map(
-        PRAS_N  => PRAS_N,
-        Q3      => Q3,
-        D_RAS_N => D_RAS_N,
-        D_Q3    => D_Q3
+        DELAY_CLK => DELAY_CLK,
+        PRAS_N    => PRAS_N,
+        Q3        => Q3,
+        D_RAS_N   => D_RAS_N,
+        D_Q3      => D_Q3
     );
 
     -- The RA bus is driven from the rising edge of RAS_N in the previous phase to the falling edge of Q3 in the current phase.
