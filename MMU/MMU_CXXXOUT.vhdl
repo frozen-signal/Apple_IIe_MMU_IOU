@@ -27,6 +27,7 @@ end MMU_CXXXOUT;
 
 architecture RTL of MMU_CXXXOUT is
 begin
+    -- FIXME: Should /ENIO be ignored or not?
     -- MMU_2 @C-2:C2-6
     CXXXOUT_N <= ((not CENROM1) and INTC3ACC_N) nand (CXXX and (not INTC8ACC));
 end RTL;

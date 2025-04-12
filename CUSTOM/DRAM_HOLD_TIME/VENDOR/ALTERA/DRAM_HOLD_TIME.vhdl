@@ -19,6 +19,7 @@ use ieee.numeric_std.all;
 --         changing NUM_LCELLS_RAS and NUM_LCELLS_Q3 below. See https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/CUSTOM/DRAM_HOLD_TIME/readme.md
 entity DRAM_HOLD_TIME is
     port (
+        DELAY_CLK : in std_logic; -- Ignored in this implementation
         PRAS_N : in std_logic;
         Q3     : in std_logic;
 

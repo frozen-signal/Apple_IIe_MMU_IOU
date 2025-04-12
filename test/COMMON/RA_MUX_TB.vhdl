@@ -8,9 +8,10 @@ end RA_MUX_TB;
 architecture TESTBENCH of RA_MUX_TB is
     component RA_MUX is
         port (
-            PHI     : in std_logic;
-            PRAS_N  : in std_logic;
-            Q3      : in std_logic;
+            DELAY_CLK : in std_logic;
+            PHI       : in std_logic;
+            PRAS_N    : in std_logic;
+            Q3        : in std_logic;
             ROW_RA0, ROW_RA1, ROW_RA2, ROW_RA3,
             ROW_RA4, ROW_RA5, ROW_RA6, ROW_RA7 : in std_logic;
             COL_RA0, COL_RA1, COL_RA2, COL_RA3,
@@ -33,9 +34,10 @@ architecture TESTBENCH of RA_MUX_TB is
     RA4, RA5, RA6, RA7 : std_logic;
 begin
     dut : RA_MUX port map(
-        PHI   => PHI,
-        PRAS_N => PRAS_N,
-        Q3    => Q3,
+        DELAY_CLK => '0',
+        PHI       => PHI,
+        PRAS_N    => PRAS_N,
+        Q3        => Q3,
 
         ROW_RA0 => ROW_RA0,
         ROW_RA1 => ROW_RA1,
