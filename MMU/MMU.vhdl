@@ -367,6 +367,10 @@ begin
     PHI_1 <= not PHI_0;
     INH   <= not INH_N;
 
+    U_DELAY_OSCILLATOR : DELAY_OSCILLATOR port map(
+        DELAY_CLK => DELAY_CLK
+    );
+
     U_MMU_HOLD_TIME : MMU_HOLD_TIME port map(
         DELAY_CLK => DELAY_CLK,
         PHI_0     => PHI_0,
@@ -623,5 +627,4 @@ begin
         RA_ENABLE_N => RA_ENABLE_N
     );
     ORA <= UNGATED_RA when RA_ENABLE_N = '0' else (others => 'Z');
-
 end RTL;
