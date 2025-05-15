@@ -19,7 +19,8 @@ use ieee.numeric_std.all;
 --         changing NUM_LCELLS below. See https://github.com/frozen-signal/Apple_IIe_MMU_IOU/blob/master/CUSTOM/MMU_HOLD_TIME/readme.md
 entity MMU_HOLD_TIME is
     port (
-        PHI_0 : in std_logic;
+        DELAY_CLK : in std_logic; -- Ignored in this implementation
+        PHI_0     : in std_logic;
 
         D_PHI_0 : out std_logic
     );

@@ -3,13 +3,10 @@ GHDL_FLAGS= --workdir=work
 FILES_FLAG= -Wno-binding
 
 COMMON_FILES := $(shell find ./COMMON -print -type d | grep \.vhdl$$)
-CUSTOM_FILES := $(shell find ./CUSTOM -print -type d | grep -v VENDOR | grep -v SIM | grep \.vhdl$$)
+CUSTOM_FILES := $(shell find ./CUSTOM -print -type d | grep -v VENDOR | grep -v SIM | grep -v DELAY_CLK | grep \.vhdl$$)
 TTL_FILES := $(shell find ./TTL -print -type d | grep \.vhdl$$)
 MMU_FILES := $(shell find ./MMU -print -type d | grep \.vhdl$$)
 IOU_FILES := $(shell find ./IOU -print -type d | grep \.vhdl$$)
-ifdef VENDOR
-VENDOR_FILES := $(shell find ./CUSTOM -print -type d | grep VENDOR | grep $(VENDOR) | grep \.vhdl$$)
-endif
 SIM_FILES := $(shell find ./CUSTOM -print -type d | grep SIM | grep \.vhdl$$)
 
 TEST_FILES := $(shell find ./test -print -type d | grep \.vhdl$$)
@@ -40,15 +37,8 @@ import :
 
 		@$(COMPILER) -i $(GHDL_FLAGS) $(MMU_FILES)
 		@$(COMPILER) -i $(GHDL_FLAGS) $(IOU_FILES)
-ifdef VENDOR
-		@$(COMPILER) -i $(GHDL_FLAGS) $(VENDOR_FILES)
-else
 		@$(COMPILER) -i $(GHDL_FLAGS) $(SIM_FILES)
-endif
 		@$(COMPILER) -i $(GHDL_FLAGS) $(TEST_FILES)
-
-files :
-		@$(COMPILER) --elab-order $(GHDL_FLAGS) $(FILES_FLAG) $(ASIC)
 
 build :
 		$(foreach ENTITY, $(ALL_ENTITIES), $(call make-entity, $(ENTITY)))

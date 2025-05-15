@@ -4,8 +4,9 @@ use work.IOU_TESTBENCH_PACKAGE.all;
 
 entity VIDEO_ADDR_MUX_SPY is
     port (
+        DELAY_CLK      : in std_logic;
         PHI_1          : in std_logic;
-        PRAS_N          : in std_logic;
+        PRAS_N         : in std_logic;
         Q3             : in std_logic;
         PG2_N          : in std_logic;
         EN80VID        : in std_logic;
@@ -24,6 +25,7 @@ end VIDEO_ADDR_MUX_SPY;
 architecture SPY of VIDEO_ADDR_MUX_SPY is
     component VIDEO_ADDR_MUX is
         port (
+            DELAY_CLK      : in std_logic;
             PHI_1          : in std_logic;
             Q3             : in std_logic;
             PG2_N          : in std_logic;
@@ -45,6 +47,7 @@ architecture SPY of VIDEO_ADDR_MUX_SPY is
     signal RA_ENABLE_N_INT                                                        : std_logic;
 begin
     U_VIDEO_ADDR_MUX : VIDEO_ADDR_MUX port map(
+        DELAY_CLK   => '0',
         PHI_1       => PHI_1,
         Q3          => Q3,
         PG2_N       => PG2_N,

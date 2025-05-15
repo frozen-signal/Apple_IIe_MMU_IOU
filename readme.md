@@ -8,9 +8,8 @@ This project offers a modern solution: a VHDL-based reimplementation of the Appl
 
 ## Important Notice
 
-This project is code-only and does not include any hardware designs such as Gerber files or a Bill of Materials (BOM) for building physical adapters. If you're looking to integrate this into an Apple IIe, you'll need to design your own hardware or find third-party solutions that suit your needs.
-<br/>
-On the other hand, [ReActiveMicro](https://www.reactivemicro.com/) is currently designing and manufacturing a replacement adapter based on this project, and should be available relatively soon.
+This project is code-only and does not include any hardware designs such as Gerber files or a Bill of Materials (BOM) for building physical adapters.<br/>
+The hardware projects are located [here for the IOU](https://github.com/frozen-signal/Apple_IIe_IOU_3V3), and [here for the MMU](https://github.com/frozen-signal/Apple_IIe_MMU_3V3). These are currently in development and should not be used in their current state to build replacement adapters.
 
 ## Project status
 The IOU and MMU has been thoroughly tested and is functionnal.

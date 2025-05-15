@@ -14,10 +14,8 @@ make clean
 ### Importing units
 The units must be imported when they have never been imported, after the library has been cleaned, and after any modification in the VHDL files.<br/>
 ```bash
-make import VENDOR={ ALTERA }
+make import
 ```
-VENDOR is optional; if omited, simulation units will be imported. Passing a VENDOR value is only used to generate the list of files required to build the IOU or the MMU<br/>
-Note that only the vendor 'ALTERA' is currently supported.
 
 ### Building units
 Once imported, the units must be built.<br/>
@@ -30,24 +28,6 @@ And then the tests can be run.
 ```bash
 make test
 ```
-
-### Obtaining the list of files
-To obtain the list of files required to build the IOU or the MMU.<br/>
-First, clean the work library:
-```bash
-make clean
-```
-
-Then import for the target device vendor:
-```bash
-make import VENDOR=ALTERA
-```
-
-And finally, generate the list of files for the desired ASIC:
-```bash
-make files ASIC={ MMU | IOU }
-```
-Where ASIC should be passed `MMU` or `IOU`.
 
 # Compiling Manually
 ## Analysing the entity

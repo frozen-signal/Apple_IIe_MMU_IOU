@@ -54,6 +54,12 @@ end IOU;
 architecture RTL of IOU is
     constant NTSC : std_logic := NTSC_CONSTANT;
 
+    component DELAY_OSCILLATOR is
+        port (
+            DELAY_CLK : out std_logic
+        );
+    end component;
+
     component POWER_ON_DETECTION is
         port (
             PHI_0 : in std_logic;
@@ -250,6 +256,7 @@ architecture RTL of IOU is
 
     component VIDEO_ADDR_MUX is
         port (
+            DELAY_CLK      : in std_logic;
             PHI_1          : in std_logic;
             PRAS_N         : in std_logic;
             Q3             : in std_logic;
@@ -577,6 +584,7 @@ begin
 
     PG2_N <= not PG2;
     U_VIDEO_ADDR_MUX : VIDEO_ADDR_MUX port map(
+        DELAY_CLK   => '0',
         PHI_1       => PHI_1,
         PRAS_N      => PRAS_N,
         Q3          => Q3,

@@ -8,6 +8,7 @@ end VIDEO_ADDR_MUX_TB;
 architecture TESTBENCH of VIDEO_ADDR_MUX_TB is
     component VIDEO_ADDR_MUX is
         port (
+            DELAY_CLK      : in std_logic;
             PHI_1          : in std_logic;
             PRAS_N         : in std_logic;
             Q3             : in std_logic;
@@ -42,6 +43,7 @@ architecture TESTBENCH of VIDEO_ADDR_MUX_TB is
 
 begin
     dut : VIDEO_ADDR_MUX port map(
+        DELAY_CLK   => '0',
         PHI_1       => PHI_1,
         Q3          => Q3,
         PG2_N       => PG2_N,

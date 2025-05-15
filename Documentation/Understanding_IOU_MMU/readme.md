@@ -21,7 +21,7 @@ Some parts were not implemented. See [Unimplemented parts](Whats-not-implemented
  - [Power-On event and /RESET Pin](reset-and-power-on.md)
  - [Video Scanner](video-scanner.md)
  - [Address decoding inside the IOU](iou-address-decoder.md)
- - [IOU Timing Signals](iou-soft-switches.md)
+ - [IOU Timing Signals](iou-timing-signals.md)
  - [The Display Address Generation](display-address.md)
  - [The Keyboard Subsystem](iou_keyboard_subsystem.md)
  - [The Soft Switches of the IOU](iou-soft-switches.md)

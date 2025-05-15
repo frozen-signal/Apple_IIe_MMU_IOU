@@ -37,8 +37,15 @@ entity MMU is
 end MMU;
 
 architecture RTL of MMU is
+    component DELAY_OSCILLATOR is
+        port (
+            DELAY_CLK : out std_logic
+        );
+    end component;
+
     component MMU_HOLD_TIME is
         port (
+            DELAY_CLK : in std_logic;
             PHI_0 : in std_logic;
 
             D_PHI_0 : out std_logic
@@ -317,6 +324,7 @@ architecture RTL of MMU is
 
     component MMU_RA is
         port (
+            DELAY_CLK : in std_logic;
             A       : in std_logic_vector(15 downto 0);
             PHI_0   : in std_logic;
             PRAS_N  : in std_logic;
@@ -329,34 +337,44 @@ architecture RTL of MMU is
         );
     end component;
 
-    signal D_PHI_0 : std_logic;  -- Delayed PHI_0
-    signal PHI_1, INH                                                                            : std_logic;
+    signal DELAY_CLK  : std_logic;
+    signal D_PHI_0    : std_logic;  -- Delayed PHI_0
+    signal PHI_1, INH : std_logic;
+
     signal CXXX_FXXX, FXXX_N, EXXX_N, DXXX_N, CXXX, C8_FXX, C8_FXX_N, C0_7XX_N, E_FXXX_N, D_FXXX : std_logic;
     signal MC0XX_N, MC3XX, MC00X_N, MC01X_N, MC04X_N, MC05X_N, MC06X_N, MC07X_N, MCFFF_N         : std_logic;
-    signal LATCHED_MC05X_N                                                                       : std_logic;
-    signal S_00_1XX, S_04_7XX, S_2_3XXX                                                          : std_logic;
-    signal S_01XX_N                                                                              : std_logic;
-    signal DEV0_N                                                                                : std_logic;
-    signal MPON_N                                                                                : std_logic;
-    signal BANK1, BANK2, RDRAM, RDROM, OUT_FST_ACC, WRPROT, OUT_WREN                             : std_logic;
-    signal EN80VID, FLG1, FLG2, PENIO_N, ALTSTKZP, INTC300_N, INTC300                            : std_logic;
-    signal PG2, HIRES                                                                            : std_logic;
-    signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N                                                  : std_logic;
-    signal SELMB_N                                                                               : std_logic;
-    signal PCASEN_N, OCASEN_N                                                                    : std_logic;
-    signal INTC8EN, INTC8ACC, INTC3ACC_N, CENROM1, INTIO_N                                       : std_logic;
-    signal CXXXOUT_N                                                                             : std_logic;
-    signal UNGATED_MD7, MD7_ENABLE_N                                                             : std_logic;
-    signal UNGATED_RA                                                                            : std_logic_vector(7 downto 0);
-    signal RA_ENABLE_N                                                                           : std_logic;
+
+    signal LATCHED_MC05X_N               : std_logic;
+    signal S_00_1XX, S_04_7XX, S_2_3XXX  : std_logic;
+    signal S_01XX_N                      : std_logic;
+    signal DEV0_N                        : std_logic;
+    signal MPON_N                        : std_logic;
+
+    signal BANK1, BANK2, RDRAM, RDROM, OUT_FST_ACC, WRPROT, OUT_WREN   : std_logic;
+    signal EN80VID, FLG1, FLG2, PENIO_N, ALTSTKZP, INTC300_N, INTC300  : std_logic;
+
+    signal PG2, HIRES                                       : std_logic;
+    signal RC01X_N, P_PHI_0, P_PHI_1, Q3_PRAS_N             : std_logic;
+    signal SELMB_N                                          : std_logic;
+    signal PCASEN_N, OCASEN_N                               : std_logic;
+    signal INTC8EN, INTC8ACC, INTC3ACC_N, CENROM1, INTIO_N  : std_logic;
+    signal CXXXOUT_N                                        : std_logic;
+    signal UNGATED_MD7, MD7_ENABLE_N                        : std_logic;
+    signal UNGATED_RA                                       : std_logic_vector(7 downto 0);
+    signal RA_ENABLE_N                                      : std_logic;
 
 begin
     PHI_1 <= not PHI_0;
     INH   <= not INH_N;
 
+    U_DELAY_OSCILLATOR : DELAY_OSCILLATOR port map(
+        DELAY_CLK => DELAY_CLK
+    );
+
     U_MMU_HOLD_TIME : MMU_HOLD_TIME port map(
-        PHI_0   => PHI_0,
-        D_PHI_0 => D_PHI_0
+        DELAY_CLK => DELAY_CLK,
+        PHI_0     => PHI_0,
+        D_PHI_0   => D_PHI_0
     );
 
     U_ADDR_DECODER : MMU_ADDR_DECODER port map(
@@ -585,7 +603,7 @@ begin
         INH_N    => INH_N,
         PHI_0    => D_PHI_0,
         PCASEN_N => PCASEN_N,
-        MPON_N => MPON_N,
+        MPON_N   => MPON_N,
         EN80_N   => EN80_N
     );
 
@@ -597,16 +615,16 @@ begin
     );
 
     U_MMU_RA : MMU_RA port map(
-        A       => A,
-        PHI_0   => PHI_0,
-        Q3      => Q3,
-        PRAS_N  => PRAS_N,
-        DXXX_N  => DXXX_N,
-        BANK1   => BANK1,
+        DELAY_CLK => DELAY_CLK,
+        A         => A,
+        PHI_0     => PHI_0,
+        Q3        => Q3,
+        PRAS_N    => PRAS_N,
+        DXXX_N    => DXXX_N,
+        BANK1     => BANK1,
 
         RA          => UNGATED_RA,
         RA_ENABLE_N => RA_ENABLE_N
     );
     ORA <= UNGATED_RA when RA_ENABLE_N = '0' else (others => 'Z');
-
 end RTL;

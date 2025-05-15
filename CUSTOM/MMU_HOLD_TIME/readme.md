@@ -4,6 +4,11 @@ This directory contains few implementations of MMU_HOLD_TIME, a component that a
 This implementation do not add the required delay.
 To be used when the delays are added externally and with the testbenches.
 
+#### DELAY_CLK
+This implementation add the required delay through a clock signal.
+To be used when the delays are generated from an internal or external oscillator.
+NOTE: The number of ticks will need to be adjusted depending on the DELAY_CLK frequency.
+
 #### VENDOR/ALTERA
 This can be used with Altera FPGA/CPLDs that support the LCELL primitive.
 

@@ -28,5 +28,6 @@ end MMU_CXXXOUT;
 architecture RTL of MMU_CXXXOUT is
 begin
     -- MMU_2 @C-2:C2-6
+    -- Note that CENROM1 is: (MC00XX_N and PENIO_N)
     CXXXOUT_N <= ((not CENROM1) and INTC3ACC_N) nand (CXXX and (not INTC8ACC));
 end RTL;

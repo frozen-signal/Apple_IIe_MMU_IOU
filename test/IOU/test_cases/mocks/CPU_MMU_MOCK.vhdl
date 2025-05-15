@@ -29,6 +29,7 @@ end CPU_MMU_MOCK;
 architecture MOCK of CPU_MMU_MOCK is
     component MMU_RA is
         port (
+            DELAY_CLK : in std_logic;
             A      : in std_logic_vector(15 downto 0);
             PHI_0  : in std_logic;
             Q3     : in std_logic;
@@ -71,6 +72,7 @@ begin
     );
 
     U_MMU_RA : MMU_RA port map(
+        DELAY_CLK => '0',
         A           => "0000000000000000",
         PRAS_N      => PRAS_N,
         PHI_0       => PHI_0,
