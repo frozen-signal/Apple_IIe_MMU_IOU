@@ -72,6 +72,12 @@ begin
         -- RA_ENABLE_N TESTS
         PHI <= '0';
         Q3 <= '0';
+        PRAS_N <= '0';
+        wait for 1 ns;
+        assert(RA_ENABLE_N = '1') report "Expected RA_ENABLE_N HIGH" severity error;
+
+        PHI <= '0';
+        Q3 <= '0';
         PRAS_N <= '1';
         wait for 1 ns;
         assert(RA_ENABLE_N = '0') report "Expected RA_ENABLE_N LOW" severity error;
