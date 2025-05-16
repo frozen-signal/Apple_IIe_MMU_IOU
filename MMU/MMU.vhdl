@@ -32,7 +32,9 @@ entity MMU is
         MD7       : out std_logic; -- Tri-state
         R_W_N_245 : out std_logic; -- Also called MD IN/OUT'
         CASEN_N   : out std_logic;
-        CXXXOUT   : out std_logic
+        CXXXOUT   : out std_logic;
+
+        RA_ENABLE_N_OUT : out std_logic -- FIXME
     );
 end MMU;
 
@@ -626,5 +628,8 @@ begin
         RA          => UNGATED_RA,
         RA_ENABLE_N => RA_ENABLE_N
     );
-    ORA <= UNGATED_RA when RA_ENABLE_N = '0' else (others => 'Z');
+    -- ORA <= UNGATED_RA when RA_ENABLE_N = '0' else (others => 'Z');
+    ORA <= UNGATED_RA;
+
+    RA_ENABLE_N_OUT <= RA_ENABLE_N;
 end RTL;
