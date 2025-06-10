@@ -54,4 +54,5 @@ begin
         Y6    => DEV6_N, -- C0EX
         Y7    => open
     );
+
 end RTL;
