@@ -2,9 +2,15 @@
 
 ## Where are the schematics or gerber files for an actual IOU / MMU replacement adapter?
 
-This project is code-only and does not include any hardware designs such as Gerber files or a Bill of Materials (BOM) for building physical adapters. If you're looking to integrate this into an Apple IIe, you'll need to design your own hardware or find third-party solutions that suit your needs.
-<br/>
-On the other hand, [ReActiveMicro](https://www.reactivemicro.com/) is currently designing and manufacturing a replacement adapter based on this project, and should be available relatively soon.
+This project is code-only and does not include any hardware designs such as Gerber files or a Bill of Materials (BOM) for building physical adapters.<br/>
+The hardware projects are located here:
+### 3.3V Adapter reference designs
+- [3.3V IOU adapter](https://github.com/frozen-signal/Apple_IIe_IOU_3V3)
+- [3.3V MMU adapter](https://github.com/frozen-signal/Apple_IIe_MMU_3V3)
+### 5V Adapter reference designs
+- 5V IOU adapter (To be done)
+- 5V MMU adapter (To be done)
+
 
 ## Origin of these schematics
 

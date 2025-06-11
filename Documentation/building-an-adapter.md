@@ -1,10 +1,19 @@
-Note: This documentation needs to be improved.
+**Note: This documentation is incomplete / needs to be improved.**
+
+Hardware reference designs can be found here:
+### 3.3V Adapter reference designs
+- [3.3V IOU adapter](https://github.com/frozen-signal/Apple_IIe_IOU_3V3)
+- [3.3V MMU adapter](https://github.com/frozen-signal/Apple_IIe_MMU_3V3)
+### 5V Adapter reference designs
+- 5V IOU adapter (To be done)
+- 5V MMU adapter (To be done)
+
 
 # Building an IOU/MMU adapter
 
 ## Note
 
-This project do not target a specific device, however the author of this project used an ALTERA MAX7000S EPM7128STC100-10N.
+This project do not target a specific device, however the author of this project used an ALTERA MAX7000S EPM7128STC100-10N for a 5V design, and a MACHXO2 for a 3.3V one.
 
 ## Pinouts
 

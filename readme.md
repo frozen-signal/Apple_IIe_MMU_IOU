@@ -9,7 +9,13 @@ This project offers a modern solution: a VHDL-based reimplementation of the Appl
 ## Important Notice
 
 This project is code-only and does not include any hardware designs such as Gerber files or a Bill of Materials (BOM) for building physical adapters.<br/>
-The hardware projects are located [here for the IOU](https://github.com/frozen-signal/Apple_IIe_IOU_3V3), and [here for the MMU](https://github.com/frozen-signal/Apple_IIe_MMU_3V3). These are currently in development and should not be used in their current state to build replacement adapters.
+The hardware projects are located here:
+### 3.3V Adapter reference designs
+- [3.3V IOU adapter](https://github.com/frozen-signal/Apple_IIe_IOU_3V3)
+- [3.3V MMU adapter](https://github.com/frozen-signal/Apple_IIe_MMU_3V3)
+### 5V Adapter reference designs
+- 5V IOU adapter (To be done)
+- 5V MMU adapter (To be done)
 
 ## Project status
 The IOU and MMU has been thoroughly tested and is functionnal.
@@ -21,27 +27,15 @@ The IOU and MMU has been thoroughly tested and is functionnal.
 ![Tests](https://img.shields.io/badge/Tests-Thoroughly_tested-green)<br/>
 
 ## Tested Hardware
-The implementation has been tested with these hardware components:
 
-- Motherboards:
-  - Rev.B motherboard
-  - ReActiveMicro motherboard
-- CPU:
-  - Synertek 6502 (unenhanced ROMs)
-  - Rockwell 6502 (unenhanced ROMs)
-  - 65C02 (enhanced ROMs)
-- AUX Cards:
-  - RAMWORKS III aux card
-  - 80-Col Expansion card (820-0067-B)
-  - 80-Col Expansion card (820-0067-D)
-- ROMs:
-  - Enhanced ROMS from ReActiveMicro
-  - Unhanced ROMS (342-0132-B, 342-0133-A, 342-0134-A, 342-0135-A)
-- Disk Interfaces
-  - Apple 5.25 Drive Controller Card (655-0101-E)
-  - Disk ][ Interface Card (650-X104)
-- Other
-  - Mouse Interface 670-0030-C
+| Category         | Hardware Components |
+|------------------|---------------------|
+| **Motherboards** | <ul><li>Rev.B motherboard (NTSC)</li><li>ReActiveMicro IIe motherboard (NTSC)</li></ul> |
+| **CPUs**         | <ul><li>Synertek 6502 (unenhanced ROMs)</li><li>Rockwell R6502AP (unenhanced ROMs)</li><li>UMC UM6502 (unenhanced ROMs)</li><li>GTE G65SC02P-2 (enhanced ROMs)</li><li>NCR 65C02 (enhanced ROMs)</li><li>Rockwell R65C02P4 (enhanced ROMs)</li></ul> |
+| **AUX Cards**    | <ul><li>RAMWorks III</li><li>80-Column Expansion Card (820-0067-B)</li><li>80-Column Expansion Card (820-0067-D)</li></ul> |
+| **ROMs**         | <ul><li>Enhanced ROM set (ReActiveMicro)</li><li>Unenhanced ROMs:<ul><li>342-0132-B</li><li>342-0133-A</li><li>342-0134-A</li><li>342-0135-A</li></ul></li></ul> |
+| **Disk Interfaces** | <ul><li>Apple 5.25" Drive Controller Card (655-0101-E)</li><li>Disk ][ Interface Card (650-X104)</li></ul> |
+| **Other**        | <ul><li>Mouse Interface Card (670-0030-C)</li></ul> |
 
 # Directory Structure
 * **COMMON**: Components common to the MMU and the IOU.

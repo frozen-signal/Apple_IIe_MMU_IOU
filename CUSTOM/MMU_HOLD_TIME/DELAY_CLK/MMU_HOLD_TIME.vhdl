@@ -27,7 +27,7 @@ entity MMU_HOLD_TIME is
 end MMU_HOLD_TIME;
 
 architecture RTL of MMU_HOLD_TIME is
-    constant DELAY_NUM_CLK_TICKS : positive := 6;
+    constant DELAY_NUM_CLK_TICKS : positive := 3;
 
     signal SHIFT_REGISTER : unsigned((DELAY_NUM_CLK_TICKS-1) downto 0) := (others => '0');
 begin
