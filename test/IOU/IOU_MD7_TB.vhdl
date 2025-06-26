@@ -77,6 +77,11 @@ begin
     process begin
 
         -- MD7_ENABLE_N -----------------------------------
+        -- Init
+        PHI_0   <= '0';
+        PRAS_N  <= '0';
+        wait for 1 ns;
+
         -- Phase part of enabling
         Q3      <= '1';
         PHI_0   <= '1';

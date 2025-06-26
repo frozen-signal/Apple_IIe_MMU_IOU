@@ -69,7 +69,19 @@ begin
     RC019_RC01F_N <= RC01X_N or XXX9_F_N;
 
     -- The MD7 enable gate is the last three 14M periods of PHASE 0 and the first 14M period of the following PHASE 1
-    TIMING_ENABLE_N <= not (((not Q3) and PHI_0) or ((not PHI_0) and Q3 and PRAS_N));
+    -- If every signal were perfect, we'd need this:
+    -- TIMING_ENABLE_N <= not (((not Q3) and PHI_0) or ((not PHI_0) and Q3 and PRAS_N));
+    -- But Q3 is rising much slower than PHI_0, and there is a ~10-15 ns gap where the FPGA sees PHI_0 = '1' and Q3 = '0'
+    --   which should never happen (Q3 and PHI_0 should rise together)
+    -- We fix by using the following process instead:
+    process (PHI_0, Q3, PRAS_N)
+    begin
+        if ((PHI_0 = '0' and PRAS_N = '0')) then
+            TIMING_ENABLE_N <= '1';
+        elsif (PHI_0 = '1' and falling_edge(Q3)) then
+            TIMING_ENABLE_N <= '0';
+        end if;
+    end process;
 
     -- Active-low when in the correct period and any IOU soft switch is read
     MD7_ENABLE_N <= TIMING_ENABLE_N or (RC010_N and RC00X_N and RC019_RC01F_N);
