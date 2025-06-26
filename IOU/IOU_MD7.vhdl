@@ -72,7 +72,7 @@ begin
     TIMING_ENABLE_N <= not (((not Q3) and PHI_0) or ((not PHI_0) and Q3 and PRAS_N));
 
     -- Active-low when in the correct period and any IOU soft switch is read
-    MD7_ENABLE_N <= TIMING_ENABLE_N or (RC01X_N and RC00X_N and RC019_RC01F_N);
+    MD7_ENABLE_N <= TIMING_ENABLE_N or (RC010_N and RC00X_N and RC019_RC01F_N);
 
     with (LA) select MD7_C01X <=
         AKD     when x"0",

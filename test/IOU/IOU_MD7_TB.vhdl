@@ -154,7 +154,13 @@ begin
 
         RC00X_N <= '1';
         RC01X_N <= '0';
-        LA      <= "0101";
+        LA      <= "0101"; -- C015
+        wait for 1 ns;
+        assert(MD7_ENABLE_N = '1') report "expect MD7_ENABLE_N to be HIGH" severity error;
+
+        RC00X_N <= '1';
+        RC01X_N <= '0';
+        LA      <= "0000"; -- C010
         wait for 1 ns;
         assert(MD7_ENABLE_N = '0') report "expect MD7_ENABLE_N to be LOW" severity error;
 
