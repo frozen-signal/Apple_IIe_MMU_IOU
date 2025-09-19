@@ -1,17 +1,18 @@
-**Note: This documentation is incomplete / needs to be improved.**
+# DISCLAIMER
+This repository is provided "as is". If you choose to fabricate and/or assemble this project yourself, you do so entirely at your own risk. The authors/maintainers provide no warranties (express or implied) and accept no responsibility for any damage, injury, or loss resulting from use or misuse. This design is not certified for safety, EMC, or regulatory compliance; you are solely responsible for verifying suitability, component orientation/polarity, firmware configuration, or any other aspect. By using any files in this repo, you agree to assume all risks.
 
+# Reference designs
 Hardware reference designs can be found here:
-### 3.3V Adapter reference designs
+## 3.3V Adapter reference designs
 - [3.3V IOU adapter](https://github.com/frozen-signal/Apple_IIe_IOU_3V3)
 - [3.3V MMU adapter](https://github.com/frozen-signal/Apple_IIe_MMU_3V3)
-### 5V Adapter reference designs
+## 5V Adapter reference designs
 - 5V IOU adapter (To be done)
 - 5V MMU adapter (To be done)
 
+# Designing an adapter from scratch
 
-# Building an IOU/MMU adapter
-
-## Note
+## Notes
 
 This project do not target a specific device, however the author of this project used an ALTERA MAX7000S EPM7128STC100-10N for a 5V design, and a MACHXO2 for a 3.3V one.
 
@@ -30,14 +31,14 @@ The pinout of the IOU:
 | SEGC | 5 | OUT |
 | S_80COL_N | 6 | OUT |
 | CASSO | 7 | OUT |
-| SPKR | 8 | OUT |
+| SPKR | 8 | OUT, possibly open-drain |
 | MD7 | 9 | OUT, Tri-state |
 | AN0 | 10 | OUT |
 | AN1 | 11 | OUT |
 | AN2 | 12 | OUT |
 | AN3 | 13 | OUT |
 | R_W_N | 14 | IN |
-| RESET_N | 15 | BIDIR, Open-drain |
+| RESET_N | 15 | BIDIR, open-drain |
 | NOT CONNECTED | 16 | Not connected |
 | ORA0 | 17 | BIDIR, Tri-state |
 | ORA1 | 18 | BIDIR, Tri-state |
@@ -113,9 +114,16 @@ The pinout of the MMU:
 
 ## Step 1 - Hardware design
 
-### 5V or 3.3V device
+### FPGA / CPLD Selection
 
-The Apple IIe is a 5V computer, so using a 5V FPGA or CPLD would be easiest. However, if you choose to use a 3.3V device, you'll need additional circuits for voltage level translation. More information on 3.3V device design can be found in [Building a 3.3V adapter](/Documentation/building-an-adapter.md#building-a-33v-adapter).
+The Apple IIe is a 5V computer, so using a 5V FPGA or CPLD would be easiest. On the other hand, 3.3V devices are easier to source.
+> [!NOTE]
+> In the case of 3.3V devices, you'll need additional circuits for voltage level translation; feeding 5V signals to a 3.3V, non 5V-resistant device will damage it.
+> More on this below.
+
+### FPGA/CPLD configuration time
+
+The configuration time of the device must be considered. In the case of the MMU, the device **must** configure itself and become operational within 35 ms. In the case of the IOU, since it has control over the /RESET signal, the configuration time is less critical.
 
 ### Number of GPIOs
 
@@ -125,10 +133,58 @@ The device needs to have a minimum number of GPIOs depending on the ASIC:
 | IOU | 37 |
 | MMU | 38  |
 
+### Voltage level translation
+
+In the case of 3.3V FPGAs, you will need to translate some 5V signals down to 3.3V.
+> [!NOTE]
+> See the [_Voltage Level Translation Guide_](https://www.ti.com/lit/ml/scyb018h/scyb018h.pdf) for more information.
+
+#### MMU signals requiring voltage level translation
+
+| Signals | Notes |
+| --- | --- |
+| A0-A15 |  |
+| MD7 | Tri-State<sup>1</sup> |
+| ORA0-7 | Tri-State<sup>1</sup> |
+| /PRAS |  |
+| Q3 |  |
+| PHI_0 |  |
+| /DMA |  |
+| /INH |  |
+| R/W* |  |
+
+<sup>1</sup> You may need to add OutputEnable* signals for tri-state signals. Remember to check if your FPGA has enough GPIOs for these additional signals. See the [top entity of the reference MMU implementation](https://github.com/frozen-signal/Apple_IIe_MMU_3V3/blob/master/firmware/CUSTOM/MMU.vhdl) for an example.
+
+See the [schematics](https://github.com/frozen-signal/Apple_IIe_MMU_3V3/blob/master/Schematics.pdf) of the MMU reference 3.3V implementation for an example and more details.
+
+
+#### IOU signals requiring voltage level translation
+
+| Signals | Notes |
+| --- | --- |
+| MD7 | Tri-State<sup>1</sup> |
+| VID6-7 |  |
+| KSTRB |  |
+| AKD |  |
+| C0XX |  |
+| A6 |  |
+| /PRAS |  |
+| Q3 |  |
+| PHI_0 |  |
+| ORA0-7 | Bidirectional<sup>1</sup> |
+| SPKR | Pulled-up<sup>2</sup> |
+| R/W* |  |
+
+<sup>1</sup> You may need to add OutputEnable* and/or Direction signals for tri-state and bidirectional signals. Remember to check if your FPGA has enough GPIOs for these additional signals. See the [top entity of the reference IOU implementation](https://github.com/frozen-signal/Apple_IIe_IOU_3V3/blob/master/firmware/CUSTOM/IOU.vhdl) for an example.
+
+<sup>2</sup> This pin is possibly open-drain on an official IOU; the signal is pulled-up to 5V on the motherboard. Therefore the corresponding 3.3V pin on the FPGA needs to be protected.
+
+See the [schematics](https://github.com/frozen-signal/Apple_IIe_IOU_3V3/blob/master/Schematics.pdf) of the IOU reference 3.3V implementation for an example and more details.
 
 ### Hold Time Delay
 
-**Important!**
+> [!IMPORTANT]
+> Do not skip this section; otherwise your adapter won't work.
 
 Some signals in the IOU and MMU require hold times. Your design needs to have the means to add the required delays. This can be achieved through various methods, for example:
 
@@ -138,11 +194,11 @@ Some signals in the IOU and MMU require hold times. Your design needs to have th
 - Using an RC circuit
 - Using logic gates
 
-If you decide to use an ALTERA MAX7000S EPM7128STC100-10N, this project should work as-is. In any other case however, you'll need to implement or modify some source files (more details in Step 2).
+If you decide to use an ALTERA MAX7000S EPM7128STC100-10N or a MACHXO2, this project should work as-is. In any other case however, you'll need to implement or modify some source files (more details in Step 2).
 
-### Pull-up Resistor
+### The /RESET signal on the IOU
 
-On the IOU, a weak pull-up is needed on /RESET (Pin 15). The schematic calls for a 3.3K resistor, but the author used a 10K pull-up resistor.
+The /RESET signal on the IOU is a bidirectional open-drain interrupt line. It needs to be pulled-up by the IOU. Caution must be taken so that this signal do not inadvertently goes HIGH during power-on; if your FPGA tri-states the /RESET GPIO during configuration, the /RESET signal will be pulled HIGH. Make sure you prevent this by using for example a circuit such as the one used in the reference [3.3V implementation](https://github.com/frozen-signal/Apple_IIe_IOU_3V3/blob/master/Schematics.pdf) (See "POWER-ON CIRCUIT" at the bottom left).
 
 ## Step 2 - HDL Development Suite Project
 
@@ -161,12 +217,15 @@ In your device's toolchain, create a project and add and/or create the files as 
 #### Required CUSTOM files
 
 Depending on the device you're using, you'll need to customize the hold time. Here are the options:
-1. **Exactly an ALTERA MAX7000S EPM7128STC100-10N:**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/VENDOR/ALTERA/DRAM_HOLD_TIME.vhdl`
+1. **Exactly an ALTERA MAX7000S EPM7128STC100:**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/VENDOR/ALTERA/DRAM_HOLD_TIME.vhdl`
 1. **An ALTERA device that supports LCELL:**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/VENDOR/ALTERA/DRAM_HOLD_TIME.vhdl` and adjust NUM_LCELLS_RAS and NUM_LCELLS_Q3<br/>**See note**
+1. **A MACHXO2**:<br/>Add the following files: `CUSTOM/DELAY_OSCILLATOR/VENDOR/LATTICE/MACHXO2/DELAY_OSCILLATOR.vhdl`, `CUSTOM/DRAM_HOLD_TIME/DELAY_CLK/DRAM_HOLD_TIME.vhdl`
+1. **An internal oscillator:**<br/>Implement your oscillator using `CUSTOM/DELAY_OSCILLATOR/NOP/DELAY_OSCILLATOR.vhdl` as a starting point, then add `CUSTOM/DRAM_HOLD_TIME/DELAY_CLK/DRAM_HOLD_TIME.vhdl`
 1. **An external delay circuit (e.g., an RC circuit):**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/NOP/DRAM_HOLD_TIME.vhdl`<br/> **See note**
 1. **Any other method (e.g., using an internal oscillator)**<br/>Implement a DRAM_HOLD_TIME entity that will add the necessary hold times.<br/>**See note**
 
-**NOTE:** Ensure your solution meets the timing specifications detailed [here](/CUSTOM/DRAM_HOLD_TIME/readme.md)
+> [!NOTE]
+> Ensure your solution meets the timing specifications detailed [here](/CUSTOM/DRAM_HOLD_TIME/readme.md)
 
 #### NTSC vs PAL Version
 
@@ -184,17 +243,12 @@ By default, this project will produce an NTSC version of the IOU. If you need th
 
 Depending on the device you're using, you'll need to customize the hold time in two entities. Here are the options:
 
-1. DRAM_HOLD_TIME entity:
-    1. **Exactly an ALTERA MAX7000S EPM7128STC100-10N:**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/VENDOR/ALTERA/DRAM_HOLD_TIME.vhdl`
-    1. **An ALTERA device that supports LCELL:**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/VENDOR/ALTERA/DRAM_HOLD_TIME.vhdl` and adjust NUM_LCELLS_RAS and NUM_LCELLS_Q3<br/>**See note**
-    1. **An external delay circuit (e.g., an RC circuit):**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/NOP/DRAM_HOLD_TIME.vhdl`<br/> **See note**
-    1. **Any other method (e.g., using an internal oscillator)**<br/>Implement a DRAM_HOLD_TIME entity that will add the necessary hold times.<br/>**See note**
-
-1. MMU_HOLD_TIME entity:
-    1. **Exactly an ALTERA MAX7000S EPM7128STC100-10N:**<br/>Add the file `CUSTOM/MMU_HOLD_TIME/VENDOR/ALTERA/MMU_HOLD_TIME.vhdl`
-    1. **An ALTERA device that supports LCELL:**<br/>Add the file `CUSTOM/MMU_HOLD_TIME/VENDOR/ALTERA/MMU_HOLD_TIME.vhdl` and adjust NUM_LCELLS **(See note)**
-    1. **An external delay circuit (e.g., an RC circuit):**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/NOP/MMU_HOLD_TIME.vhdl` **(See note)**
-    1. **Any other method (e.g., using an internal oscillator):**<br/>Implement an MMU_HOLD_TIME entity that will add the necessary hold times. **(See note)**
+1. **Exactly an ALTERA MAX7000S EPM7128STC100:**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/VENDOR/ALTERA/DRAM_HOLD_TIME.vhdl` and `CUSTOM/MMU_HOLD_TIME/VENDOR/ALTERA/MMU_HOLD_TIME.vhdl`
+1. **An ALTERA device that supports LCELL:**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/VENDOR/ALTERA/DRAM_HOLD_TIME.vhdl` and adjust NUM_LCELLS_RAS and NUM_LCELLS_Q3. Then add `CUSTOM/MMU_HOLD_TIME/VENDOR/ALTERA/MMU_HOLD_TIME.vhdl` and adjust NUM_LCELLS<br/>**See note**
+1. **A MACHXO2**:<br/>Add the following files: `CUSTOM/DELAY_OSCILLATOR/VENDOR/LATTICE/MACHXO2/DELAY_OSCILLATOR.vhdl`, `CUSTOM/DRAM_HOLD_TIME/DELAY_CLK/DRAM_HOLD_TIME.vhdl`, and `CUSTOM/MMU_HOLD_TIME/DELAY_CLK/MMU_HOLD_TIME.vhdl`
+1. **An internal oscillator:**<br/>Implement your oscillator using `CUSTOM/DELAY_OSCILLATOR/NOP/DELAY_OSCILLATOR.vhdl` as a starting point, then add `CUSTOM/DRAM_HOLD_TIME/DELAY_CLK/DRAM_HOLD_TIME.vhdl` and `CUSTOM/MMU_HOLD_TIME/DELAY_CLK/MMU_HOLD_TIME.vhdl`
+1. **An external delay circuit (e.g., an RC circuit):**<br/>Add the file `CUSTOM/DRAM_HOLD_TIME/NOP/DRAM_HOLD_TIME.vhdl` and `CUSTOM/MMU_HOLD_TIME/NOP/MMU_HOLD_TIME.vhdl`<br/> **See note**
+1. **Any other method (e.g., using an internal oscillator)**<br/>Implement a DRAM_HOLD_TIME and MMU_HOLD_TIME entities that will add the necessary hold times.<br/>**See note**
 
 **NOTE:** Ensure your solution meets the timing specifications detailed [here](/CUSTOM/DRAM_HOLD_TIME/readme.md) and [here](/CUSTOM/MMU_HOLD_TIME/readme.md)
 
@@ -204,33 +258,3 @@ Depending on the device you're using, you'll need to customize the hold time in 
 - Optimizing for speed is unnecessary for the Apple IIe, so you can optimize for area instead.
 - Ensure the settings will initialize flip-flops and other memory elements to '0'. (For example, in Quartus II, 'Power-Up Don't Care' should not be checked.)
 - You can improve signal integrity by setting a slow slew rate.
-
-## Building a 3.3V adapter
-
-When using a 3.3V adapter, voltage level translation is necessary. Refer to the [_Voltage Level Translation Guide_](https://www.ti.com/lit/ml/scyb018h/scyb018h.pdf) for more information.
-
-
-### Output Pins
-
-Fortunately, 3.3V can drive 5V TTL logic, so output-only pins can be connected directly without the need for level shifting.
-
-### Input Pins
-
-All input-only pins must be level-shifted to protect the 3.3V device from damage.
-
-### Bidirectional pins
-
-Bidirectional pins must also be level-shifted to protect the 3.3V device from damage.
-
-#### Direction Signal
-
-If you choose a solution that requires a direction signal, you'll need to add these direction signals as outputs. This will involve modifying the file /IOU/IOU.vhdl:
-
-| Signal | Direction Signal | Notes |
-| - | - | - |
-| RESET_N | FORCE_RESET_N_LOW | When FORCE_RESET_N_LOW is LOW, RESET_N acts as an input; when HIGH, it functions as an output. |
-| ORA6-0 | RA_ENABLE_N | When RA_ENABLE_N is HIGH, ORA6-0 are inputs; when LOW, they act as outputs. |
-
-#### RESET_N
-
-RESET_N is both a bidirectional and open-drain pin. Ensure that your level-shifting circuit preserves these properties, and make sure to place the pull-up resistor on the 5V side of RESET_N.
