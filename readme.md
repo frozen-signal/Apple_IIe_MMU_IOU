@@ -2,23 +2,37 @@
 
 ## Project Overview
 
-The Apple IIe’s IOU (Input/Output Unit) and MMU (Memory Management Unit) are two custom integrated circuits (ICs) that played a crucial role in the computer’s design. Developed by Apple in the early 1980s, these chips consolidated much of the system’s complex circuitry into single components. However, once Apple ceased production of the Apple IIe, the manufacture of these chips also stopped. For decades, the only way to replace a faulty IOU or MMU has been to scavenge them from other Apple IIe units—a diminishing resource.
+The Apple IIe’s IOU (Input/Output Unit) and MMU (Memory Management Unit) are two custom integrated circuits (ICs) that played a crucial role in the computer’s design. Developed by Apple in the early 1980s, these chips consolidated much of the system’s complex circuitry into single components. However, once Apple ceased production of the Apple IIe, the manufacture of these chips also stopped. For decades, the only way to replace a faulty IOU or MMU has been to scavenge them from other Apple IIe units — a diminishing resource.
 <br/>
 This project offers a modern solution: a VHDL-based reimplementation of the Apple IIe's IOU and MMU, faithfully based on original Apple schematics. The goal is to preserve the technology behind these essential ICs and provide the means to create replacement adapters, ensuring that damaged chips no longer spell the end for an Apple IIe.
 
 ## Project status
 ![Tests](https://img.shields.io/badge/Tests-Thoroughly_tested-green)<br/>
 
+
 ## Hardware adapters
 
 This project is code portion of the IOU / MMU.<br/>
-The hardware projects are located here:
+Although it does not target a specific FPGA or CPLD, some reference hardware PCB designs are available here:
 ### 3.3V Adapter reference designs
 - [3.3V IOU adapter](https://github.com/frozen-signal/Apple_IIe_IOU_3V3)
 - [3.3V MMU adapter](https://github.com/frozen-signal/Apple_IIe_MMU_3V3)
 ### 5V Adapter reference designs
-- 5V IOU adapter (To be done)
-- 5V MMU adapter (To be done)
+- 5V IOU adapter (Coming soon)
+- 5V MMU adapter (Coming soon)
+
+## Obtaining an adapter
+
+### Buying it
+The two official stores where to buy the IOU and MMU adapters are _ReActiveMicro_ and _Ralle Palaveev's store_.<br/>
+<br/>
+<a href="https://apple2.co.uk/Products">Ralle Palaveev's store</a><br/>
+<a href="https://www.reactivemicro.com/">ReActiveMicro</a> (Available soon)<br/>
+<br/>
+
+### Making it yourself
+You can of course use the reference design projects above to order the adapters at your favorite fab house.<br/>
+And the most dedicated users can design their own adapters from scratch. See [Building and adapter](Documentation/building-an-adapter.md).
 
 ## Acknowledgements
 
@@ -26,8 +40,6 @@ This project was made possible thanks to the support and contributions of a few 
 Notable thanks go to:
  * **Henry S. Courbis of ReActiveMicro** not only was instrumental in the development of the VHDL code but also was the spark that initiated this project. His generous support and deep technical insight made this project possible.
  * **[Ralle Palaveev](https://github.com/rallepalaveev)** is more than a contributor — he is the co-creator of the 3.3V adapters. His impressive skills made what seemed impossible look easy: fitting everything into a 40-pin DIP-sized PCB.
-
-
 
 And lastly, a special thanks to **Leeland Heins [@SoftwareJanitor](https://github.com/softwarejanitor)**, who thoroughly tested this project. His steady encouragement was a much-appreciated source of motivation during the tougher stretches of development.
 
